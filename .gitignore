@@ -1,2 +1,5 @@
 #Ignore virtual enviornment folder 
 myenv/
+
+#Python cache
+__pycacke__/
