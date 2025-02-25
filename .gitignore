@@ -2,4 +2,9 @@
 myenv/
 
 #Python cache
-__pycacke__/
+__pycache__/
+
+#Python Instance
+instance/
+
+
