@@ -56,20 +56,21 @@ def signup_post():
     elif (numPasswordErrors > 0): #There is at least one issue with the input password
         if (isUsernameValid != None): #There is an error with the input username
             if (numPasswordErrors==1):
-                return render_template('signup.html', messageUsername = isUsernameValid, messagePassword1 = passwordErrors[0])
-                #return render_template('signup.html', messageUsername = isUsernameValid, messagePassword1 = "hello")
-
+                return render_template('signup.html', messageUsername = isUsernameValid, messagePassword1 = passwordErrors[0], messagePassword2 =str(numPasswordErrors))
             
             elif (numPasswordErrors==2):
                 return render_template('signup.html', messageUsername = isUsernameValid, messagePassword1 = passwordErrors[0], messagePassword2 = passwordErrors[1])
             
-            '''
+            
             elif (numPasswordErrors == 3):
                 return render_template('signup.html', messageUsername = isUsernameValid, messagePassword1 = passwordErrors[0], messagePassword2 = passwordErrors[1], messagePassword3 = passwordErrors[2])
             
             elif (numPasswordErrors == 4):
                 return render_template('signup.html', messageUsername = isUsernameValid, messagePassword1 = passwordErrors[0], messagePassword2 = passwordErrors[1], messagePassword3 = passwordErrors[2], messagePassword4 = passwordErrors[3])
-             
+            #elif (numPasswordErrors == 4):
+                #return render_template('signup.html', messageUsername = isUsernameValid, messagePassword1 = passwordErrors[0], messagePassword2 = passwordErrors[1], messagePassword3 = passwordErrors[2], messagePassword4 = passwordErrors[3])
+        
+        '''
         elif (isUsernameValid == None): #There are no errors with the input username
             if (numPasswordErrors==1):
                 return render_template('signup.html', messageUsername = messagePassword1 = passwordErrors[0])
@@ -83,7 +84,7 @@ def signup_post():
             elif (numPasswordErrors == 4):
                 return render_template('signup.html', messagePassword1 = passwordErrors[0], messagePassword2 = passwordErrors[1], messagePassword3 = passwordErrors[2], messagePassword4 = passwordErrors[3])
 
-           ''' 
+        ''' 
     
     '''
     passwordRepeat = request.form.get('passwordRepeat')

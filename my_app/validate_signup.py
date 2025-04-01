@@ -19,13 +19,13 @@ def is_valid_password(password):
     if len(password) < 8:
         errorList.append("Password must contain 8 or more characters")
 
-    elif not any(char.isdigit() for char in password):
-        errorList.append("Password must contain at least 1 number")
+    if not any(char.isdigit() for char in password):
+        errorList.append("Password must contain 1 number")
 
-    elif not any(char.isupper() for char in password):
-        errorList.append("Password must contain at least 1 upper case letter")
+    if not any(char.isupper() for char in password):
+        errorList.append("Password must contain 1 upper case letter")
 
-    elif not any(char.isalnum() for char in password):
-        errorList.append("Password must contain at least 1 special character")
+    if (password.isalnum() or len(password)==0):
+        errorList.append("Password must contain 1 special character")
 
     return errorList
