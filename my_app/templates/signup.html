@@ -6,31 +6,24 @@
 	<h3 class="title">Sign Up</h3>
 	<div class="box">
 		<form method="POST" action="/signup">
-			{% if messageUsername%}
-			<h1>{{messageUsername}}</h1>
-			{%endif%}
+			{% if usernameError %}
+				<h1 class="has-text-danger">{{usernameError}}</h1>
+			{% endif %}
+
 			<div class="field">
 				<div class="control">
 					<input class="input is-large" type="text" name="username" placeholder="Username">
 				</div>
 			</div>
 			
-			{% if messagePassword1 %}
-			<h1>{{messagePassword1}}</h1>
+			{% if passwordErrors %}
+				<ul>
+					{% for error in passwordErrors %}
+					<li class="has-text-danger">{{error}}</li>
+					{% endfor %}
+				</ul>
 			{% endif %}
-
-			{% if messagePassword2 %}
-                        <h1>{{messagePassword2}}</h1>
-                        {% endif %}
-
-			{% if messagePassword3 %}
-                        <h1>{{messagePassword3}}</h1>
-                        {% endif %}
-
-			{% if messagePassword4 %}
-                        <h1>{{messagePassword4}}</h1>
-                        {% endif %}
-
+			
 			<div class="field">
 				<div class="control">
 					<input class="input is-large" type="password" name="password" placeholder="Password">
