@@ -1,4 +1,5 @@
 #validate_signup.py
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 
 def is_valid_username(username):
     if len(username) == 0:
@@ -29,3 +30,13 @@ def is_valid_password(password):
         errorList.append("Password must contain 1 special character")
 
     return errorList
+
+
+def return_signup_errors(usernameErrors, passwordErrors):
+    numPasswordErrors = len(passwordErrors)
+
+    if (numPasswordErrors == 0): #There are not issues with the password. Return result of username validation (can return None)
+        return render_template('signup.html', messageUsername = isUsernameValid)
+
+
+
