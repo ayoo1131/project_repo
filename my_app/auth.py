@@ -13,6 +13,21 @@ auth = Blueprint('auth', __name__)
 def login():
     return render_template('login.html')
 
+@auth.route('/login', methods=['POST'])
+def login_post():
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    user = User.query.filter_by(username=username).first()
+
+    #Check if user exists. Also check if password entered by user corresponds to username
+    if not user or not check_password_hash(user.password, password):
+        return render_template('login.html', loginError="Login Failed. Verify username/password are correct")
+
+    #call flask method to login user
+    login_user(user)
+    return render_template('dashboard.html', username = username)
+
 @auth.route('/signup')
 def signup():
     return render_template('signup.html')
