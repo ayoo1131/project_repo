@@ -1,5 +1,6 @@
 #validate_signup.py
 from flask import Blueprint, render_template, redirect, url_for, request, flash
+from .models import User
 
 def is_valid_username(username):
     if len(username) == 0:
@@ -7,6 +8,10 @@ def is_valid_username(username):
 
     if len(username) > 20:
         return "Username must be less than 20 characters"
+
+    user = User.query.filter_by(username=username).first() ##If this returns a user, then a user w/ username already exists
+    if user:
+        return "User with username already exists"
 
     else:
         return None
