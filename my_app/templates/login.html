@@ -4,7 +4,6 @@
 <div class="column is-4 is-offset-4">
     <h3 class="title">Login</h3>
     <div class="box">
-    <!--<body style="background-color: hsl(356, 56%, 42% );">-->
         <form method="POST" action="/login">
             {%if userSuccessfullyAdded%}
 	    	<h1 class = "has-text-success">{{userSuccessfullyAdded}}</h1>
@@ -27,6 +26,10 @@
             </div>
             <button class="button is-block is-info is-large is-fullwidth">Login</button>
         </form>
+
+	<form method="POST" action="/dashboard">
+		<a>Continue as Guest</a>
+	</form>
     </div>
 </div>
 {% endblock %}

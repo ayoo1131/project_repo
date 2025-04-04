@@ -28,6 +28,10 @@ def login_post():
     login_user(user)
     return render_template('dashboard.html', username = username)
 
+@auth.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
 @auth.route('/signup')
 def signup():
     return render_template('signup.html')
