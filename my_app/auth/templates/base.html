@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Flask Authentication Page</title>
+    <title>Andrew Yoo Web App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
@@ -15,11 +15,19 @@
         <div class="hero-head">
             <nav class="navbar">
                 <div class="container">
-                    <div id="navbarMenuHeroA" class="navbar-menu">
+                    <div id="navbarAuth" class="navbar-menu">
+			<div class="navbar-start">
+   			    <a href="{{ url_for('auth.home') }}" class="navbar-item has-text-white">Home</a>
+			    <a href="{{ url_for('auth.about') }}" class = "navbar-item has-text-white">About</a>
+			</div>
+
                         <div class="navbar-end">
-                            <a href="{{ url_for('auth.home') }}" class="navbar-item has-text-white">Home</a>
-                            <a href="{{ url_for('auth.login') }}" class="navbar-item has-text-white">Login</a>
-                            <a href="{{ url_for('auth.signup') }}" class="navbar-item has-text-white">Sign Up</a>
+			    <div class="navbar-item">
+				<div class="buttons">
+                            	    <a href="{{ url_for('auth.login') }}" class="button is-primary">Login</a>
+                          	    <a href="{{ url_for('auth.signup') }}" class="button is-light">Sign Up</a>
+			    	</div>
+			    </div>
                         </div>
                     </div>
                 </div>

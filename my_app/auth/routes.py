@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, logout_user, login_required
+#from flask_login import login_user, logout_user
+from flask_login import login_user
 from my_app.auth.models import User
 from my_app import db
 from my_app.auth import auth
@@ -10,6 +11,11 @@ from my_app.auth.validate_signup import is_valid_password, is_valid_username
 @auth.route('/')
 def home():
     return render_template('home.html')
+
+#About Page Route
+@auth.route('/about')
+def about():
+    return render_template('about.html')
 
 #Login Routes
 @auth.route('/login')
@@ -70,10 +76,4 @@ def signup_post():
     db.session.commit()
 
     return render_template('login.html', userSuccessfullyAdded='User successfully added')
- 
 
-# Logout route
-@auth.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('login.html'))

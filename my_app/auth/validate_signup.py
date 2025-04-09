@@ -1,7 +1,5 @@
 #validate_signup.py
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-#from .models import User
-#from models import User
 from my_app.auth.models import User
 
 

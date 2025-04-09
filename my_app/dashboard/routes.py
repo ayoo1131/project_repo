@@ -7,5 +7,5 @@ from my_app.dashboard import dashboard
 #Dashboard route
 @dashboard.route('/dashboard')
 def dashboard():
-    return render_template('dashboard/templates/dashboard.html')
+    return render_template('dashboard.html')
 
