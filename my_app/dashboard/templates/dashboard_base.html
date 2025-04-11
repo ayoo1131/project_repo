@@ -15,10 +15,30 @@
         <div class="hero-head">
             <nav class="navbar">
                 <div class="container">
-                    <div id="navbarMenuHeroA" class="navbar-menu">
-                        <div class="navbar-end">
-                            <a href="{{ url_for('auth.login') }}" class="navbar-item has-text-white">Home</a>
-                        </div>
+                    <div id="navbarDashboard" class="navbar-menu">
+			<div class="navbar-start">
+			    <a href="{{ url_for('dashboard.dash') }}" class="navbar-item has-text-white">Home</a>
+			    
+			    <div class="navbar-item has-dropdown is-hoverable">
+			    	<a class="navbar-link">
+				    Applications
+				</a>
+
+				<div class="navbar-dropdown">
+				    <a class="navbar-item">
+					Cover Letter
+				    </a>
+				</div>
+			    </div>
+			</div>
+
+			<div class="navbar-end">
+			    <div class="navbar-item">
+                            	<div class="buttons">
+				    <a href="{{url_for('dashboard.logout') }}" class="button is-danger">Logout</a>
+			    	</div>
+			    </div>
+			</div>
                     </div>
                 </div>
             </nav>
