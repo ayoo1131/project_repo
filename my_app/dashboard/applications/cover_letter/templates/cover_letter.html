@@ -1,9 +1,26 @@
 {% extends "dashboard_base.html" %}
 
 {% block content %}
-<section class='section'>
+<section class='hero-body is-align-items-start' style='paddint-top: 1rem;'>
 	<div class='container has-text-centered'>
 		<h1 class="title is-2">Welcome to the Cover Letter Page!</h1>
+
+		<form method='POST'>
+			<div class="field">
+				<input class="input is-medium" type="text" name="company" placeholder="company">
+			</div>
+
+			<div class="field">
+                                <input class="input is-medium" type="text" name="role" placeholder="role">
+                        </div>
+
+			<div class="field">
+                                <input class="input is-medium" type="text" name="industry" placeholder="industry">
+                        </div>
+
+			<button class="button">Generate</button>
+
+		</form>
 	</div>
 </section>
 
