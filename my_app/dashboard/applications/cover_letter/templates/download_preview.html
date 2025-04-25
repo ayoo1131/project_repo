@@ -1,0 +1,29 @@
+<!-- download_preview.html -->
+
+{% extends "dashboard_base.html" %}
+{% block content %}
+
+<section class= 'hero-body is-align-items-start' style='paddint-top: 1rem;'>
+	<div class="container has-text-centered">
+		<div class="card">
+            		<div class="card-content">
+                		<p class="title is-4">Download Your Cover Letter</p>
+                		<p class="subtitle is-6">Click the button below to download</p>
+            		</div>
+            
+            		<footer class="card-footer">
+                		<a href="{{ url_for('cover_letter.download_file') }}" class="card-footer-item button is-primary is-medium">
+                    			<span class="icon">
+                        			<i class="fas fa-file-download"></i>
+                    			</span>
+                    			<span>Download Now</span>
+                		</a>
+            		</footer>
+        	</div>
+	</div>
+
+</section>
+
+
+
+{% endblock %}

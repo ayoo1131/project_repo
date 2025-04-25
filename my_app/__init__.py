@@ -52,7 +52,11 @@ def create_app():
     # blueprint for dashboard routes in the app
     from my_app.dashboard import dashboard as dashboard_blueprint
     app.register_blueprint(dashboard_blueprint)
-    
+   
+    #blueprint for coverletter routes in the Dashboard Applications
+    from my_app.dashboard.applications.cover_letter import cover_letter as cover_letter_blueprint
+    app.register_blueprint(cover_letter_blueprint)
+
     from my_app.auth.models import User
 
     @login_manager.user_loader

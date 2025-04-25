@@ -6,16 +6,25 @@
 		<h1 class="title is-2">Welcome to the Cover Letter Page!</h1>
 
 		<form method='POST'>
+
+			{% if coverLetterErrors%}
+				<ul>
+					{%for error in coverLetterErrors%}
+					<li class="has-text-danger">{{error}}</li>
+					{%endfor%}
+				</ul>
+			{%endif%}
+
 			<div class="field">
-				<input class="input is-medium" type="text" name="company" placeholder="company">
+				<input class="input is-medium" type="text" name="company" placeholder="company" value="{{company or ''}}">
 			</div>
 
 			<div class="field">
-                                <input class="input is-medium" type="text" name="role" placeholder="role">
+				<input class="input is-medium" type="text" name="role" placeholder="role" value="{{role or ''}}"> 
                         </div>
 
 			<div class="field">
-                                <input class="input is-medium" type="text" name="industry" placeholder="industry">
+				<input class="input is-medium" type="text" name="industry" placeholder="industry" value="{{industry or ''}}">
                         </div>
 
 			<button class="button">Generate</button>
