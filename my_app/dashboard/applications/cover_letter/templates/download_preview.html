@@ -12,12 +12,29 @@
             		</div>
             
             		<footer class="card-footer">
-                		<a href="{{ url_for('cover_letter.download_file') }}" class="card-footer-item button is-primary is-medium">
+				<!--Preview Button-->
+				<a href = "{{ url_for('cover_letter.preview_document') }}" class="card-footer-item button is-info is-medium">
+					<span class="icon">
+						<i class = "fas fa-eye"></i>
+					</span>
+					<span>Preview Cover Letter</span>
+				</a>
+
+				<!--Download File Button-->
+				<a href="{{ url_for('cover_letter.download_file') }}" class="card-footer-item button is-primary is-medium">
                     			<span class="icon">
                         			<i class="fas fa-file-download"></i>
                     			</span>
                     			<span>Download Now</span>
                 		</a>
+
+				<!--Back Button-->
+				<a href="{{url_for('cover_letter.cover_letter_home', _method='GET')}}" class="card-footer-item button is-light">
+					<span class = "icon">
+						<i class="fas fa-arrow-left"></i>
+					</span>
+					<span>Back</span>
+				</a>
             		</footer>
         	</div>
 	</div>

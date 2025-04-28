@@ -3,9 +3,10 @@ import os
 from docx import Document
 import io
 from datetime import datetime
+import docx
 import logging
 
-class cover_letter_generate:
+class CoverLetterGenerator:
     #def __init__(self, template_path='dashboard/applications/cover_letter/static/clTemplate.docx'):
     def __init__(self):
         
@@ -25,6 +26,11 @@ class cover_letter_generate:
             if '<INDUSTRY>' in para.text:
                 para.text = para.text.replace('<INDUSTRY>', formData['industry'])
 
+        for para in doc.paragraphs:
+            for run in para.runs:
+                run.font.name = 'Times New Roman'
+                run.font.size = docx.shared.Pt(12)
+        
         fileName=f"Andrew Yoo Cover Letter - {formData['company']}.docx"
 
         output = io.BytesIO()
