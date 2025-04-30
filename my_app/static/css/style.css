@@ -21550,3 +21550,8 @@ has-background-danger.is-hoverable:active {
 
 /*# sourceMappingURL=bulma.css.map */
 
+/* Added CSS styling*/
+.navbar-item.gray-background:hover{
+	background-color: #2f2f2f !important;
+	color: white !important;
+}
