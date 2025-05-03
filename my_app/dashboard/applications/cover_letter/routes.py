@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, url_for, flash, send_file
-from . import cover_letter #import the cover_letter Blueprint
+from . import cover_letter_blueprint #import the cover_letter Blueprint
 from .services.generate_cover_letter import CoverLetterGenerator
 from docx import Document
 import logging
@@ -10,7 +10,7 @@ import mammoth #DOCX to HTML converter
 coverLetter = CoverLetterGenerator()
 fileStorage= TempFileStorage()
 
-@cover_letter.route('/', methods=['GET', 'POST'])
+@cover_letter_blueprint.route('/', methods=['GET', 'POST'])
 def cover_letter_home():
     if request.method == 'GET':
         formData=session.get('formData', {})
@@ -60,7 +60,7 @@ def cover_letter_home():
 
     return render_template('cover_letter.html')
    
-@cover_letter.route('/preview')
+@cover_letter_blueprint.route('/preview')
 def preview_document():
     if 'generatedDocument' not in session:
         return redirect(url_for('cover_letter.cover_letter_home'))
@@ -76,14 +76,14 @@ def preview_document():
 
     return render_template('preview.html', content=htmlContent, company=session['generatedDocument']['company'])
 
-@cover_letter.route('/download')
+@cover_letter_blueprint.route('/download')
 def download_page():
     if 'generatedDocument' not in session:
         return redirect(url_for('cover_letter.cover_letter_home'))
     
     return render_template('download_preview.html')
 
-@cover_letter.route('/download-file')
+@cover_letter_blueprint.route('/download-file')
 def download_file():
     if 'generatedDocument' not in session:
         return redirect(url_for('cover_letter.cover_letter_home'))

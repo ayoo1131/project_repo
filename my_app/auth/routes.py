@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user
 from my_app.auth.models import User
@@ -34,7 +34,9 @@ def login_post():
 
     #call flask method to login user
     login_user(user)
-    return render_template('dashboard.html', username = username)
+    session['username'] = username
+    #return render_template('dashboard.html', username = username)
+    return redirect(url_for('dashboard.dashboard_home'))
 
 #Signup Routes
 @auth.route('/signup')
