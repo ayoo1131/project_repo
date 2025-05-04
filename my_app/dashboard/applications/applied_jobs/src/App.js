@@ -1,7 +1,8 @@
 //App.js
 import React from 'react';
-import LogoutButton from './components/LogoutButton'; 
 import DashboardHome from './components/DashboardHome';
+import ApplicationDropdown from './components/ApplicationDropdown';
+import ProfileDropdown from './components/ProfileDropdown';
 
 function App() {
 	return (
@@ -17,23 +18,13 @@ function App() {
 			    					<a class="navbar-link has-text-white">
 				    					Applications
 								</a>
-
-								<div class="navbar-dropdown">
-				    					<a href="{{ url_for('dashboard.cover_letter.cover_letter_home')}}" class="navbar-item gray-background has-text-white">
-										Cover Letter
-				    					</a>
-				   
-				   	 				<a href="{{ url_for('dashboard.cover_letter.cover_letter_home')}}"  class="navbar-item gray-background has-text-white">
-										Applied Jobs
-				    					</a>
-								</div>
+								
+								<ApplicationDropdown className="navbar-item gray-background has-text-white" />
 			    				</div>
 						</div>
 
 						<div className="navbar-end">
-					    		<div className="navbar-item">
-						    		<LogoutButton className="button is-danger"/>
-			    				</div>
+							<ProfileDropdown className="navbar-item gray-background has-text-white" />
 						</div>
                     			</div>
                 		</div>

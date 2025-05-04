@@ -21551,7 +21551,11 @@ has-background-danger.is-hoverable:active {
 /*# sourceMappingURL=bulma.css.map */
 
 /* Added CSS styling*/
-.navbar-item.gray-background:hover{
+.navbar-item.gray-background:hover{ /*Make the nabvar highlight gray and text white*/
 	background-color: #2f2f2f !important;
 	color: white !important;
+}
+
+.navbar-link.has-text-white::after{ /*Make the down arrow in dropdown menu white*/
+	border-color: white !important;
 }

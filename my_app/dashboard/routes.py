@@ -16,4 +16,4 @@ def dashboard_home():
 @login_required
 def logout():
     logout_user()
-    return render_template('home.html')
+    return redirect(url_for('dashboard.dashboard_home'))

@@ -10,7 +10,7 @@ import mammoth #DOCX to HTML converter
 coverLetter = CoverLetterGenerator()
 fileStorage= TempFileStorage()
 
-@cover_letter_blueprint.route('/', methods=['GET', 'POST'])
+@cover_letter_blueprint.route('/cover-letter', methods=['GET', 'POST'])
 def cover_letter_home():
     if request.method == 'GET':
         formData=session.get('formData', {})
