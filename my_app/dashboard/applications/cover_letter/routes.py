@@ -13,10 +13,8 @@ fileStorage= TempFileStorage()
 @cover_letter_blueprint.route('/cover-letter', methods=['GET', 'POST'])
 def cover_letter_home():
     if request.method == 'GET':
-        formData=session.get('formData', {})
-        return render_template(
-            'cover_letter.html'
-        )
+        #formData=session.get('formData', {})
+        return render_template('cover_letter.html')
 
     if request.method == 'POST':#This will process the user input and create the new document from the cover letter template
         company = request.form.get('company')

@@ -35,7 +35,6 @@ def login_post():
     #call flask method to login user
     login_user(user)
     session['username'] = username
-    #return render_template('dashboard.html', username = username)
     return redirect(url_for('dashboard.dashboard_home'))
 
 #Signup Routes

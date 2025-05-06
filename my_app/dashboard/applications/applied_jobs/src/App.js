@@ -1,11 +1,21 @@
 //App.js
-import React from 'react';
-import DashboardHome from './components/DashboardHome';
-import ApplicationDropdown from './components/ApplicationDropdown';
-import ProfileDropdown from './components/ProfileDropdown';
+import React, {useContext} from 'react';
+import Header from './components/header/Header.js';
+import DashboardHome from './components/header/DashboardHome.js';
+import ApplicationDropdown from './components/header/ApplicationDropdown.js';
+import ProfileDropdown from './components/header/ProfileDropdown.js';
+
+import { UserProvider, UserContext } from './context/UserContext';
+
+function Username() {
+	const { username } = useContext(UserContext);
+
+	return <>{username}</>;
+}
 
 function App() {
 	return (
+		<UserProvider>
 		<section class="hero is-fullheight">
         	<div class="hero-head">
             		<nav class="navbar">
@@ -24,6 +34,9 @@ function App() {
 						</div>
 
 						<div className="navbar-end">
+							<a class="navbar-link has-text-white">
+				    				<Username />
+							</a>
 							<ProfileDropdown className="navbar-item gray-background has-text-white" />
 						</div>
                     			</div>
@@ -31,6 +44,7 @@ function App() {
             		</nav>
         	</div>
 		</section>
+		</UserProvider>
 	);
 }
 

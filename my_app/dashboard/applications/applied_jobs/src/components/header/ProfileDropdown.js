@@ -15,7 +15,6 @@ const ProfileDropdown = ({className}) => {
                         <a className={className} onClick={handleProfile}>Profile</a>
                         <a className={className} onClick={handleLogout}>Logout</a>
                 </div>
-	
 	)
 }
 
