@@ -1,25 +1,53 @@
 //Header.js
 
-import React from 'react';
+import React, {useContext}  from 'react';
 import ApplicationDropdown from './ApplicationDropdown.js';
 import DashboardHome from './DashboardHome.js';
 import ProfileDropdown from './ProfileDropdown.js';
 
-const Header = () => {
-	<section class="hero is-fullheight">
-        	<div class="hero-head">
-            		<nav class="navbar">
-                		<div class="container">
-                    			<div id="navbarDashboard" class="navbar-menu">
-						<div class="navbar-start">
-			    				<DashboardHome className="navbar-item gray-background has-text-white" />
-						</div>
-                    			</div>
-                		</div>
-            		</nav>
-        	</div>
-	</section>
+import { UserProvider, UserContext } from '../../context/UserContext.js';
 
+function Username() {
+	const { username } = useContext(UserContext);
+
+	return <>{username}</>;
+}
+
+const Header = () => {
+	return (
+	<UserProvider>
+	<div class="hero-head">
+            	<nav class="navbar">
+                	<div class="container">
+                    		<div id="navbarDashboard" class="navbar-menu">
+					<div class="navbar-start">
+			    			<DashboardHome className="navbar-item gray-background has-text-white" />
+						
+	       					<div class="navbar-item has-dropdown is-hoverable">
+							<a class="navbar-link has-text-white">
+                                				Applications
+        				                </a>
+							
+	
+	       						<ApplicationDropdown className="navbar-item gray-background has-text-white" />
+			    			</div>
+	       				</div>
+
+
+	       				<div className="navbar-end">
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a class="navbar-link has-text-white">
+				    				<Username />
+							</a>
+							<ProfileDropdown className="navbar-item gray-background has-text-white" />
+						</div>
+					</div>
+                    		</div>
+               		</div>
+          	</nav>
+        </div>
+	</UserProvider>
+	);
 };
 
 export default Header;
