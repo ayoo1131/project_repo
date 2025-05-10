@@ -1,13 +1,20 @@
 //UserInput.js
-
 import React from 'react';
 
 const UserInput = () =>{
+	const handleClear = () => { //Remove all the text from the umput fields
+		
+	}
+
+	const handleSubmit = () => {
+		
+	}
+
         return(
 		<div class='container has-text-centered'>
 			<form id="jobForm" class="box">
                			<div class="form-section">
-                    			<div class="columns is-mobile is-vcentered">
+                    			<div class="columns is-mobile">
                         			
                         			<div class="column">
                             				<div class="field is-small">
@@ -36,7 +43,7 @@ const UserInput = () =>{
 								<div class="control mt-2">
 									<label class="checkbox">
                                                                         	<input type="checkbox"/>
-                                                                        	<span class="ml:ewq-2">Today</span>
+                                                                        	<span class="ml-2">Today</span>
                                                                 	</label>
 								</div>
                             				</div>
@@ -73,4 +80,3 @@ const UserInput = () =>{
 };
 
 export default UserInput;
-
