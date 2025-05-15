@@ -64,28 +64,45 @@ const validatePosition = (position) => {
 const validateDate = (date) =>{
 	//Check if date is none, check if date is in the future
 	const todayDate = getTodayDate();
+	const userDate = parseUserDate(date);
+
+	if (date == ""){
+		return ("Enter a date");
+	}
+
+	if (userDate.year > todayDate.year){
+		return ("Date cannot be in the future");
+	}
+
+	else if (userDate.year===todayDate.year && userDate.month > todayDate.month){
+		return ("Date cannot be in the future");
+	}
+
+	else if ( userDate.year===todayDate.year && userDate.month===todayDate.month && userDate.day > todayDate.day){
+		return ("Date cannot be in the future");
+	}
 };
 
 const getTodayDate = () =>{
 	const todayDate = new Date();
-
-        let day = todayDate.getDate();
-        let dayString = day.toString();
-        if (dayString.length === 1){
-                dayString = "0" + day; //If single digit day, add leading 0
-        }
-
-        let month = todayDate.getMonth() + 1;//goes from 0-11
-        let monthString = month.toString();
-        if (monthString.length === 1){ //If single digit month, add leading 0
-                monthString = "0" + month;
-        }
-
-        let year = todayDate.getFullYear();
-
-        let currentDate = `${year}-${monthString}-${dayString}`; //YYYY-MM-DD
+	const todayObject={day:null, month:null, year:null};
+		
+        todayObject.day= todayDate.getDate();
+	todayObject.month = todayDate.getMonth() + 1;//goes from 0-11
+        todayObject.year = todayDate.getFullYear();
 	
-	return(currentDate);
+	return(todayObject);
+};
+
+const parseUserDate = (date) =>{
+	const dateArray = date.split('-');
+	const dateObject = {day:null, month:null, year:null};
+
+	dateObject.day = parseInt(dateArray[2]);
+	dateObject.month = parseInt(dateArray[1]);
+	dateObject.year = parseInt(dateArray[0]);
+
+	return(dateObject);
 };
 
 const validateLocation = (location) => {

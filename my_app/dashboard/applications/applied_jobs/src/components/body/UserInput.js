@@ -5,7 +5,7 @@ import { validateUserInput } from './utils/user_input/ValidateUserInput'
 
 const UserInput = () =>{
 	const [userInput, setUserInput] = useState({ //State for user entered form values
-		company:'', position:'', date:'', location:'', url:''
+		company:'', position:'', date:'', location:'', url:'', useToday:false
 	});
 
 	const [errors, setErrors] = useState({ //State for errors with user entered values
@@ -13,8 +13,10 @@ const UserInput = () =>{
 	});
 
 	const handleClear = () => { //Remove all the text from the input fields and clear all errors
-		setUserInput({ company:'', position:'', date:'', location:'', url:''});
+		setUserInput({ company:'', position:'', date:'', location:'', url:'', useToday:false});
 		setErrors({company:'', position:'', date:'', location:'', url:''});
+		
+		//TODO make the checkbox unchecked when clear is pressed
 	};
 
 	const handleAddJob = (e) => { // 'e'=event object
@@ -22,7 +24,25 @@ const UserInput = () =>{
 		
 		//Validate User Input
 		const errors = validateUserInput(userInput);
-		setErrors(errors);	
+		setErrors(errors);
+
+		//No errors with User Input, Save job to DB and Upload Job to Job List 
+		if (Object.keys(errors).length ===0){
+			
+		}
+	};
+
+	const handleToday = (e) => {//TODO there is a possibility that the date being retrieved is not the current timezone.
+		const useToday = e.target.checked;//returns true or false depending on whether the checkbox is clicked or not
+		
+		if (useToday){
+			const todayDate = new Date().toISOString().split('T')[0];
+			setUserInput({...userInput, date:todayDate, useToday:true});
+		}
+
+		else{
+			setUserInput({...userInput, date:'', useToday:false});
+		}
 	};
 
         return(
@@ -59,6 +79,7 @@ const UserInput = () =>{
 										onChange={(e)=> setUserInput({...userInput, position:e.target.value})}
 									/>
                                					</div>
+								{errors.position && (<p className="help is-danger">{errors.position}</p>)}
                           				</div>
                         			</div>
                         
@@ -73,9 +94,11 @@ const UserInput = () =>{
 										onChange={(e) => setUserInput({...userInput, date:e.target.value})}
 									/>
                                 				</div>
+								{errors.date && (<p className="help is-danger"> {errors.date}</p>)}
+								
 								<div class="control mt-2">
 									<label class="checkbox">
-                                                                        	<input type="checkbox"/>
+                                                                        	<input type="checkbox" onChange={handleToday} checked={userInput.useToday}/>
                                                                         	<span class="ml-2">Today</span>
                                                                 	</label>
 								</div>
@@ -94,6 +117,7 @@ const UserInput = () =>{
 										onChange={(e)=> setUserInput({...userInput, location:e.target.value})}
 									/>
                                					</div>
+								{errors.location && (<p className="help is-danger"> {errors.location}</p>)}
                            				</div>
                         			</div>
                         
@@ -109,6 +133,7 @@ const UserInput = () =>{
 										onChange={(e) => setUserInput({...userInput, url:e.target.value})}
 									/>
                                 				</div>
+								{errors.url && (<p className="help is-danger"> {errors.url}</p>)}
                             				</div>
                         			</div>
 						<div className="column is-narrow">
