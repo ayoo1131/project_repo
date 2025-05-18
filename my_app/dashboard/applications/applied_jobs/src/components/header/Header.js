@@ -32,7 +32,12 @@ const Header = () => {
 	       						<ApplicationDropdown className="navbar-item gray-background has-text-white" />
 			    			</div>
 	       				</div>
-
+					
+					<div class="navbar-center">
+						<div class="navbar-item app-name-centered">
+							<strong className="has-text-white">Applied Jobs</strong>
+						</div>
+					</div>
 
 	       				<div className="navbar-end">
 						<div class="navbar-item has-dropdown is-hoverable">

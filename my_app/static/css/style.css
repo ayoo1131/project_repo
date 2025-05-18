@@ -21559,3 +21559,11 @@ has-background-danger.is-hoverable:active {
 .navbar-link.has-text-white::after{ /*Make the down arrow in dropdown menu white*/
 	border-color: white !important;
 }
+
+.app-name-centered { /*Makes the Navbar center text perfectly centered*/
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1;
+
+}

@@ -35,8 +35,8 @@ def create_app():
 
     app.logger.addHandler(syslog_handler) #Add the handler to Flask's Logger
 
-    app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO' #Key used by Flask app to sign in session cookies, generate csrf tokens for forms, and provide security.
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite' #Tells SQLAlchemy to create a SQLite database file named db.sqlite in the root directory.
     app.config['SQLALCHEMY_TRACK_MODICIFATIONS'] = False
 
     db.init_app(app)
@@ -54,14 +54,13 @@ def create_app():
     app.register_blueprint(dashboard_blueprint)
    
     #blueprint for coverletter routes in the Dashboard Applications
-    #from my_app.dashboard.applications.cover_letter import cover_letter as cover_letter_blueprint
     from my_app.dashboard.applications.cover_letter import cover_letter_blueprint
     app.register_blueprint(cover_letter_blueprint)
 
     from my_app.dashboard.applications.applied_jobs import applied_jobs_blueprint
     app.register_blueprint(applied_jobs_blueprint)
 
-    from my_app.auth.models import User
+    from models.user import User
 
     @login_manager.user_loader
     def load_user(user_id):

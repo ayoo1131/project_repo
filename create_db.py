@@ -1,5 +1,6 @@
 from my_app import create_app, db
-from my_app.models import User
+from models.user import User
+from models.job import Job
 
 def initialize_database():
     app = create_app()

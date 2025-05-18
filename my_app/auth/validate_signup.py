@@ -1,6 +1,6 @@
 #validate_signup.py
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-from my_app.auth.models import User
+from models.user import User
 
 
 def is_valid_username(username):

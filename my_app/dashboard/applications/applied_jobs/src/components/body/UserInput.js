@@ -1,11 +1,11 @@
 //UserInput.js
 import React, {useState} from 'react';
-import { validateUserInput } from './utils/user_input/ValidateUserInput'
-
+import { validateUserInput } from './utils/user_input/ValidateUserInput';
+import { insertJob } from './utils/user_input/InsertJob';
 
 const UserInput = () =>{
 	const [userInput, setUserInput] = useState({ //State for user entered form values
-		company:'', position:'', date:'', location:'', url:'', useToday:false
+		company:'', position:'', date:'', location:'', url:'', useToday:false, status:'Applied'
 	});
 
 	const [errors, setErrors] = useState({ //State for errors with user entered values
@@ -15,8 +15,6 @@ const UserInput = () =>{
 	const handleClear = () => { //Remove all the text from the input fields and clear all errors
 		setUserInput({ company:'', position:'', date:'', location:'', url:'', useToday:false});
 		setErrors({company:'', position:'', date:'', location:'', url:''});
-		
-		//TODO make the checkbox unchecked when clear is pressed
 	};
 
 	const handleAddJob = (e) => { // 'e'=event object
@@ -28,7 +26,8 @@ const UserInput = () =>{
 
 		//No errors with User Input, Save job to DB and Upload Job to Job List 
 		if (Object.keys(errors).length ===0){
-			
+			console.log(userInput);
+			insertJob(userInput);
 		}
 	};
 

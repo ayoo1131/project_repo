@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user
-from my_app.auth.models import User
+from models.user import User
 from my_app import db
 from my_app.auth import auth
 from my_app.auth.validate_signup import is_valid_password, is_valid_username
@@ -66,7 +66,6 @@ def signup_post():
     if (password != passwordRepeat):
         return render_template('signup.html', usernameAutofill=username,  passwordErrors=['Passwords do not match'])
 
-    
     #User entered username and password are valid
     #Create new user with the form data. Hash the password so plaintext version isn't saved.
     newUser = User(username=username, password=generate_password_hash(password, method = 'pbkdf2:sha256'))
