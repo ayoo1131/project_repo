@@ -39,6 +39,7 @@ def insert_job():
         )
 
         db.session.add(newJob)
+        logging.error("Hit")
         db.session.commit()
 
         return jsonify({'message': 'Job added successfully'}), 201

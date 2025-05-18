@@ -10,7 +10,7 @@ class Job(db.Model):
     user_id = db.Column(db.Integer, ForeignKey('user.id'), nullable=False)
     company = db.Column(db.String(40))
     position = db.Column(db.String(40))
-    date = db.Column(db.DateTime)
+    date = db.Column(db.String(15)) #Store date as YYYY-MM-DD which is ISO standard and allows for easy sorting
     location = db.Column(db.String(40))
     url = db.Column(db.String(100))
     status = db.Column(db.String(20))
