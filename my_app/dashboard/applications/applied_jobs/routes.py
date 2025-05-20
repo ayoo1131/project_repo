@@ -3,10 +3,10 @@ from flask import send_from_directory, render_template, jsonify, request
 from flask_login import current_user, login_required
 from . import applied_jobs_blueprint
 from models.job import Job
-from models.user import User
 from my_app import db
 import os
 from sqlalchemy.exc import SQLAlchemyError
+
 import logging
 
 build_dir = '/home/ayoo1131/guitar_note_to_tabs/my_app/dashboard/applications/applied_jobs/build'
@@ -18,6 +18,11 @@ def applied_jobs_home(path):
     if path and os.path.exists(file_path):
         return send_from_directory(build_dir, path)
     return send_from_directory(build_dir, 'index.html')
+
+@applied_jobs_blueprint.route('/api/user-info')
+@login_required
+def user_info():
+    return jsonify({'username': current_user.username})
 
 @applied_jobs_blueprint.route('/api/insert-job', methods=['POST'])
 @login_required
@@ -39,11 +44,9 @@ def insert_job():
         )
 
         db.session.add(newJob)
-        logging.error("Hit")
         db.session.commit()
-
+        
         return jsonify({'message': 'Job added successfully'}), 201
-
 
     except SQLAlchemyError as e:
         db.session.rollback()
@@ -51,7 +54,24 @@ def insert_job():
     except Exception as e:
         return jsonify({'error': 'Server error', 'details': str(e)}), 500
 
-@applied_jobs_blueprint.route('/api/user-info')
+@applied_jobs_blueprint.route('/api/get-jobs', methods=['GET'])
 @login_required
-def user_info():
-    return jsonify({'username': current_user.username})
+def get_jobs():
+    try:
+        jobs = Job.query.filter_by(user_id=current_user.id).all()
+
+        return jsonify([{
+            'id': j.id,
+            'company': j.company,
+            'position': j.position,
+            'data': j.date,
+            'location': j.location,
+            'url': j.url,
+            'status': j.status
+        } for j in jobs])
+
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({'error': 'Database error', 'details': str(e)}), 500
+    except Exception as e:
+        return jsonify({'error': 'Server error', 'details': str(e)}), 500

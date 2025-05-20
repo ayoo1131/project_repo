@@ -1,6 +1,5 @@
 //InsertJob.js
 
-
 export async function insertJob(jobData){
 	try {
     		const response = await fetch('/api/insert-job', {

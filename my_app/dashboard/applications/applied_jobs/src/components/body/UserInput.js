@@ -12,9 +12,16 @@ const UserInput = () =>{
 		company:'', position:'', date:'', location:'', url:''
 	});
 
+	const [successfulAdd, setSuccessfulAdd] = useState(false); //State to track if job was successfully added. controls sucess message
+		
+	const toggleSuccessfulAdd = () =>{//Sets the state for successful added to opposite of current status
+		setSuccessfulAdd(!successfulAdd);
+	};
+
 	const handleClear = () => { //Remove all the text from the input fields and clear all errors
 		setUserInput({ company:'', position:'', date:'', location:'', url:'', useToday:false});
 		setErrors({company:'', position:'', date:'', location:'', url:''});
+		setSuccessfulAdd(false);
 	};
 
 	const handleAddJob = (e) => { // 'e'=event object
@@ -27,7 +34,9 @@ const UserInput = () =>{
 		//No errors with User Input, Save job to DB and Upload Job to Job List 
 		if (Object.keys(errors).length ===0){
 			console.log(userInput);
-			insertJob(userInput);
+			insertJob(userInput); //Insert Job into job table in db.sqlite
+			handleClear(); //Clear all the user input
+			toggleSuccessfulAdd(); //Turn the Successfully Added message on
 		}
 	};
 
@@ -47,9 +56,9 @@ const UserInput = () =>{
         return(
 		<div class='container has-text-centered'>
 			<form id="jobForm" class="box">
-               			<div class="form-section">
+               			{successfulAdd && <p className="has-text-success">Job Successfully Added!</p>}
+				<div class="form-section">
                     			<div class="columns is-mobile">
-                        			
                         			<div class="column">
                             				<div class="field is-small">
                                 				<label class="label">Company</label>

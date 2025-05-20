@@ -14,7 +14,7 @@ fileStorage= TempFileStorage()
 def cover_letter_home():
     if request.method == 'GET':
         #formData=session.get('formData', {})
-        return render_template('cover_letter.html')
+        return render_template('cover_letter.html', pageTitle='Cover Letter')
 
     if request.method == 'POST':#This will process the user input and create the new document from the cover letter template
         company = request.form.get('company')
