@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
 </head>
 
 <body style="background-color: hsl(216, 56%, 42% );">
@@ -20,7 +21,7 @@
 			    			<a href="{{ url_for('dashboard.dashboard_home') }}" class="navbar-item gray-background has-text-white">Home</a>
 			    
 			    			<div class="navbar-item has-dropdown is-hoverable">
-			    				<a class="navbar-link has-text-white">
+			    				<a class="navbar-link gray-background has-text-white">
 				    				Applications
 							</a>
 
@@ -38,16 +39,15 @@
 
 
 					<div class="navbar-center">
-						<div class="navbar-item app-name-centered">
-							<strong className="has-text-white">{{ pageTitle }}</strong>
-					</div>
+						<div class="navbar-item navbar-app-name-centered">
+							<strong class="has-text-white is-size-3">{{ pageTitle }}</strong>
 						</div>
 					</div>
 
 
 					<div class="navbar-end">
 						<div class="navbar-item has-dropdown is-hoverable">
-                                                        <a class="navbar-link has-text-white">
+                                                        <a class="navbar-link gray-background has-text-white">
 								{{current_user.username}}
                                                         </a>
 

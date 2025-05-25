@@ -1,0 +1,40 @@
+/* applied_jobs.css */
+
+/*Scrollable Jobs List in Applied Jobs App*/
+.jobs-table-container{
+        max-height: 60vh;
+        overflow-y: auto;
+        border: 1px solid #dbdbdb;
+        border-radius: 4px;
+        margin-top: 1rem;
+}
+
+/* Sticky Table Header */
+.jobs-table-container thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: white !important;
+}
+
+/* Status Tags */
+.tag.Applied { background-color: #485fc7; }
+.tag.Interview { background-color: #ffdd57; color: rgba(0,0,0,0.7); }
+.tag.Offer { background-color: #48c774; }
+.tag.Rejected { background-color: #f14668; }
+
+/* Action Buttons */
+.jobs-actions .button {
+  margin-right: 0.5rem;
+}
+
+.job-list-column-title {
+  color: #000 !important;       /* Pure black text */
+  font-weight: 600 !important;  /* Semi-bold */
+  text-transform: uppercase;    /* ALL CAPS */
+  letter-spacing: 0.5px;       /* Character spacing */
+  padding: 12px 16px !important; /* Larger padding */
+  background: white !important; /* Ensures white background */
+  border-bottom: 2px solid #000 !important; /* Black underline */
+}
+
