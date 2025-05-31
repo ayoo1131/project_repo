@@ -1,6 +1,6 @@
 //GetJobs.js
 
-export async function getJobs( userId ){
+export const getJobs = async (userId) => {
 	try {
     		const response = await fetch('/api/get-jobs', {
       			method: 'GET',
@@ -12,7 +12,8 @@ export async function getJobs( userId ){
      			throw new Error(`HTTP error! status: ${response.status}`);
     		}
 
-    		const data = await response.json();
+    		const data = await response.json(); //Gets an array of objects
+		
     		return Array.isArray(data) ? data : []; // Ensure always return an array
   	}
 	

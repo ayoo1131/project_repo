@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import { validateUserInput } from './utils/user_input/ValidateUserInput';
 import { insertJob } from './utils/user_input/InsertJob';
 
-const UserInput = () =>{
+const UserInput = ({addJob}) =>{
 	const [userInput, setUserInput] = useState({ //State for user entered form values
 		company:'', position:'', date:'', location:'', url:'', useToday:false, status:'Applied'
 	});
@@ -35,6 +35,7 @@ const UserInput = () =>{
 		if (Object.keys(errors).length ===0){
 			//console.log(userInput);
 			insertJob(userInput); //Insert Job into job table in db.sqlite
+			addJob(userInput);
 			handleClear(); //Clear all the user input
 			toggleSuccessfulAdd(); //Turn the Successfully Added message on
 		}

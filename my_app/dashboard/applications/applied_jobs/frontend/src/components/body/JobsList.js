@@ -1,26 +1,21 @@
 //JobsList.js
 import React, { useState, useEffect } from 'react';
 import { getJobs } from './utils/jobs_list/GetJobs.js'
+import { formatJobs } from './utils/jobs_list/FormatJobs.js'
 
-const JobsList = () => {
-	const [jobs, setJobs] = useState([]);
-
-	useEffect(() => {
-    		getJobs().then(data => setJobs(data));
-  	}, []);
+const JobsList = ({ jobs }) => {
 	
-	console.log(jobs);
 	return (
     		<div className="box p-0">
       			<div className="table-container jobs-table-container">
         			<table className="table is-fullwidth is-striped is-hoverable">
           				<thead>
             					<tr>
-							<th class='job-list-column-title'>No.</th>
               						<th class='job-list-column-title'>Company</th>
               						<th class='job-list-column-title'>Position</th>
               						<th class='job-list-column-title'>Date</th>
               						<th class='job-list-column-title'>Status</th>
+							<th class='job-list-column-title'>Location</th>
 							<th class='job-list-column-title'>URL</th>
 							<th class="job-list-column-title jobs-actions">Actions</th>
             					</tr>
@@ -39,8 +34,10 @@ const JobsList = () => {
                     								{job.status}
                   							</span>
                 						</td>
-								
-								<td>{job.url}</td>
+							
+								<td>{job.location}</td>
+
+								<td> <a href={job.url} target='_blank' rel='noopener noreferrer' >link</a> </td> {/*target='_blank' opens link in new tab rel is for security*/}
 
                 						<td className="jobs-actions">
                   							<button className="button is-small is-info">
