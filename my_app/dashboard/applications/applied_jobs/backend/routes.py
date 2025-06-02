@@ -11,10 +11,11 @@ import logging
 
 build_dir = '/home/ayoo1131/guitar_note_to_tabs/my_app/dashboard/applications/applied_jobs/frontend/build'
 
-@applied_jobs_blueprint.route('/applied-jobs', defaults={'path': ''})
+@applied_jobs_blueprint.route('/applied-jobs', defaults={'path': ''}, methods=['GET'])
 @applied_jobs_blueprint.route('/applied-jobs/<path:path>')
 def applied_jobs_home(path):
-    file_path = os.path.join(build_dir, path)
-    if path and os.path.exists(file_path):
-        return send_from_directory(build_dir, path)
-    return send_from_directory(build_dir, 'index.html')
+    if request.method == 'GET':
+        file_path = os.path.join(build_dir, path)
+        if path and os.path.exists(file_path):
+            return send_from_directory(build_dir, path)
+        return send_from_directory(build_dir, 'index.html')

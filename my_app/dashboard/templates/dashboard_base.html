@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
 </head>
 
-<body style="background-color: hsl(216, 56%, 42% );">
+<body class="background-color-blue">
         <section class="hero is-fullheight">
 
 	<div class="hero-head">
-        	<nav class="navbar">
+        	<nav class="navbar dark-background">
                 	<div class="container">
                     		<div id="navbarDashboard" class="navbar-menu is-active">
 					<div class="navbar-start">
@@ -37,13 +37,11 @@
 			    			</div>
 					</div>
 
-
 					<div class="navbar-center">
 						<div class="navbar-item navbar-app-name-centered">
 							<strong class="has-text-white is-size-3">{{ pageTitle }}</strong>
 						</div>
 					</div>
-
 
 					<div class="navbar-end">
 						<div class="navbar-item has-dropdown is-hoverable">
@@ -55,7 +53,7 @@
                                                                 <a class="navbar-item gray-background has-text-white">
                                                                         Profile
                                                                 </a>
-                                                                <a href="{{url_for('dashboard.logout') }}"  class="navbar-item gray-background has-text-white">
+                                                                <a href="{{url_for('dashboard.logout') }}" id="logout-link"  class="navbar-item gray-background has-text-white">
                                                                         Logout
                                                                 </a>
                                                         </div>
@@ -70,6 +68,25 @@
         {% endblock %}
 	</section>
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const logoutLink = document.getElementById("logout-link");
+        const isGuest = {{ is_guest| tojson }};
+	    
+		if (isGuest && logoutLink){
+			logoutLink.addEventListener('click', function (e) {
+				e.preventDefault();
+
+				const confirmLogout = window.confirm("You are logged in as a guest. Are you sure you want to log out?");
+
+                		if (confirmLogout) {// proceed to logout
+                    			window.location.href = logoutLink.href;
+                		}
+			});
+		}
+    });
+</script>
 
 </html>
 

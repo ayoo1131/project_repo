@@ -1,19 +1,26 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 from models.user import User
 from my_app import db
 from my_app.dashboard import dashboard
+import logging
 
 #Dashboard home page route
 @dashboard.route('/dashboard')
 @login_required
 def dashboard_home():
-    return render_template('dashboard.html',username=current_user.username)
+    return render_template('dashboard.html', username=current_user.username, is_guest=session['is_guest'])
 
 #Dashboard logout route
 @dashboard.route('/logout')
 @login_required
 def logout():
+    if (session['is_guest'] == True):
+        user = current_user
+
+        db.session.delete(user)
+        db.session.commit()
+
     logout_user()
     return redirect(url_for('dashboard.dashboard_home'))

@@ -17,7 +17,7 @@ const Header = () => {
 	return (
 	<UserProvider>
 	<div class="hero-head">
-            	<nav class="navbar">
+            	<nav class="navbar dark-background">
                 	<div class="container">
                     		<div id="navbarDashboard" class="navbar-menu">
 					<div class="navbar-start">
