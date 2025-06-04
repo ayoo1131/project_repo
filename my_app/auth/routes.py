@@ -5,6 +5,7 @@ from models.user import User
 from my_app import db
 from my_app.auth import auth
 from my_app.auth.validate_signup import is_valid_password, is_valid_username
+import random
 
 #Authentication Home Route
 @auth.route('/')
@@ -35,6 +36,30 @@ def login_post():
     #call flask method to login user
     login_user(user)
     session['username'] = username
+    session['is_guest'] = False
+    return redirect(url_for('dashboard.dashboard_home'))
+
+@auth.route('/login_guest', methods=['POST'])
+def login_guest_post():
+    username = None 
+    while True:
+        guestNum = random.randint(1,99999)
+        formatted = f'{guestNum:05d}'
+        username = 'guest_' + formatted;
+        userFound = User.query.filter_by(username=username).first()
+        
+        if (userFound == None):
+            break
+
+    password = generate_password_hash('password', method = 'pbkdf2:sha256')
+
+    guestUser = User(is_guest=1, username=username, password=password)
+    db.session.add(guestUser)
+    db.session.commit()
+    
+    login_user(guestUser)
+    session['username'] = username
+    session['is_guest'] = True
     return redirect(url_for('dashboard.dashboard_home'))
 
 #Signup Routes
@@ -68,7 +93,7 @@ def signup_post():
 
     #User entered username and password are valid
     #Create new user with the form data. Hash the password so plaintext version isn't saved.
-    newUser = User(username=username, password=generate_password_hash(password, method = 'pbkdf2:sha256'))
+    newUser = User(is_guest=0, username=username, password=generate_password_hash(password, method = 'pbkdf2:sha256'))
     
     # add the new user to the database
     db.session.add(newUser)

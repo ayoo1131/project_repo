@@ -8,8 +8,7 @@ import ProfileDropdown from './ProfileDropdown.js';
 import { UserProvider, UserContext } from '../../context/UserContext.js';
 
 function Username() {
-	const { username } = useContext(UserContext);
-
+	const { username, userId, isGuest } = useContext(UserContext);
 	return <>{username}</>;
 }
 

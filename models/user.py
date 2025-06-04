@@ -9,5 +9,6 @@ from flask_login import UserMixin #Flask-Login can manage user sessions. add Use
 class User(UserMixin, db.Model):
     __tablename__='user' #Define the name of the table when create_db is run
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    is_guest = db.Column(db.Integer)
     username = db.Column(db.String(25), unique=True)
     password = db.Column(db.String(100))

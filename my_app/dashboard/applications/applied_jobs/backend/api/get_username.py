@@ -9,5 +9,5 @@ from .. import applied_jobs_blueprint
 @applied_jobs_blueprint.route('/api/user-info')
 @login_required
 def user_info():
-    return jsonify({'username': current_user.username})
+    return jsonify({'username': current_user.username, 'user_id': current_user.id, 'is_guest': current_user.is_guest})
 

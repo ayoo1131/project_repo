@@ -13,7 +13,6 @@ const Body = () =>{
 	useEffect(() => {
                 getJobs().then(data => { //data is the valie getJobs() returns
                         const formattedJobsData = formatJobs(data);
-                        console.log(formattedJobsData);
                         setJobs(formattedJobsData);
                 });
         }, []);

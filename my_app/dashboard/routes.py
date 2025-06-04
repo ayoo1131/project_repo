@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash,
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 from models.user import User
+from models.job import Job
 from my_app import db
 from my_app.dashboard import dashboard
 import logging
@@ -18,7 +19,12 @@ def dashboard_home():
 def logout():
     if (session['is_guest'] == True):
         user = current_user
+        
+        #Delete Guest User's Applied Jobs
+        logging.error(current_user.id)
+        db.session.query(Job).filter_by(user_id=current_user.id).delete()
 
+        #Delete Guest User
         db.session.delete(user)
         db.session.commit()
 

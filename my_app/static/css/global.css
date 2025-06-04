@@ -1,5 +1,10 @@
 /* global.css */
 
+/*Background Styling*/
+.background-color-blue{
+	background-color: #6495ed !important;
+}
+
 /* Input Field Styling */
 .input-placeholder-lightgray::placeholder {
 	color: #b3b3b3;
@@ -10,6 +15,12 @@
 }
 
 /* Top Navbar Styling */
+.navbar.dark-background{
+	background-color: #191919 !important;
+	box-shadow: 0 2px 4 px rgba(0, 0, 0, 0.5) !important;
+}
+
+
 .navbar-item.gray-background { /* Base gray background for items */
   background-color: #3a3a3a !important;
   color: white !important;
