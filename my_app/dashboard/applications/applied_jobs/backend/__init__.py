@@ -12,4 +12,4 @@ from . import routes
 from .api import get_jobs
 from .api import get_username
 from .api import insert_job
-
+from .api import delete_job

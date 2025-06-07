@@ -1,7 +1,20 @@
 /* applied_jobs.css */
 
+/*User Input*/
+
+.user-input-date{
+	width: 130px !important;
+	max-width: 150px !important; 
+}
+
+
+
+
+
 /*Scrollable Jobs List in Applied Jobs App*/
 .jobs-table-container{
+	table-layout: fixed;
+	width: 100%;
         max-height: 60vh;
         overflow-y: auto;
         border: 1px solid #dbdbdb;
@@ -17,6 +30,11 @@
   background-color: white !important;
 }
 
+.jobs-table-narrow-column {
+	width: 80px !important;
+	max-width: 100px !important;
+	white-space: nowrap !important;
+}
 /* Status Tags */
 .tag.Applied { background-color: #485fc7; }
 .tag.Interview { background-color: #ffdd57; color: rgba(0,0,0,0.7); }
@@ -38,6 +56,9 @@
   border-bottom: 2px solid #000 !important; /* Black underline */
 }
 
-.deez{
-	color: blue;
+.user-input-top-bottom-margins {
+	padding-top: 0.5rem !important;
+	padding-bottom: 0.25rem !important;
+	margin-top: 0.5rem !important;
+	margin-bottom: 0.5rem !important;
 }

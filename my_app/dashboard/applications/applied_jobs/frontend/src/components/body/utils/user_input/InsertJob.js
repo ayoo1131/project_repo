@@ -2,6 +2,7 @@
 
 export const insertJob = async (jobData) => {
 	try {
+		console.log(jobData);
     		const response = await fetch('/api/insert-job', {
       			method: 'POST',
       				headers: {

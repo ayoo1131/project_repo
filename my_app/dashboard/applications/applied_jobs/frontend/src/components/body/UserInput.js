@@ -33,11 +33,11 @@ const UserInput = ({addJob}) =>{
 
 		//No errors with User Input, Save job to DB and Upload Job to Job List 
 		if (Object.keys(errors).length ===0){
-			//console.log(userInput);
 			insertJob(userInput); //Insert Job into job table in db.sqlite
-			addJob(userInput);
+			addJob(userInput);//Add job to the job list
 			handleClear(); //Clear all the user input
 			toggleSuccessfulAdd(); //Turn the Successfully Added message on
+			setUserInput({company:'', position:'', date:'', location:'', url:'', useToday:false, status:'Applied'});
 		}
 	};
 
@@ -55,8 +55,8 @@ const UserInput = ({addJob}) =>{
 	};
 
         return(
-		<div class='container has-text-centered'>
-			<form id="jobForm" class="box">
+		<div className="container has-text-centered">
+			<form id="jobForm" className='box user-input-top-bottom-margins'>
                			{successfulAdd && <p className="has-text-success">Job Successfully Added!</p>}
 				<div class="form-section">
                     			<div class="columns is-mobile">
@@ -92,7 +92,7 @@ const UserInput = ({addJob}) =>{
                           				</div>
                         			</div>
                         
-                        			<div class="column date-column">
+                        			<div class="column date-column user-input-date">
                             				<div class="field is-small">
                                					<label class="label">Date</label>
                                					<div class="control">
