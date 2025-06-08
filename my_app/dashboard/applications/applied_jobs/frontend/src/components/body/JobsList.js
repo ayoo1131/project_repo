@@ -1,10 +1,8 @@
 //JobsList.js
 import React, { useState, useEffect } from 'react';
-import { getJobs } from './utils/jobs_list/GetJobs.js'
-import { formatJobs } from './utils/jobs_list/FormatJobs.js'
 import { deleteJob } from './utils/jobs_list/DeleteJob.js'
 
-const JobsList = ({ jobs }) => {
+const JobsList = ({ jobsState }) => {
 	
 	const handleDeleteJob = (e, jobId) => {
 		e.preventDefault();
@@ -29,7 +27,7 @@ const JobsList = ({ jobs }) => {
                                                 </tr>
                                         </thead>
                                         <tbody>
-                                                {jobs.map(job => (
+                                                {jobsState.map(job => (
                                                         <tr key={job.id}>
                                                                 <td>{job.company}</td>
 
@@ -37,11 +35,7 @@ const JobsList = ({ jobs }) => {
 
                                                                 <td class='jobs-table-narrow-column'>{job.date}</td>
 
-                                                                <td class='jobs-table-narrow-column'>
-                                                                        <span className={`tag ${job.status}`}>
-                                                                                {job.status}
-                                                                        </span>
-                                                                </td>
+                                                                <td class='jobs-table-narrow-column'> <span className={`tag ${job.status}`}> {job.status} </span> </td>
 
                                                                 <td>{job.location}</td>
 

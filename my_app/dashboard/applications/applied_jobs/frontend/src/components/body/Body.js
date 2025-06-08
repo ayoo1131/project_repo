@@ -10,6 +10,10 @@ import { formatJobs } from './utils/jobs_list/FormatJobs.js'
 const Body = () =>{
 	const [jobs, setJobs] = useState([]);
 
+	const addJob = (newJob) => {
+		setJobs((prevJobs) => [...prevJobs, newJob]);
+        };
+
 	useEffect(() => {
                 getJobs().then(data => { //data is the valie getJobs() returns
                         const formattedJobsData = formatJobs(data);
@@ -17,21 +21,16 @@ const Body = () =>{
                 });
         }, []);
 
-	const addJob = (newJob) => {
-		setJobs((prevJobs) => [...prevJobs, newJob]);
-	};
-
 	return(
 		<section class='hero-body' style= {{paddingTop:'0'}}>
 			<div class='container'>
-				<UserInput addJob={addJob}/>
+				<UserInput addJobCallBack={addJob}/>
 				<div style={{ marginTop: '20px' }}> {/* Adjust this value to control spacing */}
-          				<JobsList jobs={jobs} />
+          				<JobsList jobsState={jobs} />
         			</div>
 			</div>
 		</section>
 	);
-
 };
 
 export default Body;

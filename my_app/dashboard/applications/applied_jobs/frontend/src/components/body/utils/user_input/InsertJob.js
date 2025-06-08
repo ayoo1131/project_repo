@@ -16,8 +16,9 @@ export const insertJob = async (jobData) => {
 
     		if (response.ok) {
       			console.log('Success:', result.message);
-      			// Optionally update local job list here
-    		} 
+
+    			return result.job_id;	
+		} 
 		else {
       			console.error('Server error:', result.error);
     		}

@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import { validateUserInput } from './utils/user_input/ValidateUserInput';
 import { insertJob } from './utils/user_input/InsertJob';
 
-const UserInput = ({addJob}) =>{
+const UserInput = ({addJobCallBack}) =>{
 	const [userInput, setUserInput] = useState({ //State for user entered form values
 		company:'', position:'', date:'', location:'', url:'', useToday:false, status:'Applied'
 	});
@@ -24,7 +24,7 @@ const UserInput = ({addJob}) =>{
 		setSuccessfulAdd(false);
 	};
 
-	const handleAddJob = (e) => { // 'e'=event object
+	const handleAddJob = async(e) => { // 'e'=event object
 		e.preventDefault(); //Stops browser's default form submission which refreshes the page. Essential for React form handling
 		
 		//Validate User Input
@@ -33,8 +33,12 @@ const UserInput = ({addJob}) =>{
 
 		//No errors with User Input, Save job to DB and Upload Job to Job List 
 		if (Object.keys(errors).length ===0){
-			insertJob(userInput); //Insert Job into job table in db.sqlite
-			addJob(userInput);//Add job to the job list
+			const newJobId = await insertJob(userInput); //Insert Job into job table in db.sqlite
+			const updatedUserInput ={...userInput, id:newJobId};
+			setUserInput(updatedUserInput); //React’s setState (setUserInput) is asynchronous. So userInput still has the old value when you call addJobCallBack(userInput). 
+			//Instead of relying on setUserInput immediately updating userInput, just construct and use the updated object directly
+			
+			addJobCallBack(updatedUserInput);//Add job to the job list
 			handleClear(); //Clear all the user input
 			toggleSuccessfulAdd(); //Turn the Successfully Added message on
 			setUserInput({company:'', position:'', date:'', location:'', url:'', useToday:false, status:'Applied'});
