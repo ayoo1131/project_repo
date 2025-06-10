@@ -14,6 +14,10 @@ const Body = () =>{
 		setJobs((prevJobs) => [...prevJobs, newJob]);
         };
 
+	const removeJob = (jobId) =>{
+		setJobs(jobs => jobs.filter(job => job.id !== jobId));
+	};
+
 	useEffect(() => {
                 getJobs().then(data => { //data is the valie getJobs() returns
                         const formattedJobsData = formatJobs(data);
@@ -25,9 +29,8 @@ const Body = () =>{
 		<section class='hero-body' style= {{paddingTop:'0'}}>
 			<div class='container'>
 				<UserInput addJobCallBack={addJob}/>
-				<div style={{ marginTop: '20px' }}> {/* Adjust this value to control spacing */}
-          				<JobsList jobsState={jobs} />
-        			</div>
+          			
+				<JobsList removeJobCallBack={removeJob} jobsState={jobs} />
 			</div>
 		</section>
 	);
