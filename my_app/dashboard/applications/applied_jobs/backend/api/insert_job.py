@@ -31,7 +31,7 @@ def insert_job():
         db.session.add(newJob)
         db.session.commit()
 
-        return jsonify({'message': 'Job added successfully'}), 201
+        return jsonify({'message': 'Job added successfully', 'job_id': newJob.id}), 201
 
     except SQLAlchemyError as e:
         db.session.rollback()

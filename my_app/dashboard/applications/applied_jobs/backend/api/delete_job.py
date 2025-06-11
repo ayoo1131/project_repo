@@ -5,7 +5,6 @@ from flask import jsonify, request
 from sqlalchemy.exc import SQLAlchemyError
 from models.job import Job
 from my_app import db
-import logging
 
 #Import the applied job blueprint declared in __init__.py
 from .. import applied_jobs_blueprint
@@ -16,7 +15,6 @@ def delete_job():
     try:
         data = request.get_json()
         job_id = data.get('jobId')
-        
         if not job_id:
             return jsonify({'error': 'Job Id is required'})
 

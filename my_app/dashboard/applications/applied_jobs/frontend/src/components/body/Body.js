@@ -18,6 +18,22 @@ const Body = () =>{
 		setJobs(jobs => jobs.filter(job => job.id !== jobId));
 	};
 
+	const updateRejected = (jobId) => {
+		setJobs(jobs => 
+			jobs.map(job =>
+				job.id ===jobId ? {...job, status: "Rejected"}: job
+			)
+		);
+	};
+
+	const updateInterview = (jobId) => {
+		setJobs(jobs =>
+			jobs.map(job => 
+				job.id === jobId ? {...job, status: "Interview"}:job
+			)
+		);
+	};
+
 	useEffect(() => {
                 getJobs().then(data => { //data is the valie getJobs() returns
                         const formattedJobsData = formatJobs(data);
@@ -30,7 +46,12 @@ const Body = () =>{
 			<div class='container'>
 				<UserInput addJobCallBack={addJob}/>
           			
-				<JobsList removeJobCallBack={removeJob} jobsState={jobs} />
+				<JobsList 
+					removeJobCallBack={removeJob}
+					updateRejectedCallBack = {updateRejected}
+					updateInterviewCallBack = {updateInterview}
+					jobsState={jobs}
+				/>
 			</div>
 		</section>
 	);
