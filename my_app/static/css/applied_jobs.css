@@ -1,15 +1,8 @@
 /* applied_jobs.css */
-
-/*User Input*/
-
 .user-input-date{
 	width: 130px !important;
 	max-width: 150px !important; 
 }
-
-
-
-
 
 /*Scrollable Jobs List in Applied Jobs App*/
 .jobs-table-container{
@@ -22,24 +15,44 @@
         margin-top: 1rem;
 }
 
-/* Sticky Table Header */
-.jobs-table-container thead th {
+.jobs-table-container thead tr:first-child th {
   position: sticky;
   top: 0;
-  z-index: 1;
-  background-color: white !important;
+  background-color: black;
+  z-index: 11; /* Higher so it appears above second row */
 }
 
+.jobs-table-container thead tr:nth-child(2) th {
+  position: sticky;
+  top: 30px; /* height of first sticky row */
+  background-color: black;
+  z-index: 10;
+  border-bottom: 1px solid #ccc;
+}
+
+
 .jobs-table-narrow-column {
-	width: 80px !important;
-	max-width: 100px !important;
 	white-space: nowrap !important;
 }
 /* Status Tags */
-.tag.Applied { background-color: #485fc7; }
-.tag.Interview { background-color: #ffdd57; color: rgba(0,0,0,0.7); }
-.tag.Offer { background-color: #48c774; }
-.tag.Rejected { background-color: #f14668; }
+.tag.Active { 
+	color: white;
+	background-color: #485fc7;
+}
+
+.tag.Interview { 
+	color: white;
+	background-color: #0ced2e;
+}
+
+.tag.Offer { 
+	color: white;
+	background-color: #48c774; 
+}
+.tag.Rejected { 
+	color: white;
+	background-color: #f14668;
+}
 
 /* Action Buttons */
 .jobs-actions .button {
@@ -52,7 +65,6 @@
   text-transform: uppercase;    /* ALL CAPS */
   letter-spacing: 0.5px;       /* Character spacing */
   padding: 12px 16px !important; /* Larger padding */
-  background: white !important; /* Ensures white background */
   border-bottom: 2px solid #000 !important; /* Black underline */
 }
 
@@ -61,4 +73,40 @@
 	padding-bottom: 0.25rem !important;
 	margin-top: 0.5rem !important;
 	margin-bottom: 0.5rem !important;
+}
+
+dropdown-button{
+	font-size: 0.09rem;
+}
+
+.test-dropdown-menu {
+  font-size: 0.9rem;
+  position: fixed;
+  top: 100%;
+  z-index: 9999;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  padding: 5px 0;
+  min-width: 150px;
+}
+
+.test-dropdown-menu .dropdown-item {
+  padding: 10px 15px;
+  cursor: pointer;
+
+}
+
+.test-dropdown-menu .dropdown-item .delete{
+	background-color: red;
+}
+
+.test-dropdown-menu .dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.sort-by-dropdown{
+	font-size: 0.75rem;
 }

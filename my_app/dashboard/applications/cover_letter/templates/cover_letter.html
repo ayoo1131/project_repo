@@ -1,36 +1,41 @@
 {% extends "dashboard_base.html" %}
 
 {% block content %}
-<section class='hero-body is-align-items-start' style='paddint-top: 1rem;'>
-	<div class='container has-text-centered'>
-		<h1 class="title is-2 has-text-white">Create a Cover Letter</h1>
 
-		<form method='POST'>
+<section class="hero is-fullheight has-background-dark">
+	<div class="hero-body is-flex is-justify-content-center is-align-items-center">
+		<div class="box" style="min-width: 400px;">
+			<div class="container has-text-centered">
+				<h1 class="title is-2">Create a Cover Letter</h1>
 
-			{% if coverLetterErrors%}
-				<ul>
-					{%for error in coverLetterErrors%}
-					<li class="has-text-danger">{{error}}</li>
-					{%endfor%}
-				</ul>
-			{%endif%}
+                		<form method='POST'>
+                        		{% if coverLetterErrors%}
+                                		<ul>
+                                        		{%for error in coverLetterErrors%}
+                                      				<li class="has-text-danger">{{error}}</li>
+                                        		{%endfor%}
+                                		</ul>
+                        		{%endif%}
 
-			<div class="field">
-				<input class="input is-medium" type="text" name="company" placeholder="company" value="{{company or ''}}">
+                        		<div class="field">
+                                		<input class="input is-medium" type="text" name="company" placeholder="company" value="{{company or ''}}">
+                        		</div>
+
+                        		<div class="field">
+                                		<input class="input is-medium" type="text" name="role" placeholder="role" value="{{role or ''}}">
+                        		</div>
+
+                        		<div class="field">
+                                		<input class="input is-medium" type="text" name="industry" placeholder="industry" value="{{industry or ''}}">
+                        		</div>
+
+                        		<button class="button">Generate</button>
+
+                		</form>
 			</div>
-
-			<div class="field">
-				<input class="input is-medium" type="text" name="role" placeholder="role" value="{{role or ''}}"> 
-                        </div>
-
-			<div class="field">
-				<input class="input is-medium" type="text" name="industry" placeholder="industry" value="{{industry or ''}}">
-                        </div>
-
-			<button class="button">Generate</button>
-
-		</form>
+		</div>
 	</div>
 </section>
 
 {% endblock %}
+

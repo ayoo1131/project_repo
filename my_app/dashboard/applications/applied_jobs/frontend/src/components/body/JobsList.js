@@ -8,6 +8,7 @@ import { active } from './utils/jobs_list/Active.js'
 const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallBack, updateInterviewCallBack, jobsState }) => {
         const [openDropdownId, setOpenDropdownId] = useState(null);
         const [dropdownCoords, setDropdownCoords] = useState({top: 0, left: 0});
+	const [showStatus, setShowStatus] = useState({total: true, active: true, rejected: true, interview: true });
 
         const toggleDropdown = (e, jobId) => {
                 e.stopPropagation();
@@ -79,8 +80,61 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
                 const interviewCount = jobsState.filter(job => job.status === 'Interview').length;
                 const statusCount = {total: totalJobs, active: activeCount, rejected: rejectedCount, interview: interviewCount};
 
-                return statusCount
+                return statusCount;
         };
+
+	const toggleTotal = (e) => {
+		if (showStatus.total){
+			setShowStatus({total: false, active: false, rejected: false, interview: false });
+		}
+		else{
+			setShowStatus({ total: true, active: true, rejected: true, interview: true });
+		}
+	};
+
+	const toggleActive = (e) =>{
+		if (showStatus.total && showStatus.active && showStatus.rejected && showStatus.interview){
+			setShowStatus({...showStatus, total:false, active:false});
+			return;
+		}
+
+		if (!showStatus.total && !showStatus.active && showStatus.rejected && showStatus.interview){
+			setShowStatus({...showStatus, total: true, active:true});
+			return;
+		}
+
+		setShowStatus({...showStatus, active: !showStatus.active});
+	};
+
+	const toggleRejected = (e) =>{
+		if (showStatus.total && showStatus.active && showStatus.rejected && showStatus.interview){
+			setShowStatus({...showStatus, total:false, rejected:false});
+			return;
+		}
+
+		if (!showStatus.total && showStatus.active && !showStatus.rejected && showStatus.interview){
+			setShowStatus({...showStatus, total: true, rejected: true});
+			return;
+		}
+
+		setShowStatus({...showStatus, rejected: !showStatus.rejected});
+	};
+
+	const toggleInterview = (e) => {
+		if (showStatus.total && showStatus.active && showStatus.rejected && showStatus.interview){
+                        setShowStatus({...showStatus, total:false, interview:false});
+                        return;
+                }
+
+                if (!showStatus.total && showStatus.active && showStatus.rejected && !showStatus.interview){
+                        setShowStatus({...showStatus, total: true, interview: true});
+                        return;
+                }
+
+		setShowStatus({...showStatus, interview: !showStatus.interview});
+	};
+
+
 
         return (
                 <div className="box p-0" style={{ marginTop: '20px' }}>
@@ -90,29 +144,35 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
                                                 <tr className='has-text-centered'>
 							<th colSpan='1' className='has-text-centered'>
 								<div class="control mt-1">
-                                                                        <input type="checkbox" style={{ marginRight:'0.5em'}}/>
+                                                                        <input type="checkbox" checked={showStatus.total} onChange={toggleTotal} style={{ marginRight:'0.5em'}}/>
 									Total: {countJobStatus().total}
                                                                 </div>
 							</th>
 
 							<th colSpan='1' className='has-text-centered'> 
 								<div class='control mt-1'>
-									<input type='checkbox' style={{ marginRight:'0.5em'}}/>
+									<input type='checkbox' checked={showStatus.active} onChange={toggleActive} style={{ marginRight:'0.5em'}}/>
 									Active: {countJobStatus().active} 
 								</div>
 							</th>
 
                                                         <th colSpan="2" className="has-text-centered">
 								<div class='control mt-1'>
-									<input type='checkbox' style={{ marginRight:'0.5em'}}/>
+									<input type='checkbox' checked={showStatus.rejected} onChange={toggleRejected} style={{ marginRight:'0.5em'}}/>
 									Rejected: {countJobStatus().rejected}
 								</div>
 							</th>
 
 							<th colSpan='1' className='has-text-centered'>
 								<div class='control mt-1'>
-									<input type='checkbox' style={{ marginRight:'0.5em'}}/>
+									<input type='checkbox' checked={showStatus.interview} onChange={toggleInterview} style={{ marginRight:'0.5em'}}/>
 									Interviews: {countJobStatus().interview}
+								</div>
+							</th>
+
+							<th colSpan='2' className='has-text-centered'>
+								<div class='control mt-1'>
+									<button className="sort-by-dropdown"> Sort By: ▼ </button>
 								</div>
 							</th>
                                                 </tr>
@@ -130,7 +190,6 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 
                                         <tbody>
                                                 {jobsState.map(job => (
-
                                                         <tr key={job.id}>
                                                                 <td>{job.company}</td>
                                                                 <td>{job.position}</td>
@@ -141,7 +200,7 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 
                                                                 <td className="jobs-actions" style={{ position: 'relative' }}>
 
-                                                                        <button className="button" onClick={(e) => toggleDropdown(e, job.id)}> Actions ▼ </button>
+                                                                        <button className="dropdown-button" onClick={(e) => toggleDropdown(e, job.id)}> Edit ▼ </button>
 
                                                                         {openDropdownId === job.id && (
                                                                                 

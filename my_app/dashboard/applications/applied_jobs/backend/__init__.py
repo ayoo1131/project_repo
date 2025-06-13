@@ -15,3 +15,4 @@ from .api import insert_job
 from .api import delete_job
 from .api import update_rejected
 from .api import update_interview
+from .api import update_active
