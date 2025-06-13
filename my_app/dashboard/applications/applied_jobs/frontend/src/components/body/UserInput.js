@@ -5,7 +5,7 @@ import { insertJob } from './utils/user_input/InsertJob';
 
 const UserInput = ({addJobCallBack}) =>{
 	const [userInput, setUserInput] = useState({ //State for user entered form values
-		company:'', position:'', date:'', location:'', url:'', useToday:false, status:'Applied'
+		company:'', position:'', date:'', location:'', url:'', useToday:false, status:'Active'
 	});
 
 	const [errors, setErrors] = useState({ //State for errors with user entered values
@@ -41,7 +41,7 @@ const UserInput = ({addJobCallBack}) =>{
 			addJobCallBack(updatedUserInput);//Add job to the job list
 			handleClear(); //Clear all the user input
 			toggleSuccessfulAdd(); //Turn the Successfully Added message on
-			setUserInput({company:'', position:'', date:'', location:'', url:'', useToday:false, status:'Applied'});
+			setUserInput({company:'', position:'', date:'', location:'', url:'', useToday:false, status:'Active'});
 		}
 	};
 

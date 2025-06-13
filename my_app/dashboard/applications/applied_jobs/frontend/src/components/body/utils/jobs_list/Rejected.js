@@ -11,7 +11,6 @@ export const rejected = async(jobId) =>{
 		});
 
 		const result = await response.json();	
-		console.log(result);
 		if (!response.ok){
 			throw new Error(`HTTP error!`);
 		}

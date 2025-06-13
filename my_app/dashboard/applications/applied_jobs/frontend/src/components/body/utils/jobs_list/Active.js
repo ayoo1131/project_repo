@@ -1,15 +1,15 @@
-//Interview.js
+//Active.js
 
-export const interview = async (jobId) =>{
+export const active = async(jobId) => {
 	try{
-		const response = await fetch('/api/update-interview', {
-			method: 'PUT',
+		const response = await fetch('/api/update-active', {
+			methods: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-      			credentials: 'include',  // Sends Flask session cookie
+      			credentials: 'include',
 			body: JSON.stringify({jobId})
 		});
 
-		const result = await response.json();
+		const result= await response.json();
 
                 if (!response.ok){
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -18,11 +18,11 @@ export const interview = async (jobId) =>{
                 else{
                         console.log('Success: ', response.message);
                 }
-
 	}
 
 	catch(error){
-		console.error('fetch error:', error);
+		console.error('fetch error:', error );
 		return[];
 	}
+
 };

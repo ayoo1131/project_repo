@@ -17,7 +17,15 @@ const Body = () =>{
 	const removeJob = (jobId) =>{
 		setJobs(jobs => jobs.filter(job => job.id !== jobId));
 	};
-
+	
+	const updateActive = (jobId) => {
+		setJobs(jobs =>
+			jobs.map(job =>
+				job.id ===jobId ? {...job, status:"Active"}: job
+			)
+		);
+	};
+		
 	const updateRejected = (jobId) => {
 		setJobs(jobs => 
 			jobs.map(job =>
@@ -48,6 +56,7 @@ const Body = () =>{
           			
 				<JobsList 
 					removeJobCallBack={removeJob}
+					updateActiveCallBack = {updateActive}
 					updateRejectedCallBack = {updateRejected}
 					updateInterviewCallBack = {updateInterview}
 					jobsState={jobs}

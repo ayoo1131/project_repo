@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { deleteJob } from './utils/jobs_list/DeleteJob.js'
 import { rejected } from './utils/jobs_list/Rejected.js'
 import { interview } from './utils/jobs_list/Interview.js'
+import { active } from './utils/jobs_list/Active.js'
 
-const JobsList = ({ removeJobCallBack, updateRejectedCallBack, updateInterviewCallBack, jobsState }) => {
+const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallBack, updateInterviewCallBack, jobsState }) => {
         const [openDropdownId, setOpenDropdownId] = useState(null);
         const [dropdownCoords, setDropdownCoords] = useState({top: 0, left: 0});
 
@@ -41,15 +42,21 @@ const JobsList = ({ removeJobCallBack, updateRejectedCallBack, updateInterviewCa
                 return () => window.removeEventListener('click', handleClickOutside);
         }, []);
 
+	const handleUpdateActive = (e, jobId) => {
+		e.preventDefault();
+		active(jobId);
+		updateActiveCallBack(jobId);
+	};
+
 	const handleUpdateRejected = (e, jobId) => {
 		e.preventDefault();
-		rejected(); //Change status of job to Rejected in database
+		rejected(jobId); //Change status of job to Rejected in database
 		updateRejectedCallBack(jobId); //Change status of job to Rejected in state
 	};
 
 	const handleUpdateInterview = (e, jobId) => {
 		e.preventDefault();
-		interview(); //Change status of job to Interview in database
+		interview(jobId); //Change status of job to Interview in database
 		updateInterviewCallBack(jobId); // Change status of job to Interview in state
 	};
 
@@ -58,12 +65,19 @@ const JobsList = ({ removeJobCallBack, updateRejectedCallBack, updateInterviewCa
                 deleteJob(jobId, jobCompany, jobTitle); //Delete job from the database
                 removeJobCallBack(jobId); //RemoveJob from the jobs state
         };
+		
+	const statusOptions = [
+                {label: 'Active', handler: handleUpdateActive},
+                {label: 'Rejected', handler: handleUpdateRejected},
+                {label: 'Interview', handler: handleUpdateInterview}
+        ];
 
         const countJobStatus = () => {
-                const appliedCount = jobsState.filter(job => job.status === 'Applied').length;
+		const totalJobs = jobsState.length;
+                const activeCount = jobsState.filter(job => job.status === 'Active').length;
                 const rejectedCount = jobsState.filter(job => job.status === 'Rejected').length;
                 const interviewCount = jobsState.filter(job => job.status === 'Interview').length;
-                const statusCount = {applied: appliedCount, rejected: rejectedCount, interview: interviewCount};
+                const statusCount = {total: totalJobs, active: activeCount, rejected: rejectedCount, interview: interviewCount};
 
                 return statusCount
         };
@@ -74,20 +88,43 @@ const JobsList = ({ removeJobCallBack, updateRejectedCallBack, updateInterviewCa
                                 <table className="table is-fullwidth is-striped is-hoverable">
                                         <thead>
                                                 <tr className='has-text-centered'>
-							<th colSpan='1' className='has-text-centered'> Total: {countJobStatus().applied} </th>
-							<th colSpan='2' className='has-text-centered'> Active: {countJobStatus().applied} </th>
-                                                        <th colSpan="2" className="has-text-centered"> Rejected: {countJobStatus().rejected}</th>
-							<th colSpan='2' className='has-text-centered'> Interviews: {countJobStatus().interview} </th>
+							<th colSpan='1' className='has-text-centered'>
+								<div class="control mt-1">
+                                                                        <input type="checkbox" style={{ marginRight:'0.5em'}}/>
+									Total: {countJobStatus().total}
+                                                                </div>
+							</th>
+
+							<th colSpan='1' className='has-text-centered'> 
+								<div class='control mt-1'>
+									<input type='checkbox' style={{ marginRight:'0.5em'}}/>
+									Active: {countJobStatus().active} 
+								</div>
+							</th>
+
+                                                        <th colSpan="2" className="has-text-centered">
+								<div class='control mt-1'>
+									<input type='checkbox' style={{ marginRight:'0.5em'}}/>
+									Rejected: {countJobStatus().rejected}
+								</div>
+							</th>
+
+							<th colSpan='1' className='has-text-centered'>
+								<div class='control mt-1'>
+									<input type='checkbox' style={{ marginRight:'0.5em'}}/>
+									Interviews: {countJobStatus().interview}
+								</div>
+							</th>
                                                 </tr>
 
                                                 <tr>
-                                                        <th style={{ width: '15%' }} >Company</th>
-                                                        <th style={{ width: '15%' }} >Position</th>
+                                                        <th style={{ width: '20%' }} >Company</th>
+                                                        <th style={{ width: '20%' }} >Position</th>
                                                         <th style={{ width: '10%' }} >Date</th>
                                                         <th style={{ width: '10%' }} >Status</th>
                                                         <th style={{ width: '20%' }} >Location</th>
                                                         <th style={{ width: '10%' }} >URL</th>
-                                                        <th style={{ width: '20%' }} >Actions</th>
+                                                        <th style={{ width: '10%' }} >Actions</th>
                                                 </tr>
                                         </thead>
 
@@ -103,14 +140,25 @@ const JobsList = ({ removeJobCallBack, updateRejectedCallBack, updateInterviewCa
                                                                 <td className='jobs-table-narrow-column'> <a href={job.url} target='_blank' rel='noopener noreferrer' >link</a> </td> {/*target='_blank' opens link in new tab rel is for security*/}
 
                                                                 <td className="jobs-actions" style={{ position: 'relative' }}>
+
                                                                         <button className="button" onClick={(e) => toggleDropdown(e, job.id)}> Actions ▼ </button>
 
                                                                         {openDropdownId === job.id && (
                                                                                 
   										<div className="test-dropdown-menu" style={{ top: dropdownCoords.top, left: dropdownCoords.left }}>
-    											<div className="dropdown-item" onClick={(e) => handleUpdateRejected(e, job.id)}>Rejected</div>
-    											<div className="dropdown-item" onClick={(e) => handleUpdateInterview(e, job.id)}>Interview</div>
-    											<div className="dropdown-item" onClick={(e) => handleDeleteJob(e, job.id, job.company, job.position)}>Delete</div>
+											{statusOptions
+												.filter(option => option.label != job.status)
+												.map(option => (
+													<div 
+														key={option.label}
+														className='dropdown-item'
+														onClick={(e) => option.handler(e, job.id)}
+													>
+														{option.label}
+													</div>
+											
+											))}
+											<div className="dropdown-item" onClick={(e) => handleDeleteJob(e, job.id, job.company, job.position)}>Delete</div>
   										</div>
 										
                                                                         )}
