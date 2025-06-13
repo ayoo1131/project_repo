@@ -84,11 +84,8 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
         };
 
 	const toggleTotal = (e) => {
-		if (showStatus.total){
-			setShowStatus({total: false, active: false, rejected: false, interview: false });
-		}
-		else{
-			setShowStatus({ total: true, active: true, rejected: true, interview: true });
+		if (!showStatus.total){
+			setShowStatus({total: true, active: true, rejected: true, interview: true });
 		}
 	};
 
@@ -189,7 +186,9 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
                                         </thead>
 
                                         <tbody>
-                                                {jobsState.map(job => (
+                                                {jobsState
+							.filter(job => showStatus[job.status.toLowerCase()])
+							.map(job => (
                                                         <tr key={job.id}>
                                                                 <td>{job.company}</td>
                                                                 <td>{job.position}</td>
