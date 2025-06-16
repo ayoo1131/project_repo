@@ -9,8 +9,22 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
         const [openDropdownId, setOpenDropdownId] = useState(null);
         const [dropdownCoords, setDropdownCoords] = useState({top: 0, left: 0});
 	const [showStatus, setShowStatus] = useState({total: true, active: true, rejected: true, interview: true });
+	const [sortBy, setSortBy] = useState({sort: 'newest'});
 
-        const toggleDropdown = (e, jobId) => {
+	const toggleDropdownSort = (e) => {
+		e.stopPropagation();
+		
+		if (openDropdownId === 'sort'){
+			setOpenDropdownId(null);
+			return;
+		}
+
+		const rect = e.currentTarget.getBoundingClientRect();
+		setDropdownCoords({top: rect.bottom, left: rect.left});
+		setOpenDropdownId('sort');
+	};
+	
+        const toggleDropdownStatus = (e, jobId) => {
                 e.stopPropagation();
 		
 		const dropdownHeight = 135; 
@@ -66,12 +80,20 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
                 deleteJob(jobId, jobCompany, jobTitle); //Delete job from the database
                 removeJobCallBack(jobId); //RemoveJob from the jobs state
         };
-		
+	
+	//Command Patterns(array of objects) -> Maps actions(hander) to identifier(label)
 	const statusOptions = [
                 {label: 'Active', handler: handleUpdateActive},
                 {label: 'Rejected', handler: handleUpdateRejected},
                 {label: 'Interview', handler: handleUpdateInterview}
         ];
+
+	const sortOptions = [
+		{label: 'newest', handler: handleSortNewest},
+		{label: 'oldest', handler: handleSortOldest},
+		{label: 'company_a_to_z', handler: handleCompanyAtoZ},
+		{label: 'company_z_to_a', handler: handleCompanyZtoA}
+	];
 
         const countJobStatus = () => {
 		const totalJobs = jobsState.length;
@@ -131,7 +153,9 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 		setShowStatus({...showStatus, interview: !showStatus.interview});
 	};
 
-
+	const toggleSort = (e) => {
+		
+	};	
 
         return (
                 <div className="box p-0" style={{ marginTop: '20px' }}>
@@ -169,7 +193,15 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 
 							<th colSpan='2' className='has-text-centered'>
 								<div class='control mt-1'>
-									<button className="sort-by-dropdown"> Sort By: ▼ </button>
+									<button className="sort-by-dropdown" onClick={toggleDropdownSort}> Sort By: {sortBy.sort} ▼ </button>
+									{openDropdownId === 'sort' && (
+										<div className='test-dropdown-menu' style={{top: dropdownCoords.top, left: dropdownCoords.left}}>
+											<div className='sort-by-dropdown-item' onClick={toggleSort}>newest</div>
+											<div className='sort-by-dropdown-item' onClick={toggleSort}>oldest</div>
+											<div className='sort-by-dropdown-item' onClick={toggleSort}>Company: a->z</div>
+											<div className='sort-by-dropdown-item' onClick={toggleSort}>Company: z->a</div>
+										</div>
+									)}
 								</div>
 							</th>
                                                 </tr>
@@ -199,7 +231,7 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 
                                                                 <td className="jobs-actions" style={{ position: 'relative' }}>
 
-                                                                        <button className="dropdown-button" onClick={(e) => toggleDropdown(e, job.id)}> Edit ▼ </button>
+                                                                        <button className="dropdown-button" onClick={(e) => toggleDropdownStatus(e, job.id)}> Edit ▼ </button>
 
                                                                         {openDropdownId === job.id && (
                                                                                 
