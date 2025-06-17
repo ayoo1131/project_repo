@@ -6,10 +6,10 @@ import { interview } from './utils/jobs_list/Interview.js'
 import { active } from './utils/jobs_list/Active.js'
 
 const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallBack, updateInterviewCallBack, jobsState }) => {
-        const [openDropdownId, setOpenDropdownId] = useState(null);
-        const [dropdownCoords, setDropdownCoords] = useState({top: 0, left: 0});
+	const [openDropdownId, setOpenDropdownId] = useState(null);
+	const [dropdownCoords, setDropdownCoords] = useState({top: 0, left: 0});
 	const [showStatus, setShowStatus] = useState({total: true, active: true, rejected: true, interview: true });
-	const [sortBy, setSortBy] = useState({sort: 'newest'});
+	const [sortBy, setSortBy] = useState('newest');
 
 	const toggleDropdownSort = (e) => {
 		e.stopPropagation();
@@ -24,38 +24,37 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 		setOpenDropdownId('sort');
 	};
 	
-        const toggleDropdownStatus = (e, jobId) => {
-                e.stopPropagation();
+	const toggleDropdownStatus = (e, jobId) => {
+		e.stopPropagation();
 		
 		const dropdownHeight = 135; 
-  		const buffer = 8;
+		const buffer = 8;
 		const rect = e.currentTarget.getBoundingClientRect();
 
-                if (openDropdownId === jobId) {// Close if clicking the same dropdown
-                        setOpenDropdownId(null);
-                        return;
-                }
+		if (openDropdownId === jobId) {// Close if clicking the same dropdown
+			setOpenDropdownId(null);
+			return;
+		}
 
 		let top;
 		if (rect.bottom + dropdownHeight + buffer > window.innerHeight) {
-    			top = rect.top + window.scrollY - dropdownHeight;
-  		}
+			top = rect.top + window.scrollY - dropdownHeight;
+		}
 		else{
 			top = rect.bottom + window.scrollY;
 		}
 
-                setDropdownCoords({ top, left: rect.left });
-                setOpenDropdownId(jobId);
-        };
+		setDropdownCoords({ top, left: rect.left });
+		setOpenDropdownId(jobId);
+	};
 
-        useEffect(() => {
-                const handleClickOutside =()=>{
-                        setOpenDropdownId(null);
+	useEffect(() => {
+		const handleClickOutside =()=>{
+			setOpenDropdownId(null);
 		};
-
-                window.addEventListener('click', handleClickOutside);
-                return () => window.removeEventListener('click', handleClickOutside);
-        }, []);
+		window.addEventListener('click', handleClickOutside);
+		return () => window.removeEventListener('click', handleClickOutside);
+	}, []);
 
 	const handleUpdateActive = (e, jobId) => {
 		e.preventDefault();
@@ -75,35 +74,28 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 		updateInterviewCallBack(jobId); // Change status of job to Interview in state
 	};
 
-        const handleDeleteJob = (e, jobId, jobCompany, jobTitle) => {
-                e.preventDefault();
-                deleteJob(jobId, jobCompany, jobTitle); //Delete job from the database
-                removeJobCallBack(jobId); //RemoveJob from the jobs state
-        };
+	const handleDeleteJob = (e, jobId, jobCompany, jobTitle) => {
+		e.preventDefault();
+		deleteJob(jobId, jobCompany, jobTitle); //Delete job from the database
+		removeJobCallBack(jobId); //RemoveJob from the jobs state
+	};
 	
 	//Command Patterns(array of objects) -> Maps actions(hander) to identifier(label)
 	const statusOptions = [
-                {label: 'Active', handler: handleUpdateActive},
-                {label: 'Rejected', handler: handleUpdateRejected},
-                {label: 'Interview', handler: handleUpdateInterview}
-        ];
-
-	const sortOptions = [
-		{label: 'newest', handler: handleSortNewest},
-		{label: 'oldest', handler: handleSortOldest},
-		{label: 'company_a_to_z', handler: handleCompanyAtoZ},
-		{label: 'company_z_to_a', handler: handleCompanyZtoA}
+		{label: 'Active', handler: handleUpdateActive},
+		{label: 'Rejected', handler: handleUpdateRejected},
+		{label: 'Interview', handler: handleUpdateInterview}
 	];
 
-        const countJobStatus = () => {
+	const countJobStatus = () => {
 		const totalJobs = jobsState.length;
-                const activeCount = jobsState.filter(job => job.status === 'Active').length;
-                const rejectedCount = jobsState.filter(job => job.status === 'Rejected').length;
-                const interviewCount = jobsState.filter(job => job.status === 'Interview').length;
-                const statusCount = {total: totalJobs, active: activeCount, rejected: rejectedCount, interview: interviewCount};
-
-                return statusCount;
-        };
+		const activeCount = jobsState.filter(job => job.status === 'Active').length;
+		const rejectedCount = jobsState.filter(job => job.status === 'Rejected').length;
+		const interviewCount = jobsState.filter(job => job.status === 'Interview').length;
+		const statusCount = {total: totalJobs, active: activeCount, rejected: rejectedCount, interview: interviewCount};
+		
+		return statusCount;
+	};
 
 	const toggleTotal = (e) => {
 		if (!showStatus.total){
@@ -141,33 +133,75 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 
 	const toggleInterview = (e) => {
 		if (showStatus.total && showStatus.active && showStatus.rejected && showStatus.interview){
-                        setShowStatus({...showStatus, total:false, interview:false});
-                        return;
-                }
+			setShowStatus({...showStatus, total:false, interview:false});
+			return;
+		}
 
-                if (!showStatus.total && showStatus.active && showStatus.rejected && !showStatus.interview){
-                        setShowStatus({...showStatus, total: true, interview: true});
-                        return;
-                }
+		if (!showStatus.total && showStatus.active && showStatus.rejected && !showStatus.interview){
+			setShowStatus({...showStatus, total: true, interview: true});
+			return;
+		}
 
 		setShowStatus({...showStatus, interview: !showStatus.interview});
 	};
+	
+	const jobsList = 
+		jobsState
+			.filter(job => showStatus[job.status.toLowerCase()])
+			.sort((a,b) => { //swap a and b object if 1 is returned
+				if (sortBy === 'newest'){
+					
+				}
+				
+				if (sortBy === 'oldest'){
+					
+				}
+				
+				if (sortBy === 'company_a_to_z'){ 
+					return a.company.localeCompare(b.company); //compares 2 strings and returns -1 if first string comes before second, 0 if equal, and 1 if first string comes after second string
+				}
+				
+				if (sortBy === 'company_z_to_a'){
+					return b.company.localeCompare(a.company);
+				}
+			})
+			.map(job => (
+				<tr key={job.id}>
+					<td>{job.company}</td>
+					<td>{job.position}</td>
+					<td className='jobs-table-narrow-column'>{job.date}</td>
+					<td className='jobs-table-narrow-column'> <span className={`tag ${job.status}`}> {job.status} </span> </td>
+					<td>{job.location}</td>
+					<td className='jobs-table-narrow-column'> <a href={job.url} target='_blank' rel='noopener noreferrer' >link</a> </td> {/*target='_blank' opens link in new tab rel is for security*/}
 
-	const toggleSort = (e) => {
-		
-	};	
+					<td className="jobs-actions" style={{ position: 'relative' }}>
+						<button className="dropdown-button" onClick={(e) => toggleDropdownStatus(e, job.id)}> Edit ▼ </button>
+							{openDropdownId === job.id && (       
+								<div className="test-dropdown-menu" style={{ top: dropdownCoords.top, left: dropdownCoords.left }}>
+									{statusOptions
+										.filter(option => option.label != job.status)
+										.map(option => (
+											<div key={option.label} className='dropdown-item' onClick={(e) => option.handler(e, job.id)}>{option.label}</div>
+									))}
 
-        return (
-                <div className="box p-0" style={{ marginTop: '20px' }}>
-                        <div className="table-container jobs-table-container">
-                                <table className="table is-fullwidth is-striped is-hoverable">
-                                        <thead>
-                                                <tr className='has-text-centered'>
+									<div className="dropdown-item" onClick={(e) => handleDeleteJob(e, job.id, job.company, job.position)}>Delete</div>
+								</div>
+							)}
+					</td>
+				</tr>
+		));
+
+	return (
+		<div className="box p-0" style={{ marginTop: '20px' }}>
+			<div className="table-container jobs-table-container">
+				<table className="table is-fullwidth is-striped is-hoverable">
+					<thead>
+						<tr className='has-text-centered'>
 							<th colSpan='1' className='has-text-centered'>
 								<div class="control mt-1">
-                                                                        <input type="checkbox" checked={showStatus.total} onChange={toggleTotal} style={{ marginRight:'0.5em'}}/>
+									<input type="checkbox" checked={showStatus.total} onChange={toggleTotal} style={{ marginRight:'0.5em'}}/>
 									Total: {countJobStatus().total}
-                                                                </div>
+								</div>
 							</th>
 
 							<th colSpan='1' className='has-text-centered'> 
@@ -177,7 +211,7 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 								</div>
 							</th>
 
-                                                        <th colSpan="2" className="has-text-centered">
+							<th colSpan="2" className="has-text-centered">
 								<div class='control mt-1'>
 									<input type='checkbox' checked={showStatus.rejected} onChange={toggleRejected} style={{ marginRight:'0.5em'}}/>
 									Rejected: {countJobStatus().rejected}
@@ -193,74 +227,37 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 
 							<th colSpan='2' className='has-text-centered'>
 								<div class='control mt-1'>
-									<button className="sort-by-dropdown" onClick={toggleDropdownSort}> Sort By: {sortBy.sort} ▼ </button>
+									<button className="sort-by-dropdown" onClick={toggleDropdownSort}> Sort By: {sortBy} ▼ </button>
 									{openDropdownId === 'sort' && (
 										<div className='test-dropdown-menu' style={{top: dropdownCoords.top, left: dropdownCoords.left}}>
-											<div className='sort-by-dropdown-item' onClick={toggleSort}>newest</div>
-											<div className='sort-by-dropdown-item' onClick={toggleSort}>oldest</div>
-											<div className='sort-by-dropdown-item' onClick={toggleSort}>Company: a->z</div>
-											<div className='sort-by-dropdown-item' onClick={toggleSort}>Company: z->a</div>
+											<div className='sort-by-dropdown-item' onClick={ () => setSortBy('newest')}>newest</div>
+											<div className='sort-by-dropdown-item' onClick={ () => setSortBy('oldest')}>oldest</div>
+											<div className='sort-by-dropdown-item' onClick={ () => setSortBy('company_a_to_z')}>company: a → z</div>
+											<div className='sort-by-dropdown-item' onClick={ () => setSortBy('company_z_to_a')}>company: z → a</div>
 										</div>
 									)}
 								</div>
 							</th>
-                                                </tr>
+						</tr>
 
-                                                <tr>
-                                                        <th style={{ width: '20%' }} >Company</th>
-                                                        <th style={{ width: '20%' }} >Position</th>
-                                                        <th style={{ width: '10%' }} >Date</th>
-                                                        <th style={{ width: '10%' }} >Status</th>
-                                                        <th style={{ width: '20%' }} >Location</th>
-                                                        <th style={{ width: '10%' }} >URL</th>
-                                                        <th style={{ width: '10%' }} >Actions</th>
-                                                </tr>
-                                        </thead>
+						<tr>
+							<th style={{ width: '20%' }} >Company</th>
+							<th style={{ width: '20%' }} >Position</th>
+							<th style={{ width: '10%' }} >Date</th>
+							<th style={{ width: '10%' }} >Status</th>
+							<th style={{ width: '20%' }} >Location</th>
+							<th style={{ width: '10%' }} >URL</th>
+							<th style={{ width: '10%' }} >Actions</th>
+						</tr>
+					</thead>
 
-                                        <tbody>
-                                                {jobsState
-							.filter(job => showStatus[job.status.toLowerCase()])
-							.map(job => (
-                                                        <tr key={job.id}>
-                                                                <td>{job.company}</td>
-                                                                <td>{job.position}</td>
-                                                                <td className='jobs-table-narrow-column'>{job.date}</td>
-                                                                <td className='jobs-table-narrow-column'> <span className={`tag ${job.status}`}> {job.status} </span> </td>
-                                                                <td>{job.location}</td>
-                                                                <td className='jobs-table-narrow-column'> <a href={job.url} target='_blank' rel='noopener noreferrer' >link</a> </td> {/*target='_blank' opens link in new tab rel is for security*/}
-
-                                                                <td className="jobs-actions" style={{ position: 'relative' }}>
-
-                                                                        <button className="dropdown-button" onClick={(e) => toggleDropdownStatus(e, job.id)}> Edit ▼ </button>
-
-                                                                        {openDropdownId === job.id && (
-                                                                                
-  										<div className="test-dropdown-menu" style={{ top: dropdownCoords.top, left: dropdownCoords.left }}>
-											{statusOptions
-												.filter(option => option.label != job.status)
-												.map(option => (
-													<div 
-														key={option.label}
-														className='dropdown-item'
-														onClick={(e) => option.handler(e, job.id)}
-													>
-														{option.label}
-													</div>
-											
-											))}
-											<div className="dropdown-item" onClick={(e) => handleDeleteJob(e, job.id, job.company, job.position)}>Delete</div>
-  										</div>
-										
-                                                                        )}
-                                                                </td>
-
-                                                        </tr>
-                                                ))}
-                                        </tbody>
-                                </table>
-                        </div>
-                </div>
-        );
+					<tbody>
+						{jobsList}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	);
 };
 
 export default JobsList;
