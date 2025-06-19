@@ -74,10 +74,12 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 		updateInterviewCallBack(jobId); // Change status of job to Interview in state
 	};
 
-	const handleDeleteJob = (e, jobId, jobCompany, jobTitle) => {
+	const handleDeleteJob = async(e, jobId, jobCompany, jobTitle) => {
 		e.preventDefault();
-		deleteJob(jobId, jobCompany, jobTitle); //Delete job from the database
-		removeJobCallBack(jobId); //RemoveJob from the jobs state
+		const response =await deleteJob(jobId, jobCompany, jobTitle); //Delete job from the database
+		if (!response.cancelled){
+			removeJobCallBack(jobId); //RemoveJob from the jobs state
+		}
 	};
 	
 	//Command Patterns(array of objects) -> Maps actions(hander) to identifier(label)
@@ -144,24 +146,30 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 
 		setShowStatus({...showStatus, interview: !showStatus.interview});
 	};
+
+	const formatDate = (date) => {
+		const [yyyy, mm, dd] = date.split('-');
+		const formatDate = `${mm}/${dd}/${yyyy}`;
+		return formatDate;
+	};
 	
 	const jobsList = 
 		jobsState
 			.filter(job => showStatus[job.status.toLowerCase()])
 			.sort((a,b) => { //swap a and b object if 1 is returned
 				if (sortBy === 'newest'){
-					
+					return b.date.localeCompare(a.date);
 				}
 				
 				if (sortBy === 'oldest'){
-					
+					return a.date.localeCompare(b.date);
 				}
 				
-				if (sortBy === 'company_a_to_z'){ 
+				if (sortBy === 'company: a → z'){ 
 					return a.company.localeCompare(b.company); //compares 2 strings and returns -1 if first string comes before second, 0 if equal, and 1 if first string comes after second string
 				}
 				
-				if (sortBy === 'company_z_to_a'){
+				if (sortBy === 'company: z → a'){
 					return b.company.localeCompare(a.company);
 				}
 			})
@@ -169,7 +177,7 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 				<tr key={job.id}>
 					<td>{job.company}</td>
 					<td>{job.position}</td>
-					<td className='jobs-table-narrow-column'>{job.date}</td>
+					<td className='jobs-table-narrow-column'>{formatDate(job.date)}</td>
 					<td className='jobs-table-narrow-column'> <span className={`tag ${job.status}`}> {job.status} </span> </td>
 					<td>{job.location}</td>
 					<td className='jobs-table-narrow-column'> <a href={job.url} target='_blank' rel='noopener noreferrer' >link</a> </td> {/*target='_blank' opens link in new tab rel is for security*/}
@@ -232,8 +240,8 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 										<div className='test-dropdown-menu' style={{top: dropdownCoords.top, left: dropdownCoords.left}}>
 											<div className='sort-by-dropdown-item' onClick={ () => setSortBy('newest')}>newest</div>
 											<div className='sort-by-dropdown-item' onClick={ () => setSortBy('oldest')}>oldest</div>
-											<div className='sort-by-dropdown-item' onClick={ () => setSortBy('company_a_to_z')}>company: a → z</div>
-											<div className='sort-by-dropdown-item' onClick={ () => setSortBy('company_z_to_a')}>company: z → a</div>
+											<div className='sort-by-dropdown-item' onClick={ () => setSortBy('company: a → z')}>company: a → z</div>
+											<div className='sort-by-dropdown-item' onClick={ () => setSortBy('company: z → a')}>company: z → a</div>
 										</div>
 									)}
 								</div>

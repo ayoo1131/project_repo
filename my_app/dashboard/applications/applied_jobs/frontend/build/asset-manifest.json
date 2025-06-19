@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/applied-jobs/static/js/main.1e9795de.js",
+    "main.js": "/applied-jobs/static/js/main.8e296a95.js",
     "index.html": "/applied-jobs/index.html",
-    "main.1e9795de.js.map": "/applied-jobs/static/js/main.1e9795de.js.map"
+    "main.8e296a95.js.map": "/applied-jobs/static/js/main.8e296a95.js.map"
   },
   "entrypoints": [
-    "static/js/main.1e9795de.js"
+    "static/js/main.8e296a95.js"
   ]
 }

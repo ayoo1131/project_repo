@@ -4,13 +4,13 @@ import React, { useState, useEffect } from 'react';
 import UserInput from './UserInput.js';
 import JobsList from './JobsList.js';
 import { getJobs } from './utils/jobs_list/GetJobs.js'
-import { formatJobs } from './utils/jobs_list/FormatJobs.js'
 
 
 const Body = () =>{
 	const [jobs, setJobs] = useState([]);
 
 	const addJob = (newJob) => {
+		console.log(newJob);
 		setJobs((prevJobs) => [...prevJobs, newJob]);
         };
 
@@ -41,14 +41,13 @@ const Body = () =>{
 			)
 		);
 	};
-
+	
 	useEffect(() => {
-                getJobs().then(data => { //data is the valie getJobs() returns
-                        const formattedJobsData = formatJobs(data);
-                        setJobs(formattedJobsData);
+                getJobs().then(data => { //data is the value getJobs() returns
+			setJobs(data);
                 });
         }, []);
-
+		
 	return(
 		<section class='hero-body' style= {{paddingTop:'0'}}>
 			<div class='container'>

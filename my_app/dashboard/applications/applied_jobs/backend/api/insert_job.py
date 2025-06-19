@@ -17,7 +17,7 @@ def insert_job():
         required_fields = ['company', 'position', 'date', 'url']
         if not all(field in data for field in required_fields):
             return jsonify({'error': 'Missing required fields'}), 400
-        
+       
         newJob = Job(
             user_id = current_user.id,
             company = data['company'],
@@ -27,10 +27,9 @@ def insert_job():
             url = data['url'],
             status = data['status']
         )
-
+        
         db.session.add(newJob)
         db.session.commit()
-
         return jsonify({'message': 'Job added successfully', 'job_id': newJob.id}), 201
 
     except SQLAlchemyError as e:

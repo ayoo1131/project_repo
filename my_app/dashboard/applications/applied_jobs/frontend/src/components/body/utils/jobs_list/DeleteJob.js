@@ -17,13 +17,16 @@ export const deleteJob = async (jobId, jobCompany, jobTitle)=> {
 
                 	if (response.ok) {
                         	console.log('Success:', result.message);
+				return {cancelled: false};
                 	}
                 	else {
                         	console.error('Server error:', result.error);
                 	}
-
 		}
 
+		else{
+			return{cancelled: true};
+		}
 	}
 
 	catch(error){
