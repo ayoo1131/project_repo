@@ -1,10 +1,11 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash, session
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 from models.user import User
 from models.job import Job
 from my_app import db
 from my_app.dashboard import dashboard
+from . import api_blueprint
 import logging
 
 #Dashboard home page route
@@ -12,6 +13,12 @@ import logging
 @login_required
 def dashboard_home():
     return render_template('dashboard.html', username=current_user.username, is_guest=session['is_guest'])
+
+#API Route to allow access to logged in user info
+@api_blueprint.route('/user-info')
+@login_required
+def get_user_info():
+    return jsonify({'username': current_user.username, 'user_id': current_user.id, 'is_guest': current_user.is_guest})
 
 #Dashboard logout route
 @dashboard.route('/logout')

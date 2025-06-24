@@ -45,7 +45,11 @@ def create_app():
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
-    # blueprint for auth routes in our app
+    #blueprint for api routes
+    from my_app.dashboard import api_blueprint
+    app.register_blueprint(api_blueprint)
+
+    # blueprint for auth routes
     from my_app.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
@@ -54,9 +58,10 @@ def create_app():
     app.register_blueprint(dashboard_blueprint)
    
     #blueprint for coverletter routes in the Dashboard Applications
-    from my_app.dashboard.applications.cover_letter import cover_letter_blueprint
+    from my_app.dashboard.applications.cover_letter.backend import cover_letter_blueprint
     app.register_blueprint(cover_letter_blueprint)
 
+    #blueprint for applied jobs routes in the dashboard application
     from my_app.dashboard.applications.applied_jobs.backend import applied_jobs_blueprint
     app.register_blueprint(applied_jobs_blueprint)
 
