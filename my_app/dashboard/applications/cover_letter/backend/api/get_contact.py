@@ -14,8 +14,12 @@ from .. import cover_letter_blueprint
 def get_contact():
     try:
         contact = Contact.query.filter_by(user_id = current_user.id).first()
-        return jsonify([{'name': contact.name, 'email': contact.email, 'phone': contact.phone }])
+        if (contact is not None ):
+            return jsonify([{'name': contact.name, 'email': contact.email, 'phone': contact.phone }])
 
+        else:
+            return []
+        
     except SQLAlchemyError as e:
         db.session.rollback()
         return jsonify({'error': 'Database error', 'details': str(e)}), 500

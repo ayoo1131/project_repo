@@ -12,15 +12,25 @@ const Body = () => {
 		
 	useEffect(() => {
 		getContact().then(data => {
-			console.log(data);
+			setUserContact(data[0]);
 		});
 	},[]);
+
+	useEffect(() => {
+		if (userContact != null){
+			console.log(userContact);
+		}
+
+	}, [userContact]);
 
 	return (
 		<section className='hero-body is-align-items-start' style={{paddingTop: '10px'}} >
         		<div className="container is-flex is-flex-direction-column" style={{height:'100%'}}>
-        			<UploadPersonalInfo />
-				
+        			
+				<div>	
+					{ userContact ? <DisplayPersonalInfo displayPersonalInfoCallBack={userContact} /> : <UploadPersonalInfo /> }
+				</div>		
+
 				<div style={{flexGrow:1, overflowY:'auto', maxHeight:'60vh', paddingBottom:'10px'}}>
 					<MockDocument />
 				</div>
