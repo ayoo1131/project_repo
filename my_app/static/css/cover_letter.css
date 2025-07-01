@@ -1,0 +1,32 @@
+/*cover_letter.py*/
+
+/*Text*/
+.cover-letter-text{
+	color: #000000;
+}
+
+/*User Input Text Fields*/
+.document-input-word{
+	width: 150px;
+       	background-color: transparent;
+	color: #000000;
+}
+
+.document-input-word::placeholder{
+	color: #423d3d;
+}
+
+.document-input-paragraph{
+	background-color: transparent;
+	color: #000000;
+}
+
+.document-input-paragraph::placeholder{
+	color: #423d3d;
+}
+
+.input.is-tiny{
+	font-size: 0.75rem;
+	height: 1.5em;
+	padding: 0.25em 0.5em;
+}

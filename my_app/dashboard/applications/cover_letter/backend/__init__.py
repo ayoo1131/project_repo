@@ -6,3 +6,7 @@ cover_letter_blueprint = Blueprint('cover_letter',  __name__, static_folder='../
 
 #Import routes after Blueprint is created
 from . import routes
+
+#Import api routes in the api directory
+from .api import insert_contact
+from .api import get_contact

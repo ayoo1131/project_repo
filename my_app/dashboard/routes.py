@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 from models.user import User
 from models.job import Job
+from models.contact import Contact
 from my_app import db
 from my_app.dashboard import dashboard
 from . import api_blueprint

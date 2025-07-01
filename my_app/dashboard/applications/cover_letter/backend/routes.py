@@ -2,7 +2,7 @@
 from flask import send_from_directory, render_template, jsonify, request
 from flask_login import current_user, login_required
 from . import cover_letter_blueprint
-from models.job import Job
+from models.contact import Contact
 from my_app import db
 import os
 from sqlalchemy.exc import SQLAlchemyError

@@ -15,4 +15,3 @@ class Job(db.Model):
     url = db.Column(db.String(200))
     status = db.Column(db.String(20))
     starred = db.Column(db.Integer, default=0)
-

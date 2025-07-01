@@ -49,7 +49,7 @@ const Body = () =>{
         }, []);
 		
 	return(
-		<section class='hero-body' style= {{paddingTop:'0'}}>
+		<section class='hero-body is-align-items-start' style= {{paddingTop:'0'}}>
 			<div class='container'>
 				<UserInput addJobCallBack={addJob}/>
           			

@@ -1,15 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-import Header from '../../../shared_ui/header/Header.jsx'
+//App.jsx
+import React from 'react';
+import Header from '../../../shared_ui/header/Header.jsx';
+import Body from './components/Body.jsx';
 
 function App() {
 
 	return (
-  		<Header appName='Cover Letter' />
+		<section className = 'hero is-fullheight background-color-blue'>
+
+  			<Header appName='Cover Letter' />
+
+			<Body />
+
+		</section>
 	)
 }
 
-export default App
+export default App;

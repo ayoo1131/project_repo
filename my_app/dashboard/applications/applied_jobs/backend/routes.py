@@ -7,8 +7,6 @@ from my_app import db
 import os
 from sqlalchemy.exc import SQLAlchemyError
 
-import logging
-
 build_dir = '/home/ayoo1131/guitar_note_to_tabs/my_app/dashboard/applications/applied_jobs/frontend/dist'
 
 @applied_jobs_blueprint.route('/applied-jobs', defaults={'path': ''}, methods=['GET'])

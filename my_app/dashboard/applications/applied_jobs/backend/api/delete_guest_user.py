@@ -5,6 +5,7 @@ from models.user import User
 from my_app import db
 from sqlalchemy.exc import SQLAlchemyError
 
+#Import the applied jobs blueprint declared in parent package __init__.py
 from .. import applied_jobs_blueprint
 
 @applied_jobs_blueprint.route('/api/delete-guest-user', methods=['DELETE'])
