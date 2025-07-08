@@ -15,7 +15,7 @@ def get_contact():
     try:
         contact = Contact.query.filter_by(user_id = current_user.id).first()
         if (contact is not None ):
-            return jsonify([{'name': contact.name, 'email': contact.email, 'phone': contact.phone }])
+            return jsonify([{'name': contact.name, 'email': contact.email, 'phone': contact.phone, 'social': contact.social, 'extra': contact.extra}])
 
         else:
             return []

@@ -24,7 +24,9 @@ def insert_contact():
             user_id = current_user.id,
             name = data['name'],
             email = data['email'],
-            phone = data['phone']
+            phone = data['phone'],
+            social = data['social'],
+            extra=data['extra']
         )
         db.session.add(newContact)
         db.session.commit()

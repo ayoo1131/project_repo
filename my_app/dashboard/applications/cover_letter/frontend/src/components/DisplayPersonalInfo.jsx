@@ -1,18 +1,32 @@
 //DisplayPersonalInfo.jsx
 import React, {useState} from 'react';
-import {validateContact} from './utils/personal_info/ValidateContact.js';
-import {insertContact} from './utils/personal_info/InsertContact.js'; 
+import {deleteContact} from './utils/personal_info/DeleteContact.js';
+import {updateContact} from './utils/personal_info/UpdateContact.js'; 
 
-const DisplayPersonalInfo = ({displayPersonalInfoCallBack}) => {
+const DisplayPersonalInfo = ({userContactProp,setUserContactCallback, setIsUpdatingCallback, setFillUserContactCallback}) => {
 	const [successfulSave, setSuccessfulSave] = useState(false);
 	const [errors, setErrors] = useState({name: '', email: '', phone: ''});
 
-	const handleDelete = () => {
-
+	const handleFill = (e) => {
+		e.preventDefault();
+		setFillUserContactCallback({
+			name: userContactProp.name,
+			email: userContactProp.email,
+			phone: userContactProp.phone,
+			social: userContactProp.social,
+			extra: userContactProp.extra
+		});
 	};
 
-	const handleUpdate = () => {
+	const handleDelete = async (e) => {
+		e.preventDefault();
+		deleteContact();
+		setUserContactCallback({name:'', email:'', phone:''});
+	};
 
+	const handleUpdate = async (e) => {
+		e.preventDefault();
+		setIsUpdatingCallback(true);
 	};
 
 	return (
@@ -26,7 +40,7 @@ const DisplayPersonalInfo = ({displayPersonalInfoCallBack}) => {
 						<div className='column'>
 							<div className='field is-small'>
 								<div className='control'>
-									<p className='has-text-left cover-letter-text'> Name: {displayPersonalInfoCallBack.name}</p>
+									<p className='has-text-left cover-letter-text'> Name: {userContactProp.name}</p>
 								</div>
 							</div>
 						</div>
@@ -34,16 +48,31 @@ const DisplayPersonalInfo = ({displayPersonalInfoCallBack}) => {
 						<div className='column'>
                                                         <div className='field is-small'>
                                                                 <div className='control'>
-									<p className='has-text-left cover-letter-text'>Email: {displayPersonalInfoCallBack.email}</p>
+									<p className='has-text-left cover-letter-text'>Email: {userContactProp.email}</p>
                                                                 </div>
                                                         </div>
                                                 </div>
 
+						<div className='column'>
+                                                        <div className='field is-small'>
+                                                                <div className='control'>
+									<p className='has-text-left cover-letter-text'>Phone: {userContactProp.phone}</p>
+                                                                </div>
+                                                        </div>
+                                                </div>
+						
+						<div className='column'>
+                                                        <div className='field is-small'>
+                                                                <div className='control'>
+                                                                        <p className='has-text-left cover-letter-text'>Social: {userContactProp.social}</p>
+                                                                </div>
+                                                        </div>
+                                                </div>
 
 						<div className='column'>
                                                         <div className='field is-small'>
                                                                 <div className='control'>
-									<p className='has-text-left cover-letter-text'>Phone: {displayPersonalInfoCallBack.phone}</p>
+                                                                        <p className='has-text-left cover-letter-text'>Extra: {userContactProp.extra}</p>
                                                                 </div>
                                                         </div>
                                                 </div>
@@ -51,8 +80,9 @@ const DisplayPersonalInfo = ({displayPersonalInfoCallBack}) => {
 						<div className='column is-narrow'>
 							<div className='field is-grouped'>
 								<div className='buttons'>
-									<button className='button is-light is-small' onChange={handleUpdate}>Update</button>
-									<button className='button is-light is-small' onChange={handleDelete}>Delete Saved Data</button>
+									<button className='button is-light is-small' onClick={handleFill}>Fill</button>
+									<button className='button is-light is-small' onClick={handleUpdate}>Update</button>
+									<button className='button is-light is-small' onClick={handleDelete}>Delete</button>
 								</div>
 							</div>
 						</div>

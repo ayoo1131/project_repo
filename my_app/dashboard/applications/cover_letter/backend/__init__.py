@@ -10,3 +10,5 @@ from . import routes
 #Import api routes in the api directory
 from .api import insert_contact
 from .api import get_contact
+from .api import delete_contact
+from .api import update_contact

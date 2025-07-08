@@ -5,7 +5,66 @@
 	color: #000000;
 }
 
-/*User Input Text Fields*/
+/*User Contact*/
+
+.column-name{
+	flex: 0 0 175px !important;
+	max-width: 175px !important;
+}
+
+.column-email{
+	flex: 0 0 210px !important;
+	max-width: 210px !important;
+}
+
+.column-phone{
+  	flex: 0 0 155px !important;
+	max-width: 155px !important;
+}
+
+.column-social{
+  	flex: 0 0 250px !important;
+  	max-width: 250px !important;
+}
+
+.column-extra{
+	flex: 0 0 225px !important;
+	max-width: 225px !important;
+}
+
+
+.input.input-contact{
+	border-radius: 6px;
+  	font-size: 11px;
+  	height: 24px;
+  	line-height: 16px;
+  	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.input.input-contact.name{
+	width: 120px;
+}
+
+.input.input-contact.email{
+        width: 155px;
+}
+
+.input.input-contact.phone{
+        width: 90px;
+}
+
+.input.input-contact.social{
+        width: 140px;
+}
+
+.input.input-contact.extra{
+        width: 140px;
+}
+
+/*User Input Text Fields Mock Document*/
 .document-input-word{
 	width: 150px;
        	background-color: transparent;
@@ -23,10 +82,4 @@
 
 .document-input-paragraph::placeholder{
 	color: #423d3d;
-}
-
-.input.is-tiny{
-	font-size: 0.75rem;
-	height: 1.5em;
-	padding: 0.25em 0.5em;
 }

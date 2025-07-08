@@ -2,11 +2,29 @@
 import React, {useState} from 'react';
 import {validateContact} from './utils/personal_info/ValidateContact.js';
 import {insertContact} from './utils/personal_info/InsertContact.js'; 
+import {updateContact} from './utils/personal_info/UpdateContact.js';
 
-const UploadPersonalInfo = () => {
-	const [userContact, setUserContact] = useState({name:'', email:'', phone:''});
+const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdatingCallback}) => {
+	const [userContact, setUserContact] = useState({
+		name: userContactProp.name,
+		email: userContactProp.email, 
+		phone: userContactProp.phone,
+		social: userContactProp.social,
+		extra: userContactProp.extra
+	});
+	
 	const [successfulSave, setSuccessfulSave] = useState(false);
 	const [errors, setErrors] = useState({name: '', email: '', phone: ''});
+
+	const isContactPropNull = () => {
+		if (userContactProp.name===''&&userContactProp.email===''&&userContactProp.phone===''&&userContactProp.social===''&&userContactProp.extra===''){
+			return true;
+		}
+
+		else{
+			return false;
+		}
+	}; 
 
 	const handleSave = async(e) =>{
 		e.preventDefault(); //button is in a <form> tag and triggers a page reload. preventDefault() is method on event object and tells browser not to reload
@@ -16,7 +34,24 @@ const UploadPersonalInfo = () => {
 		setErrors(errors);
 
 		if (Object.keys(errors).length === 0){
-			insertContact(userContact);
+			if (isContactPropNull()){ //There is no saved contact, create a new one for the user
+				console.log('No Saved contact');
+				console.log(userContact);
+				insertContact(userContact);
+			}
+			
+			else{//Contact exists. Update the existing contact
+				console.log('Updated contact =' + JSON.stringify(userContact));
+				updateContact(userContactProp, userContact);
+			}
+			setUserContactCallback({
+				name: userContact.name,
+				email:userContact.email,
+				phone: userContact.phone,
+				social: userContact.social, 
+				extra:userContact.extra
+			});
+			setIsUpdatingCallback(false);
 		}
 	};
 
@@ -28,14 +63,17 @@ const UploadPersonalInfo = () => {
 					<p className='has-text-left cover-letter-text' style={{paddingBottom:'2px'}}>Fill in the following fields to save your details for future use. If you prefer not to have your personal info saved, fill out the cover letter template manually.</p>
 
 					<div className='columns is-mobile'>
-						<div className='column'>
-							<div className='field is-small'>
+						<div className='column column-name'>
+							<div className='field is-grouped is-small' style={{gap: '0.25rem'}}>
+								<div className='control'>
+									<p className='cover-letter-text'>Name: </p>
+								</div>
 								<div className='control'>
 									<input
-										className="input is-small document-input-word" 
+										className="input input-contact name document-input-word" 
 										type="text" 
 										placeholder="Name"
-										value={userContact.name}
+										value={userContact?.name || ''}
 										onChange={(e) => setUserContact({...userContact, name:e.target.value })}
 									/>
 								</div>
@@ -43,14 +81,17 @@ const UploadPersonalInfo = () => {
 							</div>
 						</div>
 
-						<div className='column'>
-                                                        <div className='field is-small'>
+						<div className='column column-email'>
+                                                        <div className='field is-grouped is-small' style={{gap: '0.25rem'}}>
+								<div className='control'>
+									<p className='cover-letter-text'>Email: </p>
+								</div>
                                                                 <div className='control'>
                                                                         <input
-                                                                                className="input is-small document-input-word"
+                                                                                className="input input-contact email document-input-word"
                                                                                 type="text"
                                                                                 placeholder="email"
-										value={userContact.email}
+										value={userContact?.email || ''}
 										onChange={(e) => setUserContact({...userContact, email:e.target.value})}
                                                                         />
                                                                 </div>
@@ -58,14 +99,17 @@ const UploadPersonalInfo = () => {
                                                         </div>
                                                 </div>
 
-						<div className='column'>
-                                                        <div className='field is-small'>
+						<div className='column column-phone'>
+                                                        <div className='field is-grouped is-small' style={{gap: '0.25rem'}}>
+								<div className='control'>
+									<p className='cover-letter-text'>Phone: </p>
+								</div>
                                                                 <div className='control'>
                                                                         <input
-                                                                                className="input is-small document-input-word"
+                                                                                className="input input-contact phone document-input-word"
                                                                                	type="text"
                                                                                 placeholder="Phone #"
-										value={userContact.phone}
+										value={userContact?.phone || ''}
 										onChange={(e) => setUserContact({...userContact, phone:e.target.value})}
                                                                         />
                                                                 </div>
@@ -73,6 +117,41 @@ const UploadPersonalInfo = () => {
                                                         </div>
                                                 </div>
 
+						<div className='column column-social'>
+                                                        <div className='field is-grouped is-small' style={{gap: '0.25rem'}}>
+                                                                <div className='control'>
+                                                                        <p className='cover-letter-text'>Social Media: </p>
+                                                                </div>
+                                                                <div className='control'>
+                                                                        <input
+                                                                                className="input input-contact social document-input-word"
+                                                                                type="text"
+                                                                                placeholder="(optional)"
+                                                                                value={userContact?.social || ''}
+                                                                                onChange={(e) => setUserContact({...userContact, social:e.target.value})}
+                                                                        />
+                                                                </div>
+                                                        </div>
+                                                </div>
+
+						<div className='column column-extra'>
+                                                        <div className='field is-grouped is-small' style={{gap: '0.25rem'}}>
+                                                                <div className='control'>
+                                                                        <p className='cover-letter-text'>Extra: </p>
+                                                                </div>
+                                                                <div className='control'>
+                                                                        <input
+                                                                                className="input input-contact extra document-input-word"
+                                                                                type="text"
+                                                                                placeholder="(optional)"
+                                                                                value={userContact?.extra || ''}
+                                                                                onChange={(e) => setUserContact({...userContact, extra:e.target.value})}
+                                                                        />
+                                                                </div>
+                                                        </div>
+                                                </div>
+
+						
 						<div className='column is-narrow'>
 							<div className='field is-grouped'>
 								<div className='buttons'>
