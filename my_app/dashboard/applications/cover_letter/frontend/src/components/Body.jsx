@@ -16,8 +16,12 @@ const Body = () => {
 	const [isUpdating, setIsUpdating] = useState(false);
 
 	//The states below will be used to fill-in the cover letter template when the user presses download button
-	const [coverLetterInput, setCoverLetterInput] = useState({name:'', email:'', phone:'', social:'', extra:'', date:'', paragraph1:'', paragraph2:''});
+	const [coverLetterInput, setCoverLetterInput] = useState(
+		{name:'', email:'', phone:'', social:'', extra:'', date:'', paragraph1:'', paragraph2:''}
+	);
+	
 	const [jobInfo, setJobInfo] = useState({company:'', position:''});//Used to make sure company and position inputs match
+	const [isToday, setIsToday] = useState(false);
 
 	useEffect(() => {
 		getContact().then(data => {
@@ -71,6 +75,8 @@ const Body = () => {
 						jobInfoProp = {jobInfo}
 						setJobInfoCallback = {setJobInfo}
 						setCoverLetterInputCallback = {setCoverLetterInput}
+						isTodayProp = {isToday}
+						setIsTodayCallback = {setIsToday}
 					/>
 				</div>
 			
@@ -82,8 +88,11 @@ const Body = () => {
 								setCoverLetterInputCallback = {setCoverLetterInput}
 								setFillUserContactCallback = {setFillUserContact}
 								setJobInfoCallback = {setJobInfo}
+								setIsTodayCallback = {setIsToday}
+								isTodayProp = {isToday}
 							/>
 						</div>
+
                                         	<div className='control'>
                                         		<DownloadButton /> 
 						</div>

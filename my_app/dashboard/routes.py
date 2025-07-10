@@ -29,8 +29,10 @@ def logout():
         user = current_user
         
         #Delete Guest User's Applied Jobs
-        logging.error(current_user.id)
         db.session.query(Job).filter_by(user_id=current_user.id).delete()
+
+        #Delete Guest User's Contact for Cover Letter
+        db.session.query(Contact).filter_by(user_id=current_user.id).delete()
 
         #Delete Guest User
         db.session.delete(user)

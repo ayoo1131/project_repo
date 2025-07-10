@@ -39,7 +39,6 @@ const ProfileDropdown = () => {
 	const handleLogout = ()=>{
 		console.log(userData);
 		logoutUser(userData.is_guest);
-
 	};
 	
 	return (

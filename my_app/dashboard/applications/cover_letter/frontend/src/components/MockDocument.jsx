@@ -1,9 +1,28 @@
 //MockDocument.jsx
-import Reacti, {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
+import {setToday} from './utils/mock_document/SetToday.js' 
 
-const MockDocument = ({fillUserContactProp, coverLetterInputProp, jobInfoProp, setJobInfoCallback, setCoverLetterInputCallback}) => {
-	const [userContact, setUserContact] = useState(fillUserContactProp);//On startup, saved user contact in fillUserContactProp is set. allows multiple fill button presses
+const MockDocument = ({fillUserContactProp, coverLetterInputProp, jobInfoProp, setJobInfoCallback, setCoverLetterInputCallback, isTodayProp, setIsTodayCallback}) => {
 	
+	//On startup, saved user contact in fillUserContactProp is set. allows multiple fill button presses
+	const [userContact, setUserContact] = useState(fillUserContactProp);
+	
+	const handleToday = (e) => {
+		const useToday = e.target.checked;
+
+		if (useToday){
+			const todayDate = new Date().toLocaleDateString();
+			const formatDate = setToday(todayDate);
+			setCoverLetterInputCallback({...coverLetterInputProp, date: formatDate});
+			setIsTodayCallback(true);
+		}
+
+		else{
+			setCoverLetterInputCallback({...coverLetterInputProp, date: ''});
+                        setIsTodayCallback(false);
+		}
+	};
+
 	useEffect(() => {
 		setUserContact(fillUserContactProp);
 	}, [fillUserContactProp]);//On startup set saved contact in local state.
@@ -40,7 +59,7 @@ const MockDocument = ({fillUserContactProp, coverLetterInputProp, jobInfoProp, s
 					/> 
 				</div>
 				
-				<div className='control'><p className='cover-letter-text'> | </p></div>
+				<div className='control'> <p className='cover-letter-text'> | </p> </div>
 				
 				<div className='control'>
 					<input
@@ -70,7 +89,7 @@ const MockDocument = ({fillUserContactProp, coverLetterInputProp, jobInfoProp, s
                                         />
                                 </div>
 				
-				<div className='control'><p className='cover-letter-text'> | </p></div>
+				<div className='control'> <p className='cover-letter-text'> | </p> </div>
 				
 				<div className='control'>
                                         <input
@@ -92,13 +111,13 @@ const MockDocument = ({fillUserContactProp, coverLetterInputProp, jobInfoProp, s
 						className='input is-small document-input-word'
 						type='text'
 						placeholder='Date'
-						value = {coverLetterInputProp.data}
+						value = {coverLetterInputProp.date}
 						onChange = {(e) => {
 							setCoverLetterInputCallback({...coverLetterInputProp, date: e.target.value})
 						}}
 					/>
 					<label className='checkbox' style={{paddingLeft:'10px'}}>
-						<input type='checkbox' />
+						<input type='checkbox' onChange={handleToday} checked={isTodayProp}/>
 						<span className='ml-2 cover-letter-text'>Today</span>
 					</label>
 				</div>
