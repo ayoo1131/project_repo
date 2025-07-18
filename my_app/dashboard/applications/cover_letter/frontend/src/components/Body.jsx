@@ -4,7 +4,7 @@ import UploadPersonalInfo from './UploadPersonalInfo.jsx'; //Current user does n
 import DisplayPersonalInfo from './DisplayPersonalInfo.jsx'; //Current user has contacts saved. Show user contacts
 import MockDocument from './MockDocument.jsx';
 import ClearButton from './ClearButton.jsx';
-import DownloadButton from './DownloadButton';
+import DownloadButton from './DownloadButton.jsx';
 import {getContact} from './utils/personal_info/GetContact.js'
 
 const Body = () => {
@@ -17,7 +17,7 @@ const Body = () => {
 
 	//The states below will be used to fill-in the cover letter template when the user presses download button
 	const [coverLetterInput, setCoverLetterInput] = useState(
-		{name:'', email:'', phone:'', social:'', extra:'', date:'', paragraph1:'', paragraph2:''}
+		{name:'', email:'', phone:'', social:'', extra:'', date:'', company:'', position:'', paragraph1:'', paragraph2:''}
 	);
 	
 	const [jobInfo, setJobInfo] = useState({company:'', position:''});//Used to make sure company and position inputs match
@@ -65,6 +65,7 @@ const Body = () => {
 						setUserContactCallback={setUserContact} 
 						setIsUpdatingCallback={setIsUpdating}
 						setFillUserContactCallback = {setFillUserContact}
+						setCoverLetterInputCallback = {setCoverLetterInput}
 					/>}
 				</div>		
 
@@ -94,7 +95,9 @@ const Body = () => {
 						</div>
 
                                         	<div className='control'>
-                                        		<DownloadButton /> 
+                                        		<DownloadButton 
+								coverLetterInputProp = {coverLetterInput}
+							/> 
 						</div>
                                  	</div>
                         	</div>

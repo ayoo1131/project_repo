@@ -1,0 +1,44 @@
+#fill_template.py
+import os
+from docx import Document
+import io
+from pathlib import Path
+import logging
+
+def fill_template(username, cover_letter_input):
+    current_file_path = os.path.abspath(__file__)
+    parent_dir_path = os.path.dirname(os.path.dirname(current_file_path)) #Full path to /backend directory
+   
+    template_doc_path = None
+    
+    if (cover_letter_input['social'] != '' and cover_letter_input['extra'] != ''): #extra and social fields are NOT empty
+        template_doc_path = parent_dir_path + '/templates/cover_letter_template_all.docx'
+    
+    elif (cover_letter_input['social'] == '' and cover_letter_input['extra'] == ''): #extra and social fields are empty
+        template_doc_path = parent_dir_path + '/templates/cover_letter_template_no_social_extra.docx'
+
+    elif (cover_letter_input['social'] != '' and cover_letter_input['extra'] == ''): #extra field is empty
+        template_doc_path = parent_dir_path + '/templates/cover_letter_template_no_extra.docx'
+
+    elif (cover_letter_input['social'] == '' and cover_letter_input['extra'] != ''): #social field is empty
+        template_doc_path = parent_dir_path + '/templates/cover_letter_template_no_social.docx'
+
+    doc = Document(template_doc_path)
+    
+    for para in doc.paragraphs:
+        for input_name, input_value in cover_letter_input.items():
+            if (f'<{input_name}>') in para.text:
+                para.text = para.text.replace(f'<{input_name}>', input_value)
+
+    output_file_path = parent_dir_path + '/generated_docs/'
+    output_file_name = f"{username} Cover Letter - {cover_letter_input['company']}.docx"
+    filePath = output_file_path + output_file_name
+
+    #This will save document to disk, not necessary for user download
+    #doc.save(filePath) #Saves the document to the disk at the indicated filePath
+    
+    buffer = io.BytesIO() #Creates an in-memory buffer(like virtual file) to store binary data
+    doc.save(buffer) #Saves the same document into in-memory buffer. Used to send document to user by HTTP response w/o touching file system/disk.
+    buffer.seek(0) #Above line moves file pointer to end of buffer, current line moves pointer to beginning of in-memory buffer. Technically not necessary, but good practice to be able to read document again.
+
+    return buffer

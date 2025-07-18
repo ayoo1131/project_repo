@@ -12,3 +12,4 @@ from .api import insert_contact
 from .api import get_contact
 from .api import delete_contact
 from .api import update_contact
+from .api import download_cover_letter

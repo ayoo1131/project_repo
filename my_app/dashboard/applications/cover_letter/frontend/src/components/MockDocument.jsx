@@ -132,7 +132,10 @@ const MockDocument = ({fillUserContactProp, coverLetterInputProp, jobInfoProp, s
 						type='text'
 						placeholder='Company'
 						value = {jobInfoProp.company}
-						onChange = {(e) => setJobInfoCallback({...jobInfoProp, company: e.target.value})}
+						onChange = {(e) => {
+							setJobInfoCallback({...jobInfoProp, company: e.target.value});
+							setCoverLetterInputCallback({...coverLetterInputProp, company: e.target.value});
+						}}
 					/>
 					<p className='cover-letter-text'> Hiring Manager,</p>
 				</div>
@@ -146,7 +149,10 @@ const MockDocument = ({fillUserContactProp, coverLetterInputProp, jobInfoProp, s
 						type='text'
 						placeholder='Company'
 						value = {jobInfoProp.company}
-						onChange = {(e) => setJobInfoCallback({...jobInfoProp, company: e.target.value})}
+						onChange = {(e) => {
+							setJobInfoCallback({...jobInfoProp, company: e.target.value});
+							setCoverLetterInputCallback({...coverLetterInputProp, company: e.target.value});
+						}}
 					/>
 					<p className='cover-letter-text'>for the</p>
 					<input
@@ -154,7 +160,10 @@ const MockDocument = ({fillUserContactProp, coverLetterInputProp, jobInfoProp, s
                                                 type='text'
                                                 placeholder='Position'
 						value = {jobInfoProp.position}
-						onChange = {(e) => setJobInfoCallback({...jobInfoProp, position: e.target.value})}
+						onChange = {(e) => {
+							setJobInfoCallback({...jobInfoProp, position: e.target.value});
+							setCoverLetterInputCallback({...coverLetterInputProp, position: e.target.value});
+						}}
                                         />
 					<p className='cover-letter-text'>position.</p>
 
@@ -194,7 +203,10 @@ const MockDocument = ({fillUserContactProp, coverLetterInputProp, jobInfoProp, s
                                                 	type='text'
                                         	        placeholder='Position'
 							value = {jobInfoProp.position}
-							onChange = {(e) => setJobInfoCallback({...jobInputProp, position: e.target.value})}
+							onChange = {(e) => {
+								setJobInfoCallback({...jobInfoProp, position: e.target.value});
+								setCoverLetterInputCallback({...coverLetterInputProp, position: e.target.value});
+							}}
                                        		/>
 						&nbsp;position. If you have any questions, please do not hesitate to contact me and I will be happy to explain further. Thank you for your time and consideration.
                                 	</p>
@@ -215,7 +227,8 @@ const MockDocument = ({fillUserContactProp, coverLetterInputProp, jobInfoProp, s
                                                 placeholder='Name'
 						value={userContact.name}
 						onChange = {(e) => {
-							setUserContact({...userContact, name: e.target.value});                                                                                             setCoverLetterInputCallback({...coverLetterInputProp, name:e.target.value});
+							setUserContact({...userContact, name: e.target.value});
+							setCoverLetterInputCallback({...coverLetterInputProp, name:e.target.value});
 						}}
                                         />
                                 </div>

@@ -3,13 +3,23 @@ import React, {useState} from 'react';
 import {deleteContact} from './utils/personal_info/DeleteContact.js';
 import {updateContact} from './utils/personal_info/UpdateContact.js'; 
 
-const DisplayPersonalInfo = ({userContactProp,setUserContactCallback, setIsUpdatingCallback, setFillUserContactCallback}) => {
+const DisplayPersonalInfo = (
+	{userContactProp,setUserContactCallback, setIsUpdatingCallback, setFillUserContactCallback, setCoverLetterInputCallback}) => {
+	
 	const [successfulSave, setSuccessfulSave] = useState(false);
 	const [errors, setErrors] = useState({name: '', email: '', phone: ''});
 
 	const handleFill = (e) => {
 		e.preventDefault();
 		setFillUserContactCallback({
+			name: userContactProp.name,
+			email: userContactProp.email,
+			phone: userContactProp.phone,
+			social: userContactProp.social,
+			extra: userContactProp.extra
+		});
+
+		setCoverLetterInputCallback({
 			name: userContactProp.name,
 			email: userContactProp.email,
 			phone: userContactProp.phone,
