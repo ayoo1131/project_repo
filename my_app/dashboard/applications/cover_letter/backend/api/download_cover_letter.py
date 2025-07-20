@@ -16,12 +16,13 @@ def download_cover_letter():
     try:
         data = request.get_json()
         download_document_buffer = fill_template(current_user, data['coverLetterInputProp'])
+        user_name = data['coverLetterInputProp']['name']
+        company = data['coverLetterInputProp']['company']
 
-        logging.error(download_document_buffer)
         return send_file(
             download_document_buffer,
             as_attachment = True,
-            download_name = 'GeneratedDoc.docx',
+            download_name = f"{user_name} Cover Letter - {company}.docx",
             mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         )        
         #return jsonify({'message': 'Download successful'}), 201

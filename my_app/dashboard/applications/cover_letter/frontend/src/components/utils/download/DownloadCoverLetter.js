@@ -15,7 +15,6 @@ export const downloadCoverLetter = async(coverLetterInput) => {
 			console.error(errorText)
 			return;
 		}
-
 		console.log('Success');
 
 		const blob = await response.blob();
@@ -23,7 +22,9 @@ export const downloadCoverLetter = async(coverLetterInput) => {
 		const a = document.createElement('a');
 		a.href = url;
 
-		a.download = 'GeneratedDoc.docx';
+		const name= coverLetterInput['coverLetterInputProp'].name;
+		const company = coverLetterInput['coverLetterInputProp'].company;
+		a.download = `${name} Cover Letter - ${company}.docx`;
 
 		document.body.appendChild(a);
 		a.click();
