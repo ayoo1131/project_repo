@@ -4,7 +4,7 @@ import {deleteContact} from './utils/personal_info/DeleteContact.js';
 import {updateContact} from './utils/personal_info/UpdateContact.js'; 
 
 const DisplayPersonalInfo = (
-	{userContactProp,setUserContactCallback, setIsUpdatingCallback, setFillUserContactCallback, setCoverLetterInputCallback}) => {
+	{userContactProp,setUserContactCallback, setIsUpdatingCallback, setFillUserContactCallback, setCoverLetterInputCallback, setContactMessageCallback}) => {
 	
 	const [successfulSave, setSuccessfulSave] = useState(false);
 	const [errors, setErrors] = useState({name: '', email: '', phone: ''});
@@ -31,7 +31,8 @@ const DisplayPersonalInfo = (
 	const handleDelete = async (e) => {
 		e.preventDefault();
 		deleteContact();
-		setUserContactCallback({name:'', email:'', phone:''});
+		setUserContactCallback({name:'', email:'', phone:'', social:'', extra:''});
+		setContactMessageCallback('Contact Deleted');
 	};
 
 	const handleUpdate = async (e) => {

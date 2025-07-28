@@ -18,7 +18,9 @@ const DownloadButton = (coverLetterInputProp) =>{
 
 
 	return (
-		<button className='button' onClick={handleDownload} style={{paddingLeft:'10px'}}>Download</button>
+		<div className='control'>
+			<button className='button' onClick={handleDownload} style={{paddingLeft:'10px'}}>Download</button>
+		</div>
 	);
 };
 

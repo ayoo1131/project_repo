@@ -1,5 +1,6 @@
 //Body.jsx
 import React, {useState, useEffect} from 'react';
+import TopMessage from './TopMessage.jsx';
 import UploadPersonalInfo from './UploadPersonalInfo.jsx'; //Current user does not have contacts saved. Show inputs for contacts
 import DisplayPersonalInfo from './DisplayPersonalInfo.jsx'; //Current user has contacts saved. Show user contacts
 import MockDocument from './MockDocument.jsx';
@@ -14,12 +15,12 @@ const Body = () => {
 	//set fillUserContact if user clicks fill button, callback updates state and shows in Mock Document input
 	const [fillUserContact, setFillUserContact] = useState({name: '', email:'', phone:'', social:'', extra:''});
 	const [isUpdating, setIsUpdating] = useState(false);
+	const [contactMessage, setContactMessage] = useState(null); //Track if contact message is saved, updated, deleted, or error
+	const [downloadMessage, setDownloadMessage] = useState(null); //Track if error exists in Mock Document input fields
 
-	//The states below will be used to fill-in the cover letter template when the user presses download button
-	const [coverLetterInput, setCoverLetterInput] = useState(
+	const [coverLetterInput, setCoverLetterInput] = useState( // used to fill-in the cover letter template when the user presses download button
 		{name:'', email:'', phone:'', social:'', extra:'', date:'', company:'', position:'', paragraph1:'', paragraph2:''}
 	);
-	
 	const [jobInfo, setJobInfo] = useState({company:'', position:''});//Used to make sure company and position inputs match
 	const [isToday, setIsToday] = useState(false);
 
@@ -47,61 +48,55 @@ const Body = () => {
 
 	return (
 		<section className='hero-body is-align-items-start' style={{paddingTop: '10px'}} >
-        		<div className="container is-flex is-flex-direction-column" style={{height:'100%'}}>
-        			
-				<div>
-				{/*? Ternary Operator, if userContact is null show Upload info component. If userContact has value, show display info component*/}
-					{(isContactNull() && !isUpdating) || (!isContactNull() && isUpdating)
-					? 
-					<UploadPersonalInfo
-						userContactProp={userContact}
-						setUserContactCallback={setUserContact}
-						setIsUpdatingCallback={setIsUpdating}
-					/>
+			<div className="container is-flex is-flex-direction-column" style={{height:'100%'}}>
+				{/*Ternary Operator that only displays if contactMessage has been set.*/}
+				{contactMessage && <TopMessage messageProp={contactMessage}/> }
 
-					:
-					<DisplayPersonalInfo 
-						userContactProp={userContact} 
-						setUserContactCallback={setUserContact} 
-						setIsUpdatingCallback={setIsUpdating}
-						setFillUserContactCallback = {setFillUserContact}
-						setCoverLetterInputCallback = {setCoverLetterInput}
-					/>}
-				</div>		
+				{/*Ternary Operator, if userContact null show Upload component. If userContact not null, show display component*/}
+				{(isContactNull() && !isUpdating) || (!isContactNull() && isUpdating) ? 
+				<UploadPersonalInfo
+					userContactProp = {userContact}
+					setUserContactCallback = {setUserContact}
+					setIsUpdatingCallback = {setIsUpdating}
+					setContactMessageCallback = {setContactMessage}
+				/>
+				:
+				<DisplayPersonalInfo 
+					userContactProp = {userContact} 
+					setUserContactCallback = {setUserContact} 
+					setIsUpdatingCallback = {setIsUpdating}
+					setFillUserContactCallback = {setFillUserContact}
+					setCoverLetterInputCallback = {setCoverLetterInput}
+					setContactMessageCallback = {setContactMessage}
+				/>}
 
-				<div style={{flexGrow:1, overflowY:'auto', maxHeight:'60vh', paddingBottom:'10px'}}>
-					<MockDocument 
-						fillUserContactProp={fillUserContact}
-						coverLetterInputProp = {coverLetterInput}
-						jobInfoProp = {jobInfo}
-						setJobInfoCallback = {setJobInfo}
-						setCoverLetterInputCallback = {setCoverLetterInput}
-						isTodayProp = {isToday}
-						setIsTodayCallback = {setIsToday}
-					/>
-				</div>
+				<MockDocument 
+					fillUserContactProp={fillUserContact}
+					coverLetterInputProp = {coverLetterInput}
+					jobInfoProp = {jobInfo}
+					setJobInfoCallback = {setJobInfo}
+					setCoverLetterInputCallback = {setCoverLetterInput}
+					isTodayProp = {isToday}
+					setIsTodayCallback = {setIsToday}
+				/>
 			
 				<div className='is-flex is-justify-content-center' style={{paddingTop:'10px'}}>
                                 	<div className='field is-grouped' style={{gap:'5px'}}>
-                                        	<div className='control'>
-                                        		<ClearButton 
-								coverLetterInputProp = {coverLetterInput} 
-								setCoverLetterInputCallback = {setCoverLetterInput}
-								setFillUserContactCallback = {setFillUserContact}
-								setJobInfoCallback = {setJobInfo}
-								setIsTodayCallback = {setIsToday}
-								isTodayProp = {isToday}
-							/>
-						</div>
+                                        	<ClearButton 
+							coverLetterInputProp = {coverLetterInput} 
+							setCoverLetterInputCallback = {setCoverLetterInput}
+							setFillUserContactCallback = {setFillUserContact}
+							setJobInfoCallback = {setJobInfo}
+							setIsTodayCallback = {setIsToday}
+							isTodayProp = {isToday}
+							setContactMessageCallback = {setContactMessage}
+						/>
 
-                                        	<div className='control'>
-                                        		<DownloadButton 
-								coverLetterInputProp = {coverLetterInput}
-							/> 
-						</div>
+                                       		<DownloadButton 
+							coverLetterInputProp = {coverLetterInput}
+						/> 
                                  	</div>
                         	</div>
-
 			</div>
     		</section>
 	);

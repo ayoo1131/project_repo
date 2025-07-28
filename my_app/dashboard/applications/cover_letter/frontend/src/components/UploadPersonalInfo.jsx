@@ -4,7 +4,7 @@ import {validateContact} from './utils/personal_info/ValidateContact.js';
 import {insertContact} from './utils/personal_info/InsertContact.js'; 
 import {updateContact} from './utils/personal_info/UpdateContact.js';
 
-const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdatingCallback}) => {
+const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdatingCallback, setContactMessageCallback}) => {
 	const [userContact, setUserContact] = useState({
 		name: userContactProp.name,
 		email: userContactProp.email, 
@@ -14,10 +14,17 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 	});
 	
 	const [successfulSave, setSuccessfulSave] = useState(false);
-	const [errors, setErrors] = useState({name: '', email: '', phone: ''});
+	const [errors, setErrors] = useState({name: '', email: '', phone: '', social: '', extra: ''});
+	const [successfulAdd, setSuccessfulAdd] = useState(false);
 
 	const isContactPropNull = () => {
-		if (userContactProp.name===''&&userContactProp.email===''&&userContactProp.phone===''&&userContactProp.social===''&&userContactProp.extra===''){
+		if (
+			userContactProp.name === '' &&
+			userContactProp.email === '' &&
+			userContactProp.phone === '' &&
+			userContactProp.social === '' &&
+			userContactProp.extra === '')
+		{
 			return true;
 		}
 
@@ -32,17 +39,16 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 		//Validate User Contact
 		const errors = validateContact(userContact);
 		setErrors(errors);
-
-		if (Object.keys(errors).length === 0){
+		
+		if (Object.keys(errors).length === 0){ //No errors in user input contact.
 			if (isContactPropNull()){ //There is no saved contact, create a new one for the user
-				console.log('No Saved contact');
-				console.log(userContact);
 				insertContact(userContact);
+				setContactMessageCallback('Contact Saved');
 			}
 			
 			else{//Contact exists. Update the existing contact
-				console.log('Updated contact =' + JSON.stringify(userContact));
 				updateContact(userContactProp, userContact);
+				setContactMessageCallback('Contact Updated');
 			}
 			setUserContactCallback({
 				name: userContact.name,
@@ -53,18 +59,26 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 			});
 			setIsUpdatingCallback(false);
 		}
+
+		else {
+			if (isContactPropNull()){ 
+				setContactMessageCallback('Contact Save Error');
+			}
+			else{
+				setContactMessageCallback('Contact Update Error');
+			}
+		}
 	};
 
 	return (
-		<div className='container has-text-centered' style={{paddingBottom: '10px'}}>
+		<div className='container has-text-centered' style={{paddingBottom: '8px'}}>
 			<form id='coverLetterForm' className='box user-input-top-bottom-margins has-background-white'>
-				{successfulSave && <p className='has-text-success'>Personal Details Successfully Saved</p>}
 				<div className='form-section'>
 					<p className='has-text-left cover-letter-text' style={{paddingBottom:'2px'}}>Fill in the following fields to save your details for future use. If you prefer not to have your personal info saved, fill out the cover letter template manually.</p>
 
 					<div className='columns is-mobile'>
 						<div className='column column-name'>
-							<div className='field is-grouped is-small' style={{gap: '0.25rem'}}>
+							<div className='field is-grouped is-small column-bottom-margin' style={{gap: '0.25rem'}}>
 								<div className='control'>
 									<p className='cover-letter-text'>Name: </p>
 								</div>
@@ -77,12 +91,12 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 										onChange={(e) => setUserContact({...userContact, name:e.target.value })}
 									/>
 								</div>
-								{errors.name && <p className='help is-danger'>{errors.name}</p>}
 							</div>
+							{errors.name && <p className='error-message-user-input'>{errors.name}</p>}
 						</div>
 
 						<div className='column column-email'>
-                                                        <div className='field is-grouped is-small' style={{gap: '0.25rem'}}>
+                                                        <div className='field is-grouped is-small column-bottom-margin' style={{gap: '0.25rem'}}>
 								<div className='control'>
 									<p className='cover-letter-text'>Email: </p>
 								</div>
@@ -95,12 +109,12 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 										onChange={(e) => setUserContact({...userContact, email:e.target.value})}
                                                                         />
                                                                 </div>
-                                                                {errors.email && <p className='help is-danger'>{errors.email}</p>}
                                                         </div>
+							{errors.email && <p className='error-message-user-input'>{errors.email}</p>}
                                                 </div>
 
 						<div className='column column-phone'>
-                                                        <div className='field is-grouped is-small' style={{gap: '0.25rem'}}>
+                                                        <div className='field is-grouped is-small column-bottom-margin' style={{gap: '0.25rem'}}>
 								<div className='control'>
 									<p className='cover-letter-text'>Phone: </p>
 								</div>
@@ -113,12 +127,12 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 										onChange={(e) => setUserContact({...userContact, phone:e.target.value})}
                                                                         />
                                                                 </div>
-                                                                {errors.phone && <p className='help is-danger'>{errors.phone}</p>}
                                                         </div>
+							{errors.phone && <p className='error-message-user-input'>{errors.phone}</p>}
                                                 </div>
 
 						<div className='column column-social'>
-                                                        <div className='field is-grouped is-small' style={{gap: '0.25rem'}}>
+                                                        <div className='field is-grouped is-small column-bottom-margin' style={{gap: '0.25rem'}}>
                                                                 <div className='control'>
                                                                         <p className='cover-letter-text'>Social Media: </p>
                                                                 </div>
@@ -132,10 +146,11 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
                                                                         />
                                                                 </div>
                                                         </div>
+							{errors.social && <p className='error-message-user-input'>{errors.social}</p>}
                                                 </div>
 
 						<div className='column column-extra'>
-                                                        <div className='field is-grouped is-small' style={{gap: '0.25rem'}}>
+                                                        <div className='field is-grouped is-small column-bottom-margin' style={{gap: '0.25rem'}}>
                                                                 <div className='control'>
                                                                         <p className='cover-letter-text'>Extra: </p>
                                                                 </div>
@@ -149,6 +164,7 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
                                                                         />
                                                                 </div>
                                                         </div>
+							{errors.extra && <p className='error-message-user-input'>{errors.extra}</p>}
                                                 </div>
 
 						

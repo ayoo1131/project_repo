@@ -28,7 +28,7 @@ const MockDocument = ({fillUserContactProp, coverLetterInputProp, jobInfoProp, s
 	}, [fillUserContactProp]);//On startup set saved contact in local state.
 
 	return (
-		<div className='box is-fullheight has-background-white'>
+		<div className='box is-fullheight has-background-white' style={{flexGrow:1, overflowY:'auto', maxHeight:'60vh', paddingBottom:'5px'}}>
 			{/*Header*/}
 			<div className='field is-small is-flex is-justify-content-center'>	
 				<div className='control'>
