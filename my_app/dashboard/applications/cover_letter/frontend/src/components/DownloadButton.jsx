@@ -3,16 +3,21 @@ import React from 'react';
 import {validateCoverLetterInput} from './utils/download/ValidateCoverLetterInput.js';
 import { downloadCoverLetter } from './utils/download/DownloadCoverLetter.js';
 
-const DownloadButton = (coverLetterInputProp) =>{
+// {} destructs properties object to give state from parent
+const DownloadButton = ({coverLetterInputProp, setDownloadMessageCallback, setDownloadErrorsCallback}) =>{
 	const handleDownload = (e) => {
 		e.preventDefault();
 
-		//validate cover letter input
+		//validate cover letter input	
 		const errors = validateCoverLetterInput(coverLetterInputProp);
-		//setErrors();
-		
-		if (errors){
+		if (Object.keys(errors).length === 0){
 			downloadCoverLetter(coverLetterInputProp);
+			setDownloadMessageCallback('Download Success');
+		}
+
+		else {
+			setDownloadMessageCallback('Download Failed, Check Input');
+			setDownloadErrorsCallback(errors);
 		}
 	};
 

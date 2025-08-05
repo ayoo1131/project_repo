@@ -7,7 +7,10 @@ const TopMessage = ({messageProp}) => {
 		'Contact Updated': 'green',
 		'Contact Deleted': 'green',
 		'Contact Save Error': 'red',
-		'Contact Update Error': 'red'
+		'Contact Update Error': 'red',
+
+		'Download Success': 'green',
+		'Download Failed, Check Input': 'red'
 	};
 	const messageBackgroundColor = messageColorMap[messageProp];
 

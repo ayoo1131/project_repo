@@ -17,6 +17,7 @@ const Body = () => {
 	const [isUpdating, setIsUpdating] = useState(false);
 	const [contactMessage, setContactMessage] = useState(null); //Track if contact message is saved, updated, deleted, or error
 	const [downloadMessage, setDownloadMessage] = useState(null); //Track if error exists in Mock Document input fields
+	const [downloadErrors, setDownloadErrors] = useState({name:'', email:'', phone:'', social:'', extra:'', company:'', position:''}); //JavaScript Object
 
 	const [coverLetterInput, setCoverLetterInput] = useState( // used to fill-in the cover letter template when the user presses download button
 		{name:'', email:'', phone:'', social:'', extra:'', date:'', company:'', position:'', paragraph1:'', paragraph2:''}
@@ -50,7 +51,10 @@ const Body = () => {
 		<section className='hero-body is-align-items-start' style={{paddingTop: '10px'}} >
 			<div className="container is-flex is-flex-direction-column" style={{height:'100%'}}>
 				{/*Ternary Operator that only displays if contactMessage has been set.*/}
-				{contactMessage && <TopMessage messageProp={contactMessage}/> }
+				{contactMessage && <TopMessage messageProp = {contactMessage}/> }
+
+				{/*Ternary Operator that displays if downloadMessage is set*/}
+				{downloadMessage && <TopMessage messageProp = {downloadMessage}/> }
 
 				{/*Ternary Operator, if userContact null show Upload component. If userContact not null, show display component*/}
 				{(isContactNull() && !isUpdating) || (!isContactNull() && isUpdating) ? 
@@ -74,26 +78,31 @@ const Body = () => {
 					fillUserContactProp={fillUserContact}
 					coverLetterInputProp = {coverLetterInput}
 					jobInfoProp = {jobInfo}
+					downloadErrorsProp = {downloadErrors}
 					setJobInfoCallback = {setJobInfo}
 					setCoverLetterInputCallback = {setCoverLetterInput}
 					isTodayProp = {isToday}
 					setIsTodayCallback = {setIsToday}
 				/>
 			
-				<div className='is-flex is-justify-content-center' style={{paddingTop:'10px'}}>
+				<div className='is-flex is-justify-content-center' style={{paddingTop:'2px'}}>
                                 	<div className='field is-grouped' style={{gap:'5px'}}>
                                         	<ClearButton 
 							coverLetterInputProp = {coverLetterInput} 
+							isTodayProp = {isToday}
 							setCoverLetterInputCallback = {setCoverLetterInput}
 							setFillUserContactCallback = {setFillUserContact}
 							setJobInfoCallback = {setJobInfo}
 							setIsTodayCallback = {setIsToday}
-							isTodayProp = {isToday}
 							setContactMessageCallback = {setContactMessage}
+							setDownloadMessageCallback = {setDownloadMessage}
+							setDownloadErrorsCallback = {setDownloadErrors}
 						/>
 
                                        		<DownloadButton 
 							coverLetterInputProp = {coverLetterInput}
+							setDownloadMessageCallback = {setDownloadMessage}
+							setDownloadErrorsCallback = {setDownloadErrors}
 						/> 
                                  	</div>
                         	</div>

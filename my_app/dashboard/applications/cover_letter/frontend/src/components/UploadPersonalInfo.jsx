@@ -11,10 +11,10 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 		phone: userContactProp.phone,
 		social: userContactProp.social,
 		extra: userContactProp.extra
-	});
+	}); //JavaScript Object
 	
 	const [successfulSave, setSuccessfulSave] = useState(false);
-	const [errors, setErrors] = useState({name: '', email: '', phone: '', social: '', extra: ''});
+	const [errors, setErrors] = useState({name: '', email: '', phone: '', social: '', extra: ''}); //JavaScript Object
 	const [successfulAdd, setSuccessfulAdd] = useState(false);
 
 	const isContactPropNull = () => {

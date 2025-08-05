@@ -4,7 +4,6 @@ import React from 'react';
 export const validateContact = (userContact) => { //Arguement variable is an object
 	const errors = {}; //creates an error object that stores userContact errors. Return all errors or empty object if no error
 
-	console.log(userContact);
 	let nameError = validateName(userContact.name);
 	if (nameError != null){ //Errors found in name input
 		errors.name = nameError;
