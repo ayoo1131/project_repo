@@ -83,11 +83,6 @@ const MockDocument = ({
 					</div>
 				</div>	
 				
-		{/*
-				<div className='column is-narrow'>
-					<p className='cover-letter-text'>|</p>
-				</div>
-		*/}
 				<div className='column is-2'>
 					<div className='field is-small'>
 						<div className='control'>
@@ -109,10 +104,6 @@ const MockDocument = ({
 					</div>
 				</div>	
 
-				{/*<div className='column is-narrow'>
-					<p className='cover-letter-text'>|</p>
-				</div>*/}
-				
 				<div className='column is-2'>
                                         <div className='field is-small'>
 						<div className='control'>
@@ -134,10 +125,6 @@ const MockDocument = ({
 					</div>
 				</div>
 
-				{/*<div className='column is-narrow'>
-                                        <p className='cover-letter-text'>|</p>
-                                </div> */}
-				
 				<div className='column is-2'>
                                         <div className='field is-small'>
 						<div className='control'>
@@ -165,7 +152,7 @@ const MockDocument = ({
 			{/*-----------------------------------------Body-----------------------------------------------*/}
 			<div style={{display: 'inline-flex',alignItems: 'baseline',flexWrap: 'wrap'}}>	
 				<p className='cover-letter-text'>Dear</p>
-				<div className='document-input-error-block'>
+				<div className='document-input-error-block-sentence'> {/* Input + error container */}
 					<input
 						className='input is-small document-input-word'
 						type='text'
@@ -188,7 +175,7 @@ const MockDocument = ({
 			<div style={{display: 'inline-flex',alignItems: 'baseline',flexWrap: 'wrap'}}>
 				<p className='cover-letter-text'>I am excited to have the opportunity to apply to</p>
 				
-				<div className='document-input-error-block'>
+				<div className='document-input-error-block-sentence'> {/* Input + error container */}
 					<input
 						className='input is-small document-input-word'
 						type='text'
@@ -203,7 +190,7 @@ const MockDocument = ({
 				</div>
 
 				<p className='cover-letter-text'>for the</p>
-				<div className='document-input-error-block'>
+				<div className='document-input-error-block-sentence'> {/* Input + error container */}
 					<input
 						className='input is-small document-input-word'
 						type='text'
@@ -220,7 +207,7 @@ const MockDocument = ({
 			</div>
 
 			<div>
-				<p>&nbsp;</p>
+				{(downloadErrorsProp.company || downloadErrorsProp.position) && <p>&nbsp;</p>}
 			</div>
 
 			<div className='field'>
@@ -247,26 +234,34 @@ const MockDocument = ({
                                 </div>
                         </div>
 
-			<div className='field is-small is-flex is-justified-content-left'>
-                                <div style={{display:'flex', gap:'5px'}}>
-                                        <p className='cover-letter-text'>
-						Please find my attached resume which details my experience and qualifications for the&nbsp;
-						<input
-                                                	className='input is-small document-input-word'
-                                                	type='text'
-                                        	        placeholder='Position'
-							value = {jobInfoProp.position}
-							onChange = {(e) => {
-								setJobInfoCallback({...jobInfoProp, position: e.target.value});
-								setCoverLetterInputCallback({...coverLetterInputProp, position: e.target.value});
-							}}
-                                       		/>
-						&nbsp;position. If you have any questions, please do not hesitate to contact me and I will be happy to explain further. Thank you for your time and consideration.
-                                	</p>
-				</div>
-                        </div>
-		
+			<div>
+				<span className='cover-letter-text'>Please find my attached resume which details my experience and qualifications for the</span>
+
+ 				{/* Input + error container */}
+  				<span className='document-input-error-block-paragraph'> 
+					<input
+						className = 'document-input-word'
+						type = "text"
+						placeholder = "Position"
+						value = {jobInfoProp.position}
+						onChange = {(e) => {
+							setJobInfoCallback({ ...jobInfoProp, position: e.target.value });
+							setCoverLetterInputCallback({ ...coverLetterInputProp, position: e.target.value });
+						}}
+					/>
+
+					{/* Error message absolutely positioned in reserved space */}
+					{downloadErrorsProp.position && (<div className='document-input-error-message'> {downloadErrorsProp.position} </div>)}
+				</span>
+
+				<span className='cover-letter-text'>position. If you have any questions, please do not hesitate to contact me and I will be happy to explain further. Thank you for your time and consideration.</span>
+			</div>
+
 			{/*---------------------------------Footer------------------------------------*/}
+			<div className='is-small'>
+                                <p>&nbsp;</p>
+                        </div>
+
 			<div className='field is-small is-flex is-justified-content-left'>
                                 <div style={{display:'flex', gap:'5px'}}>
                                         <p className='cover-letter-text'>Sincerely,</p>

@@ -5,70 +5,104 @@
 	color: #000000;
 }
 
+/*Contact Message*/
+.contact-message{
+	color: white !important;
+	margin-left: 5px !important;
+	margin-right: 5px !important;
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+	border-radius: 5px !important;
+}
+
+/*UploadUserContact*/
+.error-message-user-input{
+	margin: 0px 4px 0px 4px !important;
+	padding: 0px 4px 0px 4px !important;
+	background-color: red;
+	color: white !important;
+	display: inline-block;
+	font-size: 10pt !important;
+}
+
+.user-input-top-bottom-margins {
+	padding-top: 0.5rem !important;
+	padding-bottom: 0.25rem !important;
+	margin-top: 0.5rem !important;
+}
+
 /*User Contact*/
-
-.column-name{
-	flex: 0 0 175px !important;
-	max-width: 175px !important;
+.column-bottom-margin{
+	margin-bottom: 2px !important;
 }
 
-.column-email{
-	flex: 0 0 210px !important;
-	max-width: 210px !important;
-}
-
-.column-phone{
-  	flex: 0 0 155px !important;
-	max-width: 155px !important;
-}
-
-.column-social{
-  	flex: 0 0 250px !important;
-  	max-width: 250px !important;
-}
-
-.column-extra{
-	flex: 0 0 225px !important;
-	max-width: 225px !important;
-}
-
-
-.input.input-contact{
+.upload-input-contact{
+	background-color: transparent;
+        color: #000000;
 	border-radius: 6px;
   	font-size: 11px;
   	height: 24px;
   	line-height: 16px;
-  	padding-left: 2px;
-	padding-right: 2px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+  	padding: 10px 2px 10px 2px;
+	width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
 }
 
-.input.input-contact.name{
-	width: 120px;
+.upload-input-resize{
+	flex: 1 1 auto; /*For User Contact Upload Input. Keeps grow(1) shrink(1) basis(auto) to grow and shrink to fit the full column width*/
+	min-width: 0; /*in flexbox, child elements won't automatically shrink to below their content size unless explicetly stated*/
 }
 
-.input.input-contact.email{
-        width: 155px;
-}
+.upload-label-fixed{
+	flex: 0 0 auto; /*For User Contact Upload Label. Keeps grow(0) shrink(0) basis(auto) fixed size*/
+	white-space: nowrap;
 
-.input.input-contact.phone{
-        width: 90px;
-}
-
-.input.input-contact.social{
-        width: 140px;
-}
-
-.input.input-contact.extra{
-        width: 140px;
 }
 
 /*User Input Text Fields Mock Document*/
+.document-input-contact{
+	width: 100%;
+        background-color: transparent;
+        color: #000000;
+}
+.document-input-contact::placeholder{
+	color: #423d3d;
+}
+
+.document-input-error-block-sentence{ /*for input in a sentence without text directly underneath*/
+	display: inline-block;
+	position: relative;
+       	vertical-align: bottom;
+}
+
+.document-input-error-message{
+	position: absolute;
+       	left: 50%; 
+	transform: translateX(-50%);
+	margin: 2px 0 0 0; /*top right bottom left*/
+	width: 100%;
+	text-align: center;
+	margin: 0px 4px 0px 4px !important; /*top right bottom left*/
+        padding: 0px 4px 0px 4px !important;
+        background-color: red;
+        color: white !important;
+        font-size: 10pt !important;
+}
+
+.document-input-error-block-paragraph{ /*for input in a paragraph that has text underneath*/
+	display: inline-block !important;
+        vertical-align: baseline !important; /*align input baseline with text*/
+        position: relative !important; 
+	min-width: 100px !important;
+	padding-bottom: 1.2em !important;     /*reserve space below input for error*/
+	box-sizing: content-box !important;
+}
+
 .document-input-word{
 	width: 150px;
-       	background-color: transparent;
-	color: #000000;
+       	background-color: transparent !important;
+	color: #000000 !important;
 }
 
 .document-input-word::placeholder{
@@ -82,4 +116,13 @@
 
 .document-input-paragraph::placeholder{
 	color: #423d3d;
+}
+
+
+.has-right-border {
+  border-right: 1px solid #ccc; /* light gray vertical line */
+}
+
+.has-left-border {
+  border-left: 1px solid #ccc; /* light gray vertical line */
 }

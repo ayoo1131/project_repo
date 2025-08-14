@@ -76,15 +76,15 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 				<div className='form-section'>
 					<p className='has-text-left cover-letter-text' style={{paddingBottom:'2px'}}>Fill in the following fields to save your details for future use. If you prefer not to have your personal info saved, fill out the cover letter template manually.</p>
 
-					<div className='columns is-mobile'>
-						<div className='column column-name'>
+					<div className='columns is-mobile is-multiline'>
+						<div className='column has-left-border has-right-border is-full-mobile is-6-tablet is-2-desktop'>
 							<div className='field is-grouped is-small column-bottom-margin' style={{gap: '0.25rem'}}>
-								<div className='control'>
+								<div className='control upload-label-fixed'>
 									<p className='cover-letter-text'>Name: </p>
 								</div>
-								<div className='control'>
+								<div className='control upload-input-resize'>
 									<input
-										className="input input-contact name document-input-word" 
+										className="input upload-input-contact" 
 										type="text" 
 										placeholder="Name"
 										value={userContact?.name || ''}
@@ -95,14 +95,14 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 							{errors.name && <p className='error-message-user-input'>{errors.name}</p>}
 						</div>
 
-						<div className='column column-email'>
-                                                        <div className='field is-grouped is-small column-bottom-margin' style={{gap: '0.25rem'}}>
-								<div className='control'>
+						<div className='column has-left-border has-right-border is-full-mobile is-6-tablet is-2-desktop'>
+                                                        <div className='field is-grouped column-bottom-margin' style={{gap: '0.25rem'}}>
+								<div className='control upload-label-fixed'>
 									<p className='cover-letter-text'>Email: </p>
 								</div>
-                                                                <div className='control'>
+                                                                <div className='control upload-input-resize'>
                                                                         <input
-                                                                                className="input input-contact email document-input-word"
+                                                                                className="input upload-input-contact"
                                                                                 type="text"
                                                                                 placeholder="email"
 										value={userContact?.email || ''}
@@ -113,14 +113,14 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 							{errors.email && <p className='error-message-user-input'>{errors.email}</p>}
                                                 </div>
 
-						<div className='column column-phone'>
-                                                        <div className='field is-grouped is-small column-bottom-margin' style={{gap: '0.25rem'}}>
-								<div className='control'>
+						<div className='column is-full-mobile is-6-tablet is-2-desktop'>
+                                                        <div className='field is-grouped column-bottom-margin' style={{gap: '0.25rem'}}>
+								<div className='control upload-label-fixed'>
 									<p className='cover-letter-text'>Phone: </p>
 								</div>
-                                                                <div className='control'>
+                                                                <div className='control upload-input-resize'>
                                                                         <input
-                                                                                className="input input-contact phone document-input-word"
+                                                                                className="input upload-input-contact"
                                                                                	type="text"
                                                                                 placeholder="Phone #"
 										value={userContact?.phone || ''}
@@ -131,14 +131,14 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 							{errors.phone && <p className='error-message-user-input'>{errors.phone}</p>}
                                                 </div>
 
-						<div className='column column-social'>
-                                                        <div className='field is-grouped is-small column-bottom-margin' style={{gap: '0.25rem'}}>
-                                                                <div className='control'>
+						<div className='column is-full-mobile is-6-tablet is-3-desktop'>
+                                                        <div className='field is-grouped column-bottom-margin' style={{gap: '0.25rem'}}>
+                                                                <div className='control upload-label-fixed'>
                                                                         <p className='cover-letter-text'>Social Media: </p>
                                                                 </div>
-                                                                <div className='control'>
+                                                                <div className='control upload-input-resize'>
                                                                         <input
-                                                                                className="input input-contact social document-input-word"
+                                                                                className="input upload-input-contact"
                                                                                 type="text"
                                                                                 placeholder="(optional)"
                                                                                 value={userContact?.social || ''}
@@ -149,14 +149,14 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 							{errors.social && <p className='error-message-user-input'>{errors.social}</p>}
                                                 </div>
 
-						<div className='column column-extra'>
-                                                        <div className='field is-grouped is-small column-bottom-margin' style={{gap: '0.25rem'}}>
-                                                                <div className='control'>
+						<div className='column is-full-mobile is-6-tablet is-2-desktop'>
+                                                        <div className='field is-grouped column-bottom-margin' style={{gap: '0.25rem'}}>
+                                                                <div className='control upload-label-fixed'>
                                                                         <p className='cover-letter-text'>Extra: </p>
                                                                 </div>
-                                                                <div className='control'>
+                                                                <div className='control upload-input-resize'>
                                                                         <input
-                                                                                className="input input-contact extra document-input-word"
+                                                                                className="input upload-input-contact"
                                                                                 type="text"
                                                                                 placeholder="(optional)"
                                                                                 value={userContact?.extra || ''}
@@ -168,8 +168,8 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
                                                 </div>
 
 						
-						<div className='column is-narrow'>
-							<div className='field is-grouped'>
+						<div className='column is-1'>
+							<div className='field'>
 								<div className='buttons'>
 									<button className='button is-dark is-small' onClick={handleSave}>Save</button>
 								</div>
