@@ -3,8 +3,14 @@ import React, {useState} from 'react';
 import {deleteContact} from './utils/personal_info/DeleteContact.js';
 import {updateContact} from './utils/personal_info/UpdateContact.js'; 
 
-const DisplayPersonalInfo = (
-	{userContactProp,setUserContactCallback, setIsUpdatingCallback, setFillUserContactCallback, setCoverLetterInputCallback, setContactMessageCallback}) => {
+const DisplayPersonalInfo = ({
+		userContactProp,
+		coverLetterInputProp,
+		setUserContactCallback,
+		setIsUpdatingCallback,
+		setFillUserContactCallback,
+		setCoverLetterInputCallback,
+		setContactMessageCallback}) => {
 	
 	const [successfulSave, setSuccessfulSave] = useState(false);
 	const [errors, setErrors] = useState({name: '', email: '', phone: ''});
@@ -18,8 +24,8 @@ const DisplayPersonalInfo = (
 			social: userContactProp.social,
 			extra: userContactProp.extra
 		});
-
-		setCoverLetterInputCallback({
+		
+		setCoverLetterInputCallback({...coverLetterInputProp,
 			name: userContactProp.name,
 			email: userContactProp.email,
 			phone: userContactProp.phone,

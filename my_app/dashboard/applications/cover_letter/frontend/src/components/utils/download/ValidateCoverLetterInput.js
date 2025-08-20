@@ -3,7 +3,6 @@
 export const validateCoverLetterInput = (coverLetterInput) => {
 	const errors = {};
 	
-	console.log(coverLetterInput);
 	let nameError = validateName(coverLetterInput.name);
         if (nameError != null){
 		errors.name = nameError;
@@ -38,11 +37,13 @@ export const validateCoverLetterInput = (coverLetterInput) => {
 	let companyError = validateCompany(coverLetterInput.company);
 	if(companyError != null){
 		errors.company = companyError;
+		console.log('Company Error');
 	}
 
 	let positionError = validatePosition (coverLetterInput.position);
 	if (positionError!= null){
 		errors.position = positionError;
+		console.log('Position error');
 	}
 
 	return errors;
@@ -132,7 +133,9 @@ const validateExtra = (extra) => {
 };
 
 const validateDate = (date) => {
-
+	if (isEmptyOrWhitespace(date)){
+		return("Enter a date");
+        }
 };
 
 const validateCompany = (company) => {

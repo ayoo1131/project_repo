@@ -16,6 +16,14 @@
 }
 
 /*UploadUserContact*/
+.error-message-user-input-spacing{
+	display: 'flex';
+       	justify-content:'center';
+       	padding-bottom:'5px'; 
+	padding-top:'5px';
+	text-align: center;
+}
+
 .error-message-user-input{
 	margin: 0px 4px 0px 4px !important;
 	padding: 0px 4px 0px 4px !important;
@@ -49,6 +57,10 @@
 	box-sizing: border-box;
 }
 
+.upload-input-contact::placeholder{
+        color: #423d3d;
+}
+
 .upload-input-resize{
 	flex: 1 1 auto; /*For User Contact Upload Input. Keeps grow(1) shrink(1) basis(auto) to grow and shrink to fit the full column width*/
 	min-width: 0; /*in flexbox, child elements won't automatically shrink to below their content size unless explicetly stated*/
@@ -80,11 +92,10 @@
 	position: absolute;
        	left: 50%; 
 	transform: translateX(-50%);
-	margin: 2px 0 0 0; /*top right bottom left*/
-	width: 100%;
+	width:75%;
 	text-align: center;
-	margin: 0px 4px 0px 4px !important; /*top right bottom left*/
-        padding: 0px 4px 0px 4px !important;
+	margin: 4px 0px 4px 0px !important; /*top right bottom left*/
+        padding: 0px 0px 0px 0px !important;
         background-color: red;
         color: white !important;
         font-size: 10pt !important;
@@ -96,7 +107,6 @@
         position: relative !important; 
 	min-width: 100px !important;
 	padding-bottom: 1.2em !important;     /*reserve space below input for error*/
-	box-sizing: content-box !important;
 }
 
 .document-input-word{
@@ -118,11 +128,3 @@
 	color: #423d3d;
 }
 
-
-.has-right-border {
-  border-right: 1px solid #ccc; /* light gray vertical line */
-}
-
-.has-left-border {
-  border-left: 1px solid #ccc; /* light gray vertical line */
-}

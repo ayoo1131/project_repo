@@ -19,7 +19,7 @@ const ClearButton = ({
 		setJobInfoCallback({company: '', position: ''});
 		setContactMessageCallback(null);
 		setDownloadMessageCallback(null);
-		setDownloadErrorsCallback({name:'', email:'', phone:'', social:'', extra:'', date:'', company:'', position:''});
+		setDownloadErrorsCallback({name:'', email:'', phone:'', social:'', extra:'', date:'',company:'', position:''});
 	};
 
 	return(

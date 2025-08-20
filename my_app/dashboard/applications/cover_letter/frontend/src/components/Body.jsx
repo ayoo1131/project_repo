@@ -9,20 +9,33 @@ import DownloadButton from './DownloadButton.jsx';
 import {getContact} from './utils/personal_info/GetContact.js'
 
 const Body = () => {
-	//Set userContact as null, then check api with useEffect to see if contact is set
+	//JavaScript Object, set properties as blank, then check api with useEffect to see if contact is set
 	const [userContact, setUserContact] = useState({name:'', email:'', phone:'', social:'', extra:''});
 	
-	//set fillUserContact if user clicks fill button, callback updates state and shows in Mock Document input
+	//JavaScript Object, set fillUserContact if user clicks fill button, callback updates state and shows in MockDocument input
 	const [fillUserContact, setFillUserContact] = useState({name: '', email:'', phone:'', social:'', extra:''});
+	
+	//Boolean to track if user has saved contact and has clicked the update button
 	const [isUpdating, setIsUpdating] = useState(false);
-	const [contactMessage, setContactMessage] = useState(null); //Track if contact message is saved, updated, deleted, or error
-	const [downloadMessage, setDownloadMessage] = useState(null); //Track if error exists in Mock Document input fields
-	const [downloadErrors, setDownloadErrors] = useState({name:'', email:'', phone:'', social:'', extra:'', company:'', position:''}); //JavaScript Object
 
-	const [coverLetterInput, setCoverLetterInput] = useState( // used to fill-in the cover letter template when the user presses download button
+	//String to track if contact message is saved, updated, deleted, or error
+	const [contactMessage, setContactMessage] = useState(null); 
+
+	//String to track if error exists in Mock Document input fields
+	const [downloadMessage, setDownloadMessage] = useState(null);
+
+	//JavaScript Object. If Download button is pressed, check MockDocument input values 
+	const [downloadErrors, setDownloadErrors] = useState({name:'', email:'', phone:'', social:'', extra:'', company:'', position:''});
+
+	//JavaScript Object. Used to fill-in the cover letter template when the user presses download button
+	const [coverLetterInput, setCoverLetterInput] = useState(
 		{name:'', email:'', phone:'', social:'', extra:'', date:'', company:'', position:'', paragraph1:'', paragraph2:''}
 	);
-	const [jobInfo, setJobInfo] = useState({company:'', position:''});//Used to make sure company and position inputs match
+
+	//JavaScript Object, Used to make sure both sets of company and position input tags in Mock Document match the other.
+	const [jobInfo, setJobInfo] = useState({company:'', position:''});
+
+	//Boolean, if user clicks checkbox for today, set true.
 	const [isToday, setIsToday] = useState(false);
 
 	useEffect(() => {
@@ -56,7 +69,7 @@ const Body = () => {
 				{/*Ternary Operator that displays if downloadMessage is set*/}
 				{downloadMessage && <TopMessage messageProp = {downloadMessage}/> }
 
-				{/*Ternary Operator, if userContact null show Upload component. If userContact not null, show display component*/}
+				{/*Ternary Operator, if userContact null show UploadPersonalInfo component. If userContact not null, show DisplayPersonaInfo*/}
 				{(isContactNull() && !isUpdating) || (!isContactNull() && isUpdating) ? 
 				<UploadPersonalInfo
 					userContactProp = {userContact}
@@ -66,7 +79,8 @@ const Body = () => {
 				/>
 				:
 				<DisplayPersonalInfo 
-					userContactProp = {userContact} 
+					userContactProp = {userContact}
+					coverLetterInputProp = {coverLetterInput}
 					setUserContactCallback = {setUserContact} 
 					setIsUpdatingCallback = {setIsUpdating}
 					setFillUserContactCallback = {setFillUserContact}

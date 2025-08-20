@@ -76,97 +76,97 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 				<div className='form-section'>
 					<p className='has-text-left cover-letter-text' style={{paddingBottom:'2px'}}>Fill in the following fields to save your details for future use. If you prefer not to have your personal info saved, fill out the cover letter template manually.</p>
 
-					<div className='columns is-mobile is-multiline'>
-						<div className='column has-left-border has-right-border is-full-mobile is-6-tablet is-2-desktop'>
-							<div className='field is-grouped is-small column-bottom-margin' style={{gap: '0.25rem'}}>
-								<div className='control upload-label-fixed'>
-									<p className='cover-letter-text'>Name: </p>
+					<div className='columns'>
+						<div className='column is-2' style={{alignItems: 'center'}}>
+						{/*field is contrainer for form tag, is-group for side-by side*/}
+							<div className='field is-small'>
+								<div className='control'> {/*control wraps single form control with styling/spacing*/}
+									<div className='field is-grouped is-small column-bottom-margin'>
+										<p className='cover-letter-text upload-label-fixed'>Name: </p>
+										<input
+											className='input upload-input-contact'
+											type='text'
+											placeholder='Name'
+											value={userContact?.name || ''}
+											onChange={(e) => setUserContact({...userContact, name:e.target.value })}
+										/> 
+									</div>
 								</div>
-								<div className='control upload-input-resize'>
-									<input
-										className="input upload-input-contact" 
-										type="text" 
-										placeholder="Name"
-										value={userContact?.name || ''}
-										onChange={(e) => setUserContact({...userContact, name:e.target.value })}
-									/>
-								</div>
+								{errors.name && <p className='error-message-user-input'>{errors.name}</p>}
 							</div>
-							{errors.name && <p className='error-message-user-input'>{errors.name}</p>}
+						</div>	
+						
+						<div className='column is-2'>
+                                                        <div className='field is-small'>
+                                                                <div className='control'>
+                                                                        <div className='field is-grouped is-small column-bottom-margin'>
+                                                                                <p className='cover-letter-text upload-label-fixed'>Email:</p>
+                                                                                <input
+                                                                                        className='input upload-input-contact'
+                                                                                        type='text'
+                                                                                        placeholder='Email'
+											value = {userContact?.email || ''}
+                                                					onChange={(e) => setUserContact({...userContact, email:e.target.value })}
+										/>
+									</div>
+								</div>
+								{errors.email && <p className='error-message-user-input'>{errors.email}</p>}
+							</div>
+						</div>
+						
+						<div className='column is-2'>
+							<div className='field is-small'>
+								<div className='control'>
+									<div className='field is-grouped is-small column-bottom-margin'>
+										<p className='cover-letter-text upload-label-fixed'>Phone:</p>
+										<input
+        	        		                		                className='input upload-input-contact'
+        		        	                                		type='text'
+	        			        	                                placeholder='Phone'
+											value={userContact?.phone || ''}
+											onChange={(e) => setUserContact({...userContact, phone:e.target.value })}
+										/>				
+									</div>
+								</div>
+								{errors.phone && <p className='error-message-user-input'>{errors.phone}</p>}
+							</div>
 						</div>
 
-						<div className='column has-left-border has-right-border is-full-mobile is-6-tablet is-2-desktop'>
-                                                        <div className='field is-grouped column-bottom-margin' style={{gap: '0.25rem'}}>
-								<div className='control upload-label-fixed'>
-									<p className='cover-letter-text'>Email: </p>
+						<div className='column is-3'>
+							<div className='field is-small'>
+								<div className='control'>
+									<div className='field is-grouped is-small column-bottom-margin'>
+										<p className='cover-letter-text upload-label-fixed'>Social Media:</p>
+										<input
+											className="input upload-input-contact"
+											type="text"
+											placeholder="(optional)"
+											value={userContact?.social || ''}
+											onChange={(e) => setUserContact({...userContact, social:e.target.value})}
+										/>
+									</div>
 								</div>
-                                                                <div className='control upload-input-resize'>
-                                                                        <input
-                                                                                className="input upload-input-contact"
-                                                                                type="text"
-                                                                                placeholder="email"
-										value={userContact?.email || ''}
-										onChange={(e) => setUserContact({...userContact, email:e.target.value})}
-                                                                        />
+								{errors.social && <p className='error-message-user-input'>{errors.social}</p>}
+							</div>
+						</div>
+						
+						<div className='column is-2'>
+                                                        <div className='field is-small'>
+                                                                <div className='control'>
+                                                                        <div className='field is-grouped is-small column-bottom-margin'>
+                                                                                <p className='cover-letter-text upload-label-fixed'>Extra:</p>
+                                                                                <input
+                                                                                        className="input upload-input-contact"
+                                                                                        type="text"
+                                                                                        placeholder="(optional)"
+                                                                                        value={userContact?.extra || ''}
+                                                                                        onChange={(e) => setUserContact({...userContact, extra:e.target.value})}
+                                                                                />
+                                                                        </div>
                                                                 </div>
+								{errors.extra && <p className='error-message-user-input'>{errors.extra}</p>}
                                                         </div>
-							{errors.email && <p className='error-message-user-input'>{errors.email}</p>}
                                                 </div>
-
-						<div className='column is-full-mobile is-6-tablet is-2-desktop'>
-                                                        <div className='field is-grouped column-bottom-margin' style={{gap: '0.25rem'}}>
-								<div className='control upload-label-fixed'>
-									<p className='cover-letter-text'>Phone: </p>
-								</div>
-                                                                <div className='control upload-input-resize'>
-                                                                        <input
-                                                                                className="input upload-input-contact"
-                                                                               	type="text"
-                                                                                placeholder="Phone #"
-										value={userContact?.phone || ''}
-										onChange={(e) => setUserContact({...userContact, phone:e.target.value})}
-                                                                        />
-                                                                </div>
-                                                        </div>
-							{errors.phone && <p className='error-message-user-input'>{errors.phone}</p>}
-                                                </div>
-
-						<div className='column is-full-mobile is-6-tablet is-3-desktop'>
-                                                        <div className='field is-grouped column-bottom-margin' style={{gap: '0.25rem'}}>
-                                                                <div className='control upload-label-fixed'>
-                                                                        <p className='cover-letter-text'>Social Media: </p>
-                                                                </div>
-                                                                <div className='control upload-input-resize'>
-                                                                        <input
-                                                                                className="input upload-input-contact"
-                                                                                type="text"
-                                                                                placeholder="(optional)"
-                                                                                value={userContact?.social || ''}
-                                                                                onChange={(e) => setUserContact({...userContact, social:e.target.value})}
-                                                                        />
-                                                                </div>
-                                                        </div>
-							{errors.social && <p className='error-message-user-input'>{errors.social}</p>}
-                                                </div>
-
-						<div className='column is-full-mobile is-6-tablet is-2-desktop'>
-                                                        <div className='field is-grouped column-bottom-margin' style={{gap: '0.25rem'}}>
-                                                                <div className='control upload-label-fixed'>
-                                                                        <p className='cover-letter-text'>Extra: </p>
-                                                                </div>
-                                                                <div className='control upload-input-resize'>
-                                                                        <input
-                                                                                className="input upload-input-contact"
-                                                                                type="text"
-                                                                                placeholder="(optional)"
-                                                                                value={userContact?.extra || ''}
-                                                                                onChange={(e) => setUserContact({...userContact, extra:e.target.value})}
-                                                                        />
-                                                                </div>
-                                                        </div>
-							{errors.extra && <p className='error-message-user-input'>{errors.extra}</p>}
-                                                </div>
-
 						
 						<div className='column is-1'>
 							<div className='field'>

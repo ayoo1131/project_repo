@@ -8,16 +8,19 @@ const DownloadButton = ({coverLetterInputProp, setDownloadMessageCallback, setDo
 	const handleDownload = (e) => {
 		e.preventDefault();
 
-		//validate cover letter input	
+		//validate cover letter input
+		console.log(coverLetterInputProp);
 		const errors = validateCoverLetterInput(coverLetterInputProp);
 		if (Object.keys(errors).length === 0){
 			downloadCoverLetter(coverLetterInputProp);
 			setDownloadMessageCallback('Download Success');
+			console.log('Download Success');
 		}
 
 		else {
 			setDownloadMessageCallback('Download Failed, Check Input');
 			setDownloadErrorsCallback(errors);
+			console.log('Download Fail');
 		}
 	};
 
