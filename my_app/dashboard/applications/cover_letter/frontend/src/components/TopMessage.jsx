@@ -2,7 +2,7 @@
 import React from 'react';
 
 const TopMessage = ({messageProp}) => {
-	const messageColorMap = {
+	const messageColorMap = { //A map that indicates message and message background color depending on success or failure
 		'Contact Saved': 'green',
 		'Contact Updated': 'green',
 		'Contact Deleted': 'green',

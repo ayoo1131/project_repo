@@ -4,13 +4,15 @@ import {validateCoverLetterInput} from './utils/download/ValidateCoverLetterInpu
 import { downloadCoverLetter } from './utils/download/DownloadCoverLetter.js';
 
 // {} destructs properties object to give state from parent
-const DownloadButton = ({coverLetterInputProp, setDownloadMessageCallback, setDownloadErrorsCallback}) =>{
+const DownloadButton = ({coverLetterInputProp, setDownloadMessageCallback, setContactMessageCallback, setDownloadErrorsCallback}) =>{
+	
 	const handleDownload = (e) => {
-		e.preventDefault();
+		e.preventDefault();//stops Download button click from reloading page.
 
 		//validate cover letter input
 		console.log(coverLetterInputProp);
 		const errors = validateCoverLetterInput(coverLetterInputProp);
+		setContactMessageCallback(null); //SetContact message to null regardless of if there is contact message on top of page or not
 		if (Object.keys(errors).length === 0){
 			downloadCoverLetter(coverLetterInputProp);
 			setDownloadMessageCallback('Download Success');

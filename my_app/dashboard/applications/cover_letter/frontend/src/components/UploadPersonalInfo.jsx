@@ -4,7 +4,13 @@ import {validateContact} from './utils/personal_info/ValidateContact.js';
 import {insertContact} from './utils/personal_info/InsertContact.js'; 
 import {updateContact} from './utils/personal_info/UpdateContact.js';
 
-const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdatingCallback, setContactMessageCallback}) => {
+const UploadPersonalInfo = ({
+	userContactProp, 
+	setUserContactCallback, 
+	setIsUpdatingCallback, 
+	setContactMessageCallback,
+	setDownloadMessageCallback}) => {
+
 	const [userContact, setUserContact] = useState({
 		name: userContactProp.name,
 		email: userContactProp.email, 
@@ -12,9 +18,9 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 		social: userContactProp.social,
 		extra: userContactProp.extra
 	}); //JavaScript Object
-	
-	const [successfulSave, setSuccessfulSave] = useState(false);
+
 	const [errors, setErrors] = useState({name: '', email: '', phone: '', social: '', extra: ''}); //JavaScript Object
+	const [successfulSave, setSuccessfulSave] = useState(false);
 	const [successfulAdd, setSuccessfulAdd] = useState(false);
 
 	const isContactPropNull = () => {
@@ -40,6 +46,7 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 		const errors = validateContact(userContact);
 		setErrors(errors);
 		
+		setDownloadMessageCallback(null); //Clear Download message from top of screen if there is one
 		if (Object.keys(errors).length === 0){ //No errors in user input contact.
 			if (isContactPropNull()){ //There is no saved contact, create a new one for the user
 				insertContact(userContact);
@@ -60,7 +67,7 @@ const UploadPersonalInfo = ({userContactProp, setUserContactCallback, setIsUpdat
 			setIsUpdatingCallback(false);
 		}
 
-		else {
+		else { //There is an error with the user input contact.
 			if (isContactPropNull()){ 
 				setContactMessageCallback('Contact Save Error');
 			}

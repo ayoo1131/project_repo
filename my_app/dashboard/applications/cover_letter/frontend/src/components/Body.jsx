@@ -69,13 +69,14 @@ const Body = () => {
 				{/*Ternary Operator that displays if downloadMessage is set*/}
 				{downloadMessage && <TopMessage messageProp = {downloadMessage}/> }
 
-				{/*Ternary Operator, if userContact null show UploadPersonalInfo component. If userContact not null, show DisplayPersonaInfo*/}
+				{/*Ternary Operator, if userContact null or isUpdating show UploadPersonalInfo. If userContact set, show DisplayPersonaInfo*/}
 				{(isContactNull() && !isUpdating) || (!isContactNull() && isUpdating) ? 
 				<UploadPersonalInfo
 					userContactProp = {userContact}
 					setUserContactCallback = {setUserContact}
 					setIsUpdatingCallback = {setIsUpdating}
 					setContactMessageCallback = {setContactMessage}
+					setDownloadMessageCallback = {setDownloadMessage}
 				/>
 				:
 				<DisplayPersonalInfo 
@@ -86,6 +87,7 @@ const Body = () => {
 					setFillUserContactCallback = {setFillUserContact}
 					setCoverLetterInputCallback = {setCoverLetterInput}
 					setContactMessageCallback = {setContactMessage}
+					setDownloadMessageCallback = {setDownloadMessage}
 				/>}
 
 				<MockDocument 
@@ -116,6 +118,7 @@ const Body = () => {
                                        		<DownloadButton 
 							coverLetterInputProp = {coverLetterInput}
 							setDownloadMessageCallback = {setDownloadMessage}
+							setContactMessageCallback = {setContactMessage}
 							setDownloadErrorsCallback = {setDownloadErrors}
 						/> 
                                  	</div>
