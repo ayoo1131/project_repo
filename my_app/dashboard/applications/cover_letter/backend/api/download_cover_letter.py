@@ -15,10 +15,12 @@ from .. import cover_letter_blueprint
 def download_cover_letter():
     try:
         data = request.get_json()
-        download_document_buffer = fill_template(current_user, data['coverLetterInputProp'])
-        user_name = data['coverLetterInputProp']['name']
-        company = data['coverLetterInputProp']['company']
-
+        download_document_buffer = fill_template(current_user, data)
+        logging.error(data)
+        #user_name = data['name']
+        user_name = 'James'
+        company = data['company']
+        
         return send_file(
             download_document_buffer,
             as_attachment = True,

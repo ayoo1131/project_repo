@@ -1,4 +1,4 @@
-//ApplicationDropdown.js
+//ApplicationDropdown.jsx
 import React from 'react';
 
 const ApplicationDropout = () => {
@@ -9,7 +9,7 @@ const ApplicationDropout = () => {
 	const handleAppliedJobs = () => {
 		window.location.href='/applied-jobs'
 	};
-	
+
 	return (
 		<div class="navbar-item has-dropdown is-hoverable">
 			<a className="navbar-link gray-background has-text-white">

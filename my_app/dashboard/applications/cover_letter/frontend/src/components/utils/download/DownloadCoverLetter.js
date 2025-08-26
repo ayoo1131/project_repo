@@ -1,5 +1,5 @@
 //DownloadCoverLetter.js
-export const downloadCoverLetter = async(coverLetterInput) => {
+export const downloadCoverLetter = async(coverLetterInput) => { //coverLetterInput parameter is object 
 	try {
 		const response = await fetch('/api/download-cover-letter', {
 			method: 'POST',
@@ -21,9 +21,10 @@ export const downloadCoverLetter = async(coverLetterInput) => {
 		const url = window.URL.createObjectURL(blob);
 		const a = document.createElement('a');
 		a.href = url;
-
-		const name= coverLetterInput['coverLetterInputProp'].name;
-		const company = coverLetterInput['coverLetterInputProp'].company;
+		
+		console.log(typeof coverLetterInput);
+		const name= coverLetterInput.name;
+		const company = coverLetterInput.company;
 		a.download = `${name} Cover Letter - ${company}.docx`;
 
 		document.body.appendChild(a);

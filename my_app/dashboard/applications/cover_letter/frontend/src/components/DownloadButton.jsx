@@ -10,13 +10,11 @@ const DownloadButton = ({coverLetterInputProp, setDownloadMessageCallback, setCo
 		e.preventDefault();//stops Download button click from reloading page.
 
 		//validate cover letter input
-		console.log(coverLetterInputProp);
 		const errors = validateCoverLetterInput(coverLetterInputProp);
 		setContactMessageCallback(null); //SetContact message to null regardless of if there is contact message on top of page or not
 		if (Object.keys(errors).length === 0){
 			downloadCoverLetter(coverLetterInputProp);
 			setDownloadMessageCallback('Download Success');
-			console.log('Download Success');
 		}
 
 		else {

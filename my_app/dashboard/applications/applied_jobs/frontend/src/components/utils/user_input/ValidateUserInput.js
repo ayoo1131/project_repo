@@ -124,8 +124,8 @@ const validateURL = (url) => {
                 return("Enter a url");
         }
 
-        else if (urlLength > 100){
-                return("url must be 40 characters or less");
+        else if (urlLength > 300){
+                return("url must be 300 characters or less");
         }
 };
 

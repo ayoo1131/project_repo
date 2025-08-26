@@ -37,13 +37,11 @@ export const validateCoverLetterInput = (coverLetterInput) => {
 	let companyError = validateCompany(coverLetterInput.company);
 	if(companyError != null){
 		errors.company = companyError;
-		console.log('Company Error');
 	}
 
 	let positionError = validatePosition (coverLetterInput.position);
 	if (positionError!= null){
 		errors.position = positionError;
-		console.log('Position error');
 	}
 
 	return errors;
