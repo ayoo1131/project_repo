@@ -44,8 +44,8 @@ echo -e "\nVite Installation Complete!\n"
 react_project_name_dash=$(echo "$react_project_name_underscore" | tr '_' '-')
 
 #stream editor. command tool to process and transform text. used to search, replace, insert, delete, and edit file without opening it.
-#sed '/pattern/i new line' file.txt - Inserts before pattern (a inserts after)
-#sed -i "/})/i base: '/${react_project_name_dash}'," vite.config.js
+#sed '/pattern/i new line' file.txt - Inserts before pattern (i inserts before, a inserts after)
+sed -i "/})/i base: '/${react_project_name_dash}'," vite.config.js
 
 echo -e "\nFrontend Directory Build Complete!\n"
 cd ..
@@ -144,7 +144,7 @@ echo -e "\nReact App Added to Home Page Dropdown Header\n"
 echo -e "\nAdding Blueprint and Registering for React Project\n"
 cd ..
 tab_one=$'\t'
-blueprint_registration=$' '"$tab_one"'from my_app.dashboard.applications.'"$react_project_name_underscore"'.backend import '"$react_project_name_underscore"'_blueprint \n '"$tab_one"'app.register_blueprint('"$react_project_name_underscore"'_blueprint)'
+blueprint_registration=$''"$tab_one"'from my_app.dashboard.applications.'"$react_project_name_underscore"'.backend import '"$react_project_name_underscore"'_blueprint\n'"$tab_one"'app.register_blueprint('"$react_project_name_underscore"'_blueprint)'
 awk -v new_line="$blueprint_registration" '
         /^[[:space:]]*#Application Blueprint Route and Register/ {
                 print
@@ -154,3 +154,103 @@ awk -v new_line="$blueprint_registration" '
         {print}
 ' __init__.py > temp && mv temp __init__.py
 echo -e "\nFinished Adding Blueprint and Registering React Project\n"
+
+#Restart the system manager
+sudo systemctl restart flaskapp.service
+
+cd dashboard/applications/
+echo -e "\nBuilding all React Applications to Reflect Application Dropdown Change\n"
+#Loop through all the entries in applications/ that end with a slash(directories)
+for dir in */; do
+        #Remove trailing slash from directory name
+        dirname="${dir%/}"
+	
+	#Ignore shared_ui directory
+        if [[ "$dirname" != "shared_ui" ]]; then
+                cd ${dirname}/frontend
+                echo -e "\nBuilding Application: $dirname\n"
+		npm run build
+                cd ..
+                cd ..
+        fi
+done
+echo -e "\n$react_project_name_header has been added \n"
+echo "$react_project_name_header has been added. Check to verify default React Page is accessable. Press Enter to continue:"
+read user_input
+
+#------------------------Remove Default React App, Build Header and Body--------------------------------------------------------
+cd $react_project_name_underscore/frontend/
+
+echo -e "\nEditing /frontend/index.html\n"
+sed -i "s|<title>.*</title>|<title>$react_project_name_header</title>|" index.html
+
+tabs_two=$'\t\t'
+bulma_css="$tabs_two<link rel="stylesheet" href="https://andrewyoo.xyz/static/css/bulma.css">"
+global_css="$tabs_two<link rel="stylesheet" href="https://andrewyoo.xyz/static/css/global.css">"
+awk -v first="$bulma_css" -v second="$global_css" '
+        /^[[:space:]]*<\/head>/ {
+                print first
+                print second
+        }
+        { print }
+' index.html > temp && mv temp index.html
+echo -e "\nCompleted editing /frontend/index.html\n"
+
+echo -e "\nStarting edit of frontend/src/App.jsx\n"
+cd src
+rm -rf App.jsx
+cat << EOF > App.jsx
+//App.jsx
+import React from 'react';
+import Header from '../../../shared_ui/header/Header.jsx';
+import Body from './components/Body.jsx';
+
+function App() {
+
+        return (
+                <section className = 'hero is-fullheight background-color-blue'>
+
+                        <Header appName='$react_project_name_header' />
+
+                        <Body />
+
+                </section>
+        )
+}
+
+export default App;
+EOF
+echo -e "\nfrontend/src/App.jsx edit complete!\n"
+
+echo -e "\nRemoving index.css from frontend/src/main.jsx\n"
+sed -i "/index.css/d" main.jsx
+echo -e "\nRemoved index.css from main.jsx\n"
+
+echo -e "\nCreating src/components/ dir, src/components/utils/ dir, and src/components/Body.jsx file\n"
+mkdir components
+cd components
+mkdir utils
+
+cat << EOF > Body.jsx
+//Body.jsx
+import React, {useState, useEffect} from 'react';
+
+const Body = () => {
+
+        return (
+                <div>
+                        <p>Hello</p>
+                </div>
+        );
+};
+
+export default Body;
+EOF
+echo -e "\nCompleted creating components/ utils/ and Body.jsx\n"
+
+echo -e "\nChange Vite development dependency versions to resolve react/jsx-runtime Header.jsx error \n"
+npm install vite@^6.3.5 --save-dev
+npm install @vitejs/plugin-react@4.4.1 --save-dev
+echo -e "\nVite dependency successsfully changed\n"
+
+npm run build
