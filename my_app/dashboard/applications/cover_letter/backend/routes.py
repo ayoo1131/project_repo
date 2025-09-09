@@ -9,10 +9,11 @@ from sqlalchemy.exc import SQLAlchemyError
 
 import logging
 
-build_dir = '/home/ayoo1131/guitar_note_to_tabs/my_app/dashboard/applications/cover_letter/frontend/dist'
+build_dir = '/home/ayoo1131/project_repo/my_app/dashboard/applications/cover_letter/frontend/dist'
 
 @cover_letter_blueprint.route('/cover-letter', defaults={'path': ''}, methods=['GET'])
 @cover_letter_blueprint.route('/cover-letter/<path:path>')
+@login_required
 def cover_letter_home(path):
     if request.method == 'GET':
         file_path = os.path.join(build_dir, path)

@@ -1,5 +1,4 @@
 //Header.js
-
 import React, {useContext}  from 'react';
 import ApplicationDropdown from './ApplicationDropdown.jsx';
 import DashboardHome from './DashboardHome.jsx';

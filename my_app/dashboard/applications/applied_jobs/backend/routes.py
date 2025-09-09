@@ -7,10 +7,11 @@ from my_app import db
 import os
 from sqlalchemy.exc import SQLAlchemyError
 
-build_dir = '/home/ayoo1131/guitar_note_to_tabs/my_app/dashboard/applications/applied_jobs/frontend/dist'
+build_dir = '/home/ayoo1131/project_repo/my_app/dashboard/applications/applied_jobs/frontend/dist'
 
 @applied_jobs_blueprint.route('/applied-jobs', defaults={'path': ''}, methods=['GET'])
 @applied_jobs_blueprint.route('/applied-jobs/<path:path>')
+@login_required
 def applied_jobs_home(path):
     if request.method == 'GET':
         file_path = os.path.join(build_dir, path)

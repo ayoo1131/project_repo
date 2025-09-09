@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
+import time
 from flask_login import login_user
 from models.user import User
 from my_app import db
@@ -43,12 +44,12 @@ def login_post():
 def login_guest_post():
     username = None 
     while True:
-        guestNum = random.randint(1,99999)
-        formatted = f'{guestNum:05d}'
+        guestNum = random.randint(1,99999) #Generate number
+        formatted = f'{guestNum:05d}' #Format number to string of 5 digits, put leading zeros
         username = 'guest_' + formatted;
-        userFound = User.query.filter_by(username=username).first()
-        
-        if (userFound == None):
+       
+        #On the highly unlikey chance there is already a guest user with same number, repeat while loop
+        if not (User.query.filter_by(username=username).first()): 
             break
 
     password = generate_password_hash('password', method = 'pbkdf2:sha256')
@@ -58,8 +59,12 @@ def login_guest_post():
     db.session.commit()
     
     login_user(guestUser)
+
+    session.permanent = True #treats session as 'permanent', meaning it uses value of permanent_session_lifetime to decide when session expires. Without this line, session will only last untill browser is closed.
     session['username'] = username
     session['is_guest'] = True
+    session['guest_created_at'] = time.time()
+    session['last_active'] = time.time()
     return redirect(url_for('dashboard.dashboard_home'))
 
 #Signup Routes
