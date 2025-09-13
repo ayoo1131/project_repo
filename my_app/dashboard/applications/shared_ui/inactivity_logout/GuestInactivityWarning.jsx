@@ -4,7 +4,7 @@ import '../../../../static/css/shared/guest_inactivity_warning.css';
 import { logoutGuestUser } from './utils/logoutGuestUser.js'; 
 
 const GuestInactivityWarning = ({setShowGuestInactiveWarningCallback}) => {
-	const [timeLeft, setTimeLeft] = useState(300); //user has 5 mins to click I'm still working button
+	const [timeLeft, setTimeLeft] = useState(60); //user has 5 mins to click I'm still working button
 	
 	useEffect(() => {
 		if (timeLeft <= 0) {
@@ -27,7 +27,7 @@ const GuestInactivityWarning = ({setShowGuestInactiveWarningCallback}) => {
 			<div className='inactivity-warning-content'>
 				<h3 className='inactivity-warning-text'>Are you still there?</h3>
 				<p className='inactivity-warning-text'>You will be logged out due to inactivity in {timeLeft} seconds.</p>
-				<p style={{color: 'red'}}>*All your saved data will be deleted*</p>	
+				<p style={{color: 'red'}}>*All your saved data will be deleted*</p>
 				<button onClick={handleConfirmActive} className="inactivity-warning-button">I'm still working</button>
 			</div>
 		</div>
