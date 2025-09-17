@@ -41,7 +41,9 @@ function App() {
 			{showGuestInactiveWarning && //if user has been inactive for x amount of mins, will show warning  
 				<GuestInactivityWarning setShowGuestInactiveWarningCallback={setShowGuestInactiveWarning}/>
 			}
-			<Header  appName='Applied Jobs'/>
+			{
+				userData &&<Header  appName='Applied Jobs' userRoleProp={userData.role}/>
+			}
 			<Body />
 		</section>
 	);

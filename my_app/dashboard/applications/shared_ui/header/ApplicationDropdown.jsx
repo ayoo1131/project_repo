@@ -1,7 +1,5 @@
-//ApplicationDropdown.jsx
-import React from 'react';
-
-const ApplicationDropout = () => {
+//AppicationDropdown.jsx
+const ApplicationDropout = ({userRoleProp}) => {
 	const handleCoverLetter = () => {
 		window.location.href='/cover-letter'
 	};
@@ -9,7 +7,9 @@ const ApplicationDropout = () => {
 	const handleAppliedJobs = () => {
 		window.location.href='/applied-jobs'
 	};
-
+	const handleTestApp = () => { 
+		window.location.href='/test-app'
+	};
 	return (
 		<div class="navbar-item has-dropdown is-hoverable">
 			<a className="navbar-link gray-background has-text-white">
@@ -17,6 +17,7 @@ const ApplicationDropout = () => {
 			</a>
 
 			<div className="navbar-dropdown">
+				<a className="navbar-item gray-background has-text-white" onClick={handleTestApp}>Test App</a>
 				<a className="navbar-item gray-background has-text-white" onClick={handleCoverLetter}>Cover Letter</a>
 				<a className="navbar-item gray-background has-text-white" onClick={handleAppliedJobs}>Applied Jobs</a>
 			</div>

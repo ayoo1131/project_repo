@@ -4,9 +4,9 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 #Prompt user for react app name and read into variable
-read -p "Enter React app name: "  react_project_name_underscore
+read -p "Enter React app name (ex. react_project_name): "  react_project_name_underscore
 
-# Move working directory to applications directory
+# Move working directory, go up one directory, then cd to applications directory. || - or if cd fails do commands in {}
 cd "$SCRIPT_DIR/../applications" || {
 	echo "failed to cd to /applications directory"
 	exit 1
@@ -31,7 +31,7 @@ mkdir frontend backend
 #Move default files to frontend directory
 mv eslint.config.js index.html package.json public src vite.config.js frontend/
 
-#------------------Build Frontend Directory-----------------------
+#------------------Build Frontend Directory---------------project_repo/my_app/dashboard/applications/react_app/frontend
 #Install Vite locally into React project, add Vite and devDependenct in package.json
 echo -e "\nInstalling Vite locally into project\n"
 cd frontend
@@ -49,7 +49,7 @@ sed -i "/})/i base: '/${react_project_name_dash}'," vite.config.js
 
 echo -e "\nFrontend Directory Build Complete!\n"
 cd ..
-#-------------------Build Backend Directory-----------------------
+#-------------------Build Backend Directory------------project_repo/my_app/dashboard/applications/react_app/backend
 echo -e "\nPopulating Backend Directory\n"
 cd backend
 mkdir api utils
@@ -75,7 +75,7 @@ from my_app import db
 import os
 from sqlalchemy.exc import SQLAlchemyError
 
-build_dir = '/home/ayoo1131/guitar_note_to_tabs/my_app/dashboard/applications/${react_project_name_underscore}/frontend/dist'
+build_dir = '/home/ayoo1131/project_repo/my_app/dashboard/applications/${react_project_name_underscore}/frontend/dist'
 
 @${react_project_name_underscore}_blueprint.route('/${react_project_name_dash}', defaults={'path': ''}, methods=['GET'])
 @${react_project_name_underscore}_blueprint.route('/${react_project_name_dash}/<path:path>')
@@ -143,7 +143,7 @@ echo -e "\nReact App Added to Home Page Dropdown Header\n"
 
 echo -e "\nAdding Blueprint and Registering for React Project\n"
 cd ..
-tab_one=$'\t'
+tab_one=$'    '
 blueprint_registration=$''"$tab_one"'from my_app.dashboard.applications.'"$react_project_name_underscore"'.backend import '"$react_project_name_underscore"'_blueprint\n'"$tab_one"'app.register_blueprint('"$react_project_name_underscore"'_blueprint)'
 awk -v new_line="$blueprint_registration" '
         /^[[:space:]]*#Application Blueprint Route and Register/ {
@@ -201,21 +201,50 @@ cd src
 rm -rf App.jsx
 cat << EOF > App.jsx
 //App.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import useCheckGuestInactivity from '../../../shared_ui/inactivity_logout/utils/useCheckGuestInactivity.js';
+import GuestInactivityWarning from '../../../shared_ui/inactivity_logout/GuestInactivityWarning.jsx';
 import Header from '../../../shared_ui/header/Header.jsx';
 import Body from './components/Body.jsx';
 
 function App() {
+	const [showGuestInactiveWarning, setShowGuestInactiveWarning] = useState(false);
+	const [userData, setUserData] = useState(null);
 
-        return (
-                <section className = 'hero is-fullheight background-color-blue'>
+	useCheckGuestInactivity( userData?.is_guest, setShowGuestInactiveWarning);
 
-                        <Header appName='$react_project_name_header' />
+	useEffect(() => { //Get user information from api
+		const fetchUserData = async () => {
+			try{
+				const response = await fetch('/api/user-info', {
+					method: 'GET',
+					headers: { 'Content-Type': 'application/json' },
+					credentials: 'include', // Send cookies with request (important for Flask sessions)
+				});
+				const result = await response.json();
+				if (response.ok){
+					setUserData(result);
+				}
+				else{
+					console.error('Server error: ', result.error);
+				}
+			}
+			catch(error){
+				console.error('Fetch error: ', error);
+			}
+		};
+		fetchUserData();
+	} ,[]);
 
-                        <Body />
-
-                </section>
-        )
+	return (
+		<section className = 'hero is-fullheight background-color-blue'>
+			{showGuestInactiveWarning &&  
+				<GuestInactivityWarning setShowGuestInactiveWarningCallback={setShowGuestInactiveWarning}/>
+			}
+			<Header appName='$react_project_name_header' />
+			<Body />
+		</section>
+	)
 }
 
 export default App;

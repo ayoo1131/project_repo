@@ -36,8 +36,6 @@ def login_post():
 
     #call flask method to login user
     login_user(user)
-    session['username'] = username
-    session['is_guest'] = False
     return redirect(url_for('dashboard.dashboard_home'))
 
 @auth.route('/login_guest', methods=['POST'])
@@ -60,11 +58,7 @@ def login_guest_post():
     
     login_user(guestUser)
 
-    session.permanent = True #treats session as 'permanent', meaning it uses value of permanent_session_lifetime to decide when session expires. Without this line, session will only last untill browser is closed.
-    session['username'] = username
-    session['is_guest'] = True
-    session['guest_created_at'] = time.time()
-    session['last_active'] = time.time()
+    #session.permanent = True #treats session as 'permanent', meaning it uses value of permanent_session_lifetime to decide when session expires. Without this line, session will only last untill browser is closed.
     return redirect(url_for('dashboard.dashboard_home'))
 
 #Signup Routes

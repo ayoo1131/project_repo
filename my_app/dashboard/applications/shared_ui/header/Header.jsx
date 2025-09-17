@@ -4,7 +4,7 @@ import ApplicationDropdown from './ApplicationDropdown.jsx';
 import DashboardHome from './DashboardHome.jsx';
 import ProfileDropdown from './ProfileDropdown.jsx';
 
-const Header =({appName}) => {
+const Header =({appName, userRoleProp}) => {
 	return (
 	<div className="hero-head">
             	<nav className="navbar dark-background">
@@ -12,7 +12,7 @@ const Header =({appName}) => {
                     		<div id="navbarDashboard" className="navbar-menu">
 					<div className="navbar-start">
 						<DashboardHome />
-	       					<ApplicationDropdown />
+	       					<ApplicationDropdown userRoleProp={userRoleProp}/>
 	       				</div>
 					
 					<div className="navbar-center">

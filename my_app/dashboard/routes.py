@@ -19,13 +19,18 @@ def dashboard_home():
 @api_blueprint.route('/user-info')
 @login_required
 def get_user_info():
-    return jsonify({'username': current_user.username, 'user_id': current_user.id, 'is_guest': current_user.is_guest})
+    return jsonify({
+        'username': current_user.username, 
+        'user_id': current_user.id, 
+        'is_guest': current_user.is_guest, 
+        'role': current_user.role,
+    })
 
 #Dashboard logout route
 @dashboard.route('/logout')
 @login_required
 def logout():
-    if (session['is_guest'] == True):
+    if (current_user.is_guest == '1'):
         user = current_user
         
         #Delete Guest User's Applied Jobs

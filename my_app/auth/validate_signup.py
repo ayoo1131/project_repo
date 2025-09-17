@@ -7,8 +7,10 @@ def is_valid_username(username):
     if len(username) == 0:
         return "Please enter a valid username"
 
-    if len(username) > 20:
-        return "Username must be less than 20 characters"
+    if len(username) >= 25:
+        return "Username must be 25 characters or less"
+
+    #Username cannot have a whitespace in it, must be more than 3 characters, cannot have the following symbols: ! @ # $ % ^ & * ( ) , ? ' "  \ / < > = ; : 
 
     user = User.query.filter_by(username=username).first() ##If this returns a user, then a user w/ username already exists
     if user:
