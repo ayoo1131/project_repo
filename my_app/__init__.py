@@ -15,18 +15,6 @@ def create_app():
     app = Flask(__name__)
     app.debug = True #Debug mode ON
 
-    #Set up the paths to your templates
-    auth_base_template_path = os.path.join(os.path.dirname(__file__), 'templates')
-    dashboard_base_template_path = os.path.join(os.path.dirname(__file__), 'dashboard','templates')
-    cover_letter_template_path = os.path.join(os.path.dirname(__file__), 'applications', 'cover_letter', 'templates')
-
-    # Tell Flask to look in both places when rendering templates
-    app.jinja_loader = ChoiceLoader([
-        FileSystemLoader(auth_base_template_path),
-        FileSystemLoader(dashboard_base_template_path),
-        FileSystemLoader(cover_letter_template_path)
-    ])
-
     #Setup error logging to /var/log/syslog
     syslog_handler = SysLogHandler(address='/dev/log') #writes to syslog
     syslog_handler.setLevel(logging.DEBUG) #set the level of logging you want
@@ -58,8 +46,6 @@ def create_app():
     app.register_blueprint(dashboard_blueprint)
 
     #Application Blueprint Route and Register
-    from my_app.dashboard.applications.test_app.backend import test_app_blueprint
-    app.register_blueprint(test_app_blueprint)
 
     #blueprint for coverletter routes in the Dashboard Applications
     from my_app.dashboard.applications.cover_letter.backend import cover_letter_blueprint

@@ -6,8 +6,11 @@ from models.job import Job
 from my_app import db
 import os
 from sqlalchemy.exc import SQLAlchemyError
+from pathlib import Path
+import logging
 
-build_dir = '/home/ayoo1131/project_repo/my_app/dashboard/applications/applied_jobs/frontend/dist'
+BASE_DIR = Path(__file__).resolve().parent.parent #Get the complete file path to parent directory of this file
+build_dir = BASE_DIR / 'frontend' / 'dist'
 
 @applied_jobs_blueprint.route('/applied-jobs', defaults={'path': ''}, methods=['GET'])
 @applied_jobs_blueprint.route('/applied-jobs/<path:path>')

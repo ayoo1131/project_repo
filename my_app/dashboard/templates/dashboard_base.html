@@ -27,16 +27,9 @@
 
 							<div class="navbar-dropdown">
 								<!--Insert Application Dropdown Below-->
-								{% if current_user.role=='dev'%}
- 									<a href="{{url_for('test_app.test_app_home')}}" class="navbar-item gray-background has-text-white"> 
- 										Test App 
- 									</a> 
-								{% endif %}
 								<a href="{{ url_for('cover_letter.cover_letter_home') }}" class="navbar-item gray-background has-text-white">
 									Cover Letter
 								</a>
-								
-								<!--url_for(blueprint_name.function)-->
 								<a href="{{ url_for('applied_jobs.applied_jobs_home') }}"  class="navbar-item gray-background has-text-white">
 									Applied Jobs
 								</a>

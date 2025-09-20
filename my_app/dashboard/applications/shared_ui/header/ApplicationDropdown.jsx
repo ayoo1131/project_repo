@@ -7,9 +7,6 @@ const ApplicationDropout = ({userRoleProp}) => {
 	const handleAppliedJobs = () => {
 		window.location.href='/applied-jobs'
 	};
-	const handleTestApp = () => { 
-		window.location.href='/test-app'
-	};
 	return (
 		<div class="navbar-item has-dropdown is-hoverable">
 			<a className="navbar-link gray-background has-text-white">
@@ -17,7 +14,6 @@ const ApplicationDropout = ({userRoleProp}) => {
 			</a>
 
 			<div className="navbar-dropdown">
-				<a className="navbar-item gray-background has-text-white" onClick={handleTestApp}>Test App</a>
 				<a className="navbar-item gray-background has-text-white" onClick={handleCoverLetter}>Cover Letter</a>
 				<a className="navbar-item gray-background has-text-white" onClick={handleAppliedJobs}>Applied Jobs</a>
 			</div>

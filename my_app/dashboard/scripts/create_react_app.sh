@@ -107,7 +107,8 @@ awk -v new_line="$handle_function" '
 
 #Add <a> tag to add React Project to dropdown app
 react_project_name_link=$(echo "$react_project_name_header" | sed -E 's/([A-Z])/ \1/g' | sed 's/^ //')
-hyperlink_tag=$'\t\t\t\t<a className="navbar-item gray-background has-text-white" onClick={handle'"$react_project_name_header"'}>'"$react_project_name_link"'</a>'
+hyperlink_tag=$'\t\t\t\t{userRoleProp==='"'"'dev'"'"'&&\n\t\t\t\t\t<a className="navbar-item gray-background has-text-white" onClick={handle'"$react_project_name_header"'}>'"$react_project_name_link"'</a>\n\t\t\t\t}'
+
 #inserts text after target line
 awk -v new_line="$hyperlink_tag" '
 	/^[[:space:]]*<div className="navbar-dropdown">/ {
@@ -126,10 +127,18 @@ cd ..
 #<div class="navbar-dropdown">
 #react_project_name_header=$(echo "$react_project_name_underscore" | sed -r 's/(^|_)([a-z])/\U\2/g')
 #react_project_name_link=$(echo "$react_project_name_header" | sed -E 's/([A-Z])/ \1/g' | sed 's/^ //')
+
 tabs_eight=$'\t\t\t\t\t\t\t\t'
 tabs_nine=$'\t\t\t\t\t\t\t\t\t'
-echo $react_project_name_link
-hyperlink_tag=$' '"$tabs_eight"'<a href="{{url_for('\'''"$react_project_name_underscore"'.'"$react_project_name_underscore"'_home'\'')}}" class="navbar-item gray-background has-text-white"> \n '"$tabs_nine""$react_project_name_link"$' \n '"$tabs_eight"'</a> '
+tabs_ten=$'\t\t\t\t\t\t\t\t\t\t'
+
+line_one=''"$tabs_eight"'{% if current_user.role=='"'"'dev'"'"'%} '"\n"''
+line_two=''"$tabs_nine"'<a href="{{url_for('\'''"$react_project_name_underscore"'.'"$react_project_name_underscore"'_home'\'')}}" class="navbar-item gray-background has-text-white">'"\n"''
+line_three=''"$tabs_ten"''"$react_project_name_link"' '"\n"''
+line_four=''"$tabs_nine"'</a> '"\n"''
+line_five=''"$tabs_eight"'{% endif %}'
+
+hyperlink_tag=$''"$line_one"''"$line_two"''"$line_three"''"$line_four"''"$line_five"''
 
 awk -v new_line="$hyperlink_tag" '
         /^[[:space:]]*<!--Insert Application Dropdown Below-->/ {
@@ -241,7 +250,9 @@ function App() {
 			{showGuestInactiveWarning &&  
 				<GuestInactivityWarning setShowGuestInactiveWarningCallback={setShowGuestInactiveWarning}/>
 			}
-			<Header appName='$react_project_name_header' />
+			{userData &&
+				<Header appName='$react_project_name_header' userRoleProp={userData.role}/> 
+			}
 			<Body />
 		</section>
 	)

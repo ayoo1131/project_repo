@@ -5,7 +5,9 @@ from flask_login import login_user
 from models.user import User
 from my_app import db
 from my_app.auth import auth
-from my_app.auth.validate_signup import is_valid_password, is_valid_username
+from .utils.validate_signup import is_valid_password, is_valid_username
+from .utils.create_guest_user import create_guest_username
+from .utils.created_user_date_time import created_user_date_time
 import random
 
 #Authentication Home Route
@@ -40,19 +42,9 @@ def login_post():
 
 @auth.route('/login_guest', methods=['POST'])
 def login_guest_post():
-    username = None 
-    while True:
-        guestNum = random.randint(1,99999) #Generate number
-        formatted = f'{guestNum:05d}' #Format number to string of 5 digits, put leading zeros
-        username = 'guest_' + formatted;
-       
-        #On the highly unlikey chance there is already a guest user with same number, repeat while loop
-        if not (User.query.filter_by(username=username).first()): 
-            break
-
     password = generate_password_hash('password', method = 'pbkdf2:sha256')
 
-    guestUser = User(is_guest=1, username=username, password=password)
+    guestUser = User(is_guest=1, username=create_guest_username(), password=password, role='user', created_date_time=created_user_date_time())
     db.session.add(guestUser)
     db.session.commit()
     
@@ -92,11 +84,10 @@ def signup_post():
 
     #User entered username and password are valid
     #Create new user with the form data. Hash the password so plaintext version isn't saved.
-    newUser = User(is_guest=0, username=username, password=generate_password_hash(password, method = 'pbkdf2:sha256'))
+    newUser = User(is_guest=0, username=username, password=generate_password_hash(password, method = 'pbkdf2:sha256'), role='user', created_date_time=created_user_date_time())
     
     # add the new user to the database
     db.session.add(newUser)
     db.session.commit()
 
     return render_template('login.html', userSuccessfullyAdded='User successfully added')
-

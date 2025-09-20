@@ -30,7 +30,7 @@ def get_user_info():
 @dashboard.route('/logout')
 @login_required
 def logout():
-    if (current_user.is_guest == '1'):
+    if (current_user.is_guest == 1):
         user = current_user
         
         #Delete Guest User's Applied Jobs
