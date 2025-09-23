@@ -8,6 +8,7 @@ from my_app import db
 
 #Import the applied jobs blueprint declared in parent package __init__.py
 from .. import applied_jobs_blueprint
+import logging
 
 @applied_jobs_blueprint.route('/api/update-interview', methods=['PUT'])
 @login_required
@@ -15,7 +16,6 @@ def update_interview():
     try:
         frontend_data = request.get_json()
         job_id = frontend_data.get('jobId')
-
         if not job_id:
             return jsonify({'error': 'Job Id is required'})
 

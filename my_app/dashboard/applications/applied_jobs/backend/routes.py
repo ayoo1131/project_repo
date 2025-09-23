@@ -21,4 +21,3 @@ def applied_jobs_home(path):
         if path and os.path.exists(file_path):
             return send_from_directory(build_dir, path)
         return send_from_directory(build_dir, 'index.html')
-

@@ -12,9 +12,8 @@ from .. import applied_jobs_blueprint
 @login_required
 def update_rejected():
     try:
-        frontendData = request.get_json()
-        job_id = frontendData.get('jobId')
-        logging.error(job_id)
+        frontend_data = request.get_json()
+        job_id = frontend_data.get('jobId')
 
         if not job_id:
             return jsonify({'error': 'Job Id is required'}), 400

@@ -2,7 +2,6 @@
 
 export const rejected = async(jobId) =>{
 	try{
-		console.log(jobId);
 		const response = await fetch('/api/update-rejected',{	
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
