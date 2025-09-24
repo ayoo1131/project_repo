@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import { validateUserInput } from './utils/user_input/ValidateUserInput';
 import { insertJob } from './utils/user_input/InsertJob';
+import { formatToday } from './utils/user_input/FormatToday';
 
 const UserInput = ({addJobCallBack}) =>{
 	const [userInput, setUserInput] = useState({ //State for user entered form values
@@ -49,8 +50,10 @@ const UserInput = ({addJobCallBack}) =>{
 		const useToday = e.target.checked;//returns true or false depending on whether the checkbox is clicked or not
 		
 		if (useToday){
-			const todayDate = new Date().toISOString().split('T')[0];
-			setUserInput({...userInput, date:todayDate, useToday:true});
+			const todayDate = new Date().toLocaleDateString();
+			const todayDateISO = formatToday(todayDate);
+			
+			setUserInput({...userInput, date:todayDateISO, useToday:true});
 		}
 
 		else{

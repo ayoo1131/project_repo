@@ -2,7 +2,6 @@
 
 export const active = async(jobId) => {
 	try{
-		console.log(jobId);
 		const response = await fetch('/api/update-active', {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
