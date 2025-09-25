@@ -29,7 +29,7 @@ const Body = () => {
 
 	//JavaScript Object. Used to fill-in the cover letter template when the user presses download button
 	const [coverLetterInput, setCoverLetterInput] = useState(
-		{name:'', email:'', phone:'', social:'', extra:'', date:'', company:'', position:'', paragraph1:'', paragraph2:''}
+		{name:'', email:'', phone:'', social:'', extra:'', date:'', company:'', position:'', paragraph1:'', paragraph2:'', paragraph3:''}
 	);
 
 	//JavaScript Object, Used to make sure both sets of company and position input tags in Mock Document match the other.
