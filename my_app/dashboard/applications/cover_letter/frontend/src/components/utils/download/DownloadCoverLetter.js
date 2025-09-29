@@ -1,5 +1,5 @@
 //DownloadCoverLetter.js
-export const downloadCoverLetter = async(coverLetterInput) => { //coverLetterInput parameter is object 
+export const downloadCoverLetter = async(coverLetterInput) => { //coverLetterInput parameter is type object 
 	try {
 		const response = await fetch('/api/download-cover-letter', {
 			method: 'POST',
@@ -10,19 +10,17 @@ export const downloadCoverLetter = async(coverLetterInput) => { //coverLetterInp
 				body: JSON.stringify(coverLetterInput)
 		});
 
-		if (!response.ok){
+		if (!response.ok){ //API call returned an error message
 			const errorText = await response.text();
-			console.error(errorText)
 			return;
 		}
-		console.log('Success');
-
-		const blob = await response.blob();
+		
+		//blob() reads body of response and returns a Blob object.
+		const blob = await response.blob(); //Blob is binary representation of data(file,image,video) Used to download files,handle image,upload binary data.
 		const url = window.URL.createObjectURL(blob);
 		const a = document.createElement('a');
 		a.href = url;
 		
-		console.log(typeof coverLetterInput);
 		const name= coverLetterInput.name;
 		const company = coverLetterInput.company;
 		a.download = `${name} Cover Letter - ${company}.docx`;

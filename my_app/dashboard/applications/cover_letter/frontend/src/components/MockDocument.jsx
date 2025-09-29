@@ -242,8 +242,8 @@ const MockDocument = ({
                                                 className = 'textarea document-input-paragraph'
                                                 type = 'text'
                                                 placeholder = 'Paragraph 3 - Write about any personal projects, school projects, or extracurricular activities that relate to this job. Mention any skills that you learned on your own time. Tie this into the Skills and Experience requirement in the job description.'
-						value = {coverLetterInputProp.paragraph2}
-                                                onChange = {(e) => setCoverLetterInputCallback({...coverLetterInputProp, paragraph2: e.target.value})}
+						value = {coverLetterInputProp.paragraph3}
+                                                onChange = {(e) => setCoverLetterInputCallback({...coverLetterInputProp, paragraph3: e.target.value})}
                                         />
                                 </div>
                         </div>
