@@ -1,12 +1,13 @@
 //Body.jsx
 import React, {useState, useEffect} from 'react';
+import {getContact} from './utils/personal_info/GetContact.js';
 import TopMessage from './TopMessage.jsx';
 import UploadPersonalInfo from './UploadPersonalInfo.jsx'; //Current user does not have contacts saved. Show inputs for contacts
 import DisplayPersonalInfo from './DisplayPersonalInfo.jsx'; //Current user has contacts saved. Show user contacts
 import MockDocument from './MockDocument.jsx';
 import ClearButton from './ClearButton.jsx';
 import DownloadButton from './DownloadButton.jsx';
-import {getContact} from './utils/personal_info/GetContact.js'
+import DeleteContactWarning from './DeleteContactWarning.jsx';
 
 const Body = () => {
 	//JavaScript Object, set properties as blank, then check api with useEffect to see if contact is set
@@ -38,6 +39,9 @@ const Body = () => {
 	//Boolean, if user clicks checkbox for today, set true.
 	const [isToday, setIsToday] = useState(false);
 
+	//Boolean, If the user clicks delete button for User Contact, set true.
+	const [showContactDeleteWarning, setShowContactDeleteWarning] = useState(false);
+
 	useEffect(() => {
 		getContact().then(data => {
 			if (data[0] === undefined){
@@ -63,6 +67,16 @@ const Body = () => {
 	return (
 		<section className='hero-body is-align-items-start' style={{paddingTop: '10px'}} >
 			<div className="container is-flex is-flex-direction-column" style={{height:'100%'}}>
+				{/*Ternary Operator, Only display message if user clicks delete contact button*/}		
+				{showContactDeleteWarning &&
+				<DeleteContactWarning 
+					setShowContactDeleteWarningCallback = {setShowContactDeleteWarning}
+					setUserContactCallback = {setUserContact}
+					setContactMessageCallback = {setContactMessage}
+					setDownloadMessageCallback = {setDownloadMessage}
+				/>
+				}
+					
 				{/*Ternary Operator that only displays if contactMessage has been set.*/}
 				{contactMessage && <TopMessage messageProp = {contactMessage}/> }
 
@@ -88,6 +102,7 @@ const Body = () => {
 					setCoverLetterInputCallback = {setCoverLetterInput}
 					setContactMessageCallback = {setContactMessage}
 					setDownloadMessageCallback = {setDownloadMessage}
+					setShowContactDeleteWarningCallback = {setShowContactDeleteWarning}
 				/>}
 
 				<MockDocument 

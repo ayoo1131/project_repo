@@ -11,7 +11,8 @@ const DisplayPersonalInfo = ({
 		setFillUserContactCallback,
 		setCoverLetterInputCallback,
 		setContactMessageCallback,
-		setDownloadMessageCallback}) => {
+		setDownloadMessageCallback,
+		setShowContactDeleteWarningCallback}) => {
 	
 	const [successfulSave, setSuccessfulSave] = useState(false);
 	const [errors, setErrors] = useState({name: '', email: '', phone: ''});
@@ -37,10 +38,11 @@ const DisplayPersonalInfo = ({
 
 	const handleDelete = async (e) => {
 		e.preventDefault();
-		deleteContact();
-		setUserContactCallback({name:'', email:'', phone:'', social:'', extra:''});
-		setContactMessageCallback('Contact Deleted');
-		setDownloadMessageCallback(null);
+		setShowContactDeleteWarningCallback(true)
+		//deleteContact();
+		//setUserContactCallback({name:'', email:'', phone:'', social:'', extra:''});
+		//setContactMessageCallback('Contact Deleted');
+		//setDownloadMessageCallback(null);
 	};
 
 	const handleUpdate = async (e) => {
