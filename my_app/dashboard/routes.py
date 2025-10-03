@@ -9,13 +9,11 @@ from my_app.dashboard import dashboard
 from . import api_blueprint
 import logging
 
-#Dashboard home page route
 @dashboard.route('/dashboard')
 @login_required
 def dashboard_home():
     return render_template('dashboard.html', username=current_user.username, is_guest=session['is_guest'])
 
-#API Route to allow access to logged in user info
 @api_blueprint.route('/user-info')
 @login_required
 def get_user_info():
@@ -26,7 +24,11 @@ def get_user_info():
         'role': current_user.role,
     })
 
-#Dashboard logout route
+@dashboard.route('/guest_acknowledged', methods=['POST'])
+def guest_acknowledged():
+    session['guest_acknowledged'] = True
+    return redirect(url_for('dashboard.dashboard_home'))
+
 @dashboard.route('/logout')
 @login_required
 def logout():

@@ -38,7 +38,7 @@ def create_app():
     app.register_blueprint(api_blueprint)
 
     # blueprint for auth routes
-    from my_app.auth import auth as auth_blueprint
+    from my_app.auth import auth_blueprint
     app.register_blueprint(auth_blueprint)
 
     # blueprint for dashboard routes in the app

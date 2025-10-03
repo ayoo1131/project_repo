@@ -1,3 +1,4 @@
+#create_db.py
 from my_app import create_app, db
 from models.user import User
 from models.job import Job

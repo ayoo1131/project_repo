@@ -2,6 +2,19 @@
 
 {% block content %}
 
+{% if session['is_guest'] and (not session['guest_acknowledged']) %}
+<div class='inactivity-warning-overlay'>
+	<div class='inactivity-warning-content'>
+		<h3 class='inactivity-warning-text'>Warning!</h3>
+		<br>
+		<h3 class='inactivity-warning-text'>You're logged in as a Guest user. You'll be logged out automatically after 20 mins of inactivity. All of your saved data will be deleted after logout.</h3>
+		<form method="POST" action="/guest_acknowledged">
+			<button class="inactivity-warning-button" action>I Understand</button>
+		</form>
+	</div>
+</div>
+{% endif %}
+
 <div class='hero-body'>
 	<div class='container has-text-centered'>
 		<h1 class="title has-text-white">Welcome, {{current_user.username}}!</h1>

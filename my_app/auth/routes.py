@@ -1,31 +1,32 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session
+from flask_login import login_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import time
-from flask_login import login_user
+import random
 from models.user import User
 from my_app import db
-from my_app.auth import auth
 from .utils.validate_signup import is_valid_password, is_valid_username
 from .utils.create_guest_user import create_guest_username
 from .utils.created_user_date_time import created_user_date_time
-import random
+
+auth_blueprint = Blueprint('auth', __name__, template_folder='templates')
 
 #Authentication Home Route
-@auth.route('/')
+@auth_blueprint.route('/')
 def home():
     return render_template('home.html')
 
 #About Page Route
-@auth.route('/about')
+@auth_blueprint.route('/about')
 def about():
     return render_template('about.html')
 
 #Login Routes
-@auth.route('/login')
+@auth_blueprint.route('/login')
 def login():
     return render_template('login.html')
 
-@auth.route('/login', methods=['POST'])
+@auth_blueprint.route('/login', methods=['POST'])
 def login_post():
     username = request.form.get('username')
     password = request.form.get('password')
@@ -38,9 +39,10 @@ def login_post():
 
     #call flask method to login user
     login_user(user)
+    session['is_guest'] = False
     return redirect(url_for('dashboard.dashboard_home'))
 
-@auth.route('/login_guest', methods=['POST'])
+@auth_blueprint.route('/login_guest', methods=['POST'])
 def login_guest_post():
     password = generate_password_hash('password', method = 'pbkdf2:sha256')
 
@@ -49,16 +51,17 @@ def login_guest_post():
     db.session.commit()
     
     login_user(guestUser)
-
+    session['is_guest'] = True
+    session['guest_acknowledged'] = False
     #session.permanent = True #treats session as 'permanent', meaning it uses value of permanent_session_lifetime to decide when session expires. Without this line, session will only last untill browser is closed.
     return redirect(url_for('dashboard.dashboard_home'))
 
 #Signup Routes
-@auth.route('/signup')
+@auth_blueprint.route('/signup')
 def signup():
     return render_template('signup.html')
 
-@auth.route('/signup', methods=['POST'])
+@auth_blueprint.route('/signup', methods=['POST'])
 def signup_post():
     username = request.form.get('username')
     password = request.form.get('password')
