@@ -1,60 +1,46 @@
 #!/bin/bash
 
-#Create a variable to get absolute path of script file
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-#Prompt user for react app name and read into variable
 read -p "Enter React app name (ex. react_project_name): "  react_project_name_underscore
 
-# Move working directory, go up one directory, then cd to applications directory. || - or if cd fails do commands in {}
 cd "$SCRIPT_DIR/../applications" || {
 	echo "failed to cd to /applications directory"
 	exit 1
 }
 
-#Check if npm is installed
 command -v npm >/dev/null 2>&1 || {
-  echo "npm is not installed. Aborting."
-  exit 1
+	echo "npm is not installed. Aborting."
+	exit 1
 }
 
-#Create React project with Vite
 echo -e "\nCreating React Project!\n"
+echo -e "\nWhen prompted for use rolldown-vite (Experimental)? and Install with npm and start now?, Select no"
 npm create vite@latest "$react_project_name_underscore" -- --template react
 echo -e "\nReact Project: $react_project_name_underscore successfully created!\n"
 
 cd "$react_project_name_underscore"
 
-#Create front and backend directories
 mkdir frontend backend
 
-#Move default files to frontend directory
 mv eslint.config.js index.html package.json public src vite.config.js frontend/
 
-#------------------Build Frontend Directory---------------project_repo/my_app/dashboard/applications/react_app/frontend
-#Install Vite locally into React project, add Vite and devDependenct in package.json
 echo -e "\nInstalling Vite locally into project\n"
 cd frontend
 npm install vite --save-dev
 npm run build
 echo -e "\nVite Installation Complete!\n"
 
-# tr is transform character, used to replace, delete or squeeze input characters from input.
-# '|' is pipe operator. Used to pass output of one command as input to another.
 react_project_name_dash=$(echo "$react_project_name_underscore" | tr '_' '-')
 
-#stream editor. command tool to process and transform text. used to search, replace, insert, delete, and edit file without opening it.
-#sed '/pattern/i new line' file.txt - Inserts before pattern (i inserts before, a inserts after)
 sed -i "/})/i base: '/${react_project_name_dash}'," vite.config.js
 
 echo -e "\nFrontend Directory Build Complete!\n"
 cd ..
-#-------------------Build Backend Directory------------project_repo/my_app/dashboard/applications/react_app/backend
 echo -e "\nPopulating Backend Directory\n"
 cd backend
 mkdir api utils
 
-#create __init__.py and write content into it. cat > overwrites or creates file. EOF (end of file) used to specify lines to insert
 cat > __init__.py << EOF
 #__init__.py
 from flask import Blueprint

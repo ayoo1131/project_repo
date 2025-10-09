@@ -5,12 +5,10 @@ import UserInput from './UserInput.jsx';
 import JobsList from './JobsList.jsx';
 import { getJobs } from './utils/jobs_list/GetJobs.js'
 
-
 const Body = () =>{
 	const [jobs, setJobs] = useState([]);
 
 	const addJob = (newJob) => {
-		console.log(newJob);
 		setJobs((prevJobs) => [...prevJobs, newJob]);
         };
 

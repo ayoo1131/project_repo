@@ -28,6 +28,8 @@
 
 							<div class="navbar-dropdown">
 								<!--Insert Application Dropdown Below-->
+								{% if current_user.role=='dev'%} 
+								{% endif %}
 								<a href="{{ url_for('cover_letter.cover_letter_home') }}" class="navbar-item gray-background has-text-white">
 									Cover Letter
 								</a>

@@ -148,6 +148,7 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 	};
 
 	const formatDate = (date) => {
+		console.log("formatDate() = "+date);
 		const [yyyy, mm, dd] = date.split('-');
 		const formatDate = `${mm}/${dd}/${yyyy}`;
 		return formatDate;
@@ -158,11 +159,11 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 			.filter(job => showStatus[job.status.toLowerCase()])
 			.sort((a,b) => { //swap a and b object if 1 is returned
 				if (sortBy === 'newest'){
-					return b.date.localeCompare(a.date);
+					return b.date_time_applied.localeCompare(a.date_time_applied);
 				}
 				
 				if (sortBy === 'oldest'){
-					return a.date.localeCompare(b.date);
+					return a.date_time_applied.localeCompare(b.date_time_applied);
 				}
 				
 				if (sortBy === 'company: a → z'){ 
@@ -177,7 +178,7 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 				<tr key={job.id}>
 					<td>{job.company}</td>
 					<td>{job.position}</td>
-					<td className='jobs-table-narrow-column'>{formatDate(job.date)}</td>
+					<td className='jobs-table-narrow-column'>{formatDate(job.date_time_applied)}</td>
 					<td className='jobs-table-narrow-column'> <span className={`tag ${job.status}`}> {job.status} </span> </td>
 					<td>{job.location}</td>
 					<td className='jobs-table-narrow-column'> <a href={job.url} target='_blank' rel='noopener noreferrer' >link</a> </td> {/*target='_blank' opens link in new tab rel is for security*/}
@@ -251,7 +252,7 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 						<tr>
 							<th style={{ width: '20%' }} >Company</th>
 							<th style={{ width: '20%' }} >Position</th>
-							<th style={{ width: '10%' }} >Date</th>
+							<th style={{ width: '10%' }} >Applied Date</th>
 							<th style={{ width: '10%' }} >Status</th>
 							<th style={{ width: '20%' }} >Location</th>
 							<th style={{ width: '10%' }} >URL</th>

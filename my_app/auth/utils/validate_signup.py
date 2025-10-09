@@ -2,7 +2,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from models.user import User
 
-
 def is_valid_username(username):
     if len(username) == 0:
         return "Please enter a valid username"

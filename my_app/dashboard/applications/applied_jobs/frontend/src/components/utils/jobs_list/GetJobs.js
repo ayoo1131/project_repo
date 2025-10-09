@@ -2,7 +2,7 @@
 
 export const getJobs = async (userId) => {
 	try {
-    		const response = await fetch('/api/get-jobs', {
+		const response = await fetch('/api/get-jobs', {
       			method: 'GET',
       			headers: { 'Content-Type': 'application/json' },
       			credentials: 'include'  // Sends Flask session cookie
@@ -13,8 +13,7 @@ export const getJobs = async (userId) => {
     		}
 
     		const data = await response.json(); //Gets an array of objects
-		
-    		return Array.isArray(data) ? data : []; // Ensure always return an array
+		return Array.isArray(data) ? data : []; // Ensure always return an array
   	}
 	
 	catch (error) {

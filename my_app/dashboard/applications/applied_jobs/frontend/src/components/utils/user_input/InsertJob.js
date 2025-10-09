@@ -2,7 +2,8 @@
 
 export const insertJob = async (jobData) => {
 	try {
-    		const response = await fetch('/api/insert-job', {
+    		console.log(jobData);
+		const response = await fetch('/api/insert-job', {
       			method: 'POST',
       				headers: {
         				'Content-Type': 'application/json'

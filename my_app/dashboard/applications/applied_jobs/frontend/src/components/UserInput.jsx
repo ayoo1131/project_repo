@@ -6,11 +6,11 @@ import { formatToday } from './utils/user_input/FormatToday';
 
 const UserInput = ({addJobCallBack}) =>{
 	const [userInput, setUserInput] = useState({ //State for user entered form values
-		company:'', position:'', date:'', location:'', url:'', useToday:false, status:'Active'
+		company:'', position:'', dateTimeApplied:'', location:'', url:'', useToday:false, status:'Active'
 	});
 
 	const [errors, setErrors] = useState({ //State for errors with user entered values
-		company:'', position:'', date:'', location:'', url:''
+		company:'', position:'', dateTimeApplied:'', location:'', url:''
 	});
 
 	const [successfulAdd, setSuccessfulAdd] = useState(false); //State to track if job was successfully added. controls sucess message
@@ -20,8 +20,8 @@ const UserInput = ({addJobCallBack}) =>{
 	};
 
 	const handleClear = () => { //Remove all the text from the input fields and clear all errors
-		setUserInput({ company:'', position:'', date:'', location:'', url:'', useToday:false});
-		setErrors({company:'', position:'', date:'', location:'', url:''});
+		setUserInput({ company:'', position:'', dateTimeApplied:'', location:'', url:'', useToday:false});
+		setErrors({company:'', position:'', dateTimeApplied:'', location:'', url:''});
 		setSuccessfulAdd(false);
 	};
 
@@ -42,22 +42,21 @@ const UserInput = ({addJobCallBack}) =>{
 			addJobCallBack(updatedUserInput);//Add job to the job list
 			handleClear(); //Clear all the user input
 			toggleSuccessfulAdd(); //Turn the Successfully Added message on
-			setUserInput({company:'', position:'', date:'', location:'', url:'', useToday:false, status:'Active'});
+			setUserInput({company:'', position:'', dateTimeApplied:'', location:'', url:'', useToday:false, status:'Active'});
 		}
 	};
 
-	const handleToday = (e) => {//TODO there is a possibility that the date being retrieved is not the current timezone.
+	const handleToday = (e) => {
 		const useToday = e.target.checked;//returns true or false depending on whether the checkbox is clicked or not
 		
 		if (useToday){
 			const todayDate = new Date().toLocaleDateString();
 			const todayDateISO = formatToday(todayDate);
-			
-			setUserInput({...userInput, date:todayDateISO, useToday:true});
+			setUserInput({...userInput, dateTimeApplied:todayDateISO, useToday:true});
 		}
 
 		else{
-			setUserInput({...userInput, date:'', useToday:false});
+			setUserInput({...userInput, dateTimeApplied:'', useToday:false});
 		}
 	};
 
@@ -101,16 +100,16 @@ const UserInput = ({addJobCallBack}) =>{
                         
                         			<div class="column date-column user-input-date">
                             				<div class="field is-small">
-                               					<label class="label">Date</label>
+                               					<label class="label">Date Applied</label>
                                					<div class="control">
                                  					<input
 										class="input is-small"
 										type="date"
-										value={userInput.date}
-										onChange={(e) => setUserInput({...userInput, date:e.target.value})}
+										value={userInput.dateTimeApplied}
+										onChange={(e) => setUserInput({...userInput, dateTimeApplied:e.target.value})}
 									/>
                                 				</div>
-								{errors.date && (<p className="help is-danger"> {errors.date}</p>)}
+								{errors.dateTimeApplied && (<p className="help is-danger"> {errors.dateTimeApplied}</p>)}
 								
 								<div class="control mt-2">
 									<label class="checkbox">

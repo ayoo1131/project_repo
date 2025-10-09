@@ -18,10 +18,16 @@ export const formatToday = (date) => {
 	]);
 
 	const todayArray = date.split('/');
-
 	const todayYear = todayArray[2];
 	const todayMonth = monthMap.get(todayArray[0]);
-	const todayDay = todayArray[1];
+	
+	let todayDay=todayArray[1];
+	if (todayArray[1].length === 1){
+		todayDay = '0' + todayDay
+	}
+
+	//const todayDay = todayArray[1];
+
 
 	const todayDateISO = todayYear + '-' + todayMonth + '-' + todayDay;
 	return todayDateISO;

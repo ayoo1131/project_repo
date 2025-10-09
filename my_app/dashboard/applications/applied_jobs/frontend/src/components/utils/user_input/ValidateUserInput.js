@@ -16,7 +16,7 @@ export const validateUserInput = (userInput) => {
 		errors.position = positionError;
 	}
 
-	let dateError = validateDate(userInput.date)
+	let dateError = validateDate(userInput.dateTimeApplied)
 	if (dateError != null){
 		errors.date = dateError;
 	}
@@ -65,7 +65,7 @@ const validateDate = (date) =>{
 	//Check if date is none, check if date is in the future
 	const todayDate = getTodayDate();
 	const userDate = parseUserDate(date);
-
+	
 	if (date == ""){
 		return ("Enter a date");
 	}
@@ -101,7 +101,7 @@ const parseUserDate = (date) =>{
 	dateObject.day = parseInt(dateArray[2]);
 	dateObject.month = parseInt(dateArray[1]);
 	dateObject.year = parseInt(dateArray[0]);
-
+	
 	return(dateObject);
 };
 
