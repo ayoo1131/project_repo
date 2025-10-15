@@ -16,7 +16,7 @@ export const validateUserInput = (userInput) => {
 		errors.position = positionError;
 	}
 
-	let dateError = validateDate(userInput.dateTimeApplied)
+	let dateError = validateDate(userInput.date_time_applied)
 	if (dateError != null){
 		errors.date = dateError;
 	}

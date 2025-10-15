@@ -26,9 +26,6 @@ export const formatToday = (date) => {
 		todayDay = '0' + todayDay
 	}
 
-	//const todayDay = todayArray[1];
-
-
 	const todayDateISO = todayYear + '-' + todayMonth + '-' + todayDay;
 	return todayDateISO;
 };

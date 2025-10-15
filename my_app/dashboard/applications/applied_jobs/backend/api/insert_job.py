@@ -14,7 +14,7 @@ from .. import applied_jobs_blueprint
 def insert_job():
     try:
         data = request.get_json() #Parses incoming JSON data from request body into a dictionary.
-        required_fields = ['company', 'position', 'dateTimeApplied', 'url']
+        required_fields = ['company', 'position', 'date_time_applied', 'url']
         logging.error(data)
         if not all(field in data for field in required_fields):
             return jsonify({'error': 'Missing required fields'}), 400
@@ -23,7 +23,7 @@ def insert_job():
             user_id = current_user.id,
             company = data['company'],
             position = data['position'],
-            date_time_applied = data['dateTimeApplied'],
+            date_time_applied = data['date_time_applied'],
             location = data['location'],
             url = data['url'],
             status = data['status']

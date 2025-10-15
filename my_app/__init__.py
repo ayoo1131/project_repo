@@ -46,6 +46,8 @@ def create_app():
     app.register_blueprint(dashboard_blueprint)
 
     #Application Blueprint Route and Register
+    from my_app.dashboard.applications.test_applied_jobs.backend import test_applied_jobs_blueprint
+    app.register_blueprint(test_applied_jobs_blueprint)
 
     #blueprint for coverletter routes in the Dashboard Applications
     from my_app.dashboard.applications.cover_letter.backend import cover_letter_blueprint

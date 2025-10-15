@@ -6,11 +6,11 @@ import { formatToday } from './utils/user_input/FormatToday';
 
 const UserInput = ({addJobCallBack}) =>{
 	const [userInput, setUserInput] = useState({ //State for user entered form values
-		company:'', position:'', dateTimeApplied:'', location:'', url:'', useToday:false, status:'Active'
+		company:'', position:'', date_time_applied:'', location:'', url:'', useToday:false, status:'Active'
 	});
 
 	const [errors, setErrors] = useState({ //State for errors with user entered values
-		company:'', position:'', dateTimeApplied:'', location:'', url:''
+		company:'', position:'', date_time_applied:'', location:'', url:''
 	});
 
 	const [successfulAdd, setSuccessfulAdd] = useState(false); //State to track if job was successfully added. controls sucess message
@@ -20,8 +20,8 @@ const UserInput = ({addJobCallBack}) =>{
 	};
 
 	const handleClear = () => { //Remove all the text from the input fields and clear all errors
-		setUserInput({ company:'', position:'', dateTimeApplied:'', location:'', url:'', useToday:false});
-		setErrors({company:'', position:'', dateTimeApplied:'', location:'', url:''});
+		setUserInput({ company:'', position:'', date_time_applied:'', location:'', url:'', useToday:false});
+		setErrors({company:'', position:'', date_time_applied:'', location:'', url:''});
 		setSuccessfulAdd(false);
 	};
 
@@ -38,11 +38,10 @@ const UserInput = ({addJobCallBack}) =>{
 			const updatedUserInput ={...userInput, id:newJobId};
 			setUserInput(updatedUserInput); //React’s setState (setUserInput) is asynchronous. So userInput still has the old value when you call addJobCallBack(userInput). 
 			//Instead of relying on setUserInput immediately updating userInput, just construct and use the updated object directly
-			
 			addJobCallBack(updatedUserInput);//Add job to the job list
 			handleClear(); //Clear all the user input
 			toggleSuccessfulAdd(); //Turn the Successfully Added message on
-			setUserInput({company:'', position:'', dateTimeApplied:'', location:'', url:'', useToday:false, status:'Active'});
+			setUserInput({company:'', position:'', date_time_applied:'', location:'', url:'', useToday:false, status:'Active'});
 		}
 	};
 
@@ -52,11 +51,11 @@ const UserInput = ({addJobCallBack}) =>{
 		if (useToday){
 			const todayDate = new Date().toLocaleDateString();
 			const todayDateISO = formatToday(todayDate);
-			setUserInput({...userInput, dateTimeApplied:todayDateISO, useToday:true});
+			setUserInput({...userInput, date_time_applied:todayDateISO, useToday:true});
 		}
 
 		else{
-			setUserInput({...userInput, dateTimeApplied:'', useToday:false});
+			setUserInput({...userInput, date_time_applied:'', useToday:false});
 		}
 	};
 
@@ -105,11 +104,11 @@ const UserInput = ({addJobCallBack}) =>{
                                  					<input
 										class="input is-small"
 										type="date"
-										value={userInput.dateTimeApplied}
-										onChange={(e) => setUserInput({...userInput, dateTimeApplied:e.target.value})}
+										value={userInput.date_time_applied}
+										onChange={(e) => setUserInput({...userInput, date_time_applied:e.target.value})}
 									/>
                                 				</div>
-								{errors.dateTimeApplied && (<p className="help is-danger"> {errors.dateTimeApplied}</p>)}
+								{errors.date_time_applied && (<p className="help is-danger"> {errors.date_time_applied}</p>)}
 								
 								<div class="control mt-2">
 									<label class="checkbox">
