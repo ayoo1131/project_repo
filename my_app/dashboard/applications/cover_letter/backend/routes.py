@@ -5,11 +5,13 @@ from . import cover_letter_blueprint
 from models.contact import Contact
 from my_app import db
 import os
+from pathlib import Path
 from sqlalchemy.exc import SQLAlchemyError
 
 import logging
 
-build_dir = '/home/ayoo1131/project_repo/my_app/dashboard/applications/cover_letter/frontend/dist'
+BASE_DIR = Path(__file__).resolve().parent.parent #Get the complete file path to parent directory of this file
+build_dir = BASE_DIR / 'frontend' / 'dist'
 
 @cover_letter_blueprint.route('/cover-letter', defaults={'path': ''}, methods=['GET'])
 @cover_letter_blueprint.route('/cover-letter/<path:path>')

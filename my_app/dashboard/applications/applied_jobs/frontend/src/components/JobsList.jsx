@@ -148,7 +148,6 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 	};
 
 	const formatDate = (date) => {
-		console.log(date);
 		const [yyyy, mm, dd] = date.split('-');
 		const formatDate = `${mm}/${dd}/${yyyy}`;
 		return formatDate;
