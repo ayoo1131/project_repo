@@ -209,3 +209,11 @@ for dir in "${react_project_directories[@]}"; do
 done
 
 sudo systemctl restart flaskapp.service
+
+#Add Application to .gitignore file
+cd ..
+cd ..
+cd ..
+
+insert=$"/my_app/dashboard/applications/${react_project_copy}"
+echo $insert >> .gitignore
