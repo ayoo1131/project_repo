@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import UserInput from './UserInput.jsx';
 import JobsList from './JobsList.jsx';
 import { getJobs } from './utils/jobs_list/GetJobs.js'
+import { calculateDaysActive } from './utils/body/CalculateDaysActive.js'
 
 const Body = () =>{
 	const [jobs, setJobs] = useState([]);
@@ -41,11 +42,12 @@ const Body = () =>{
 	};
 	
 	useEffect(() => {
-                getJobs().then(data => { //data is the value getJobs() returns
-			setJobs(data);
+                getJobs().then(data => { //data is an array of objects. It contains the rows from the job table
+                        const jobsData = calculateDaysActive(data);
+                        setJobs(jobsData);
                 });
         }, []);
-		
+
 	return(
 		<section class='hero-body is-align-items-start' style= {{paddingTop:'0'}}>
 			<div class='container'>

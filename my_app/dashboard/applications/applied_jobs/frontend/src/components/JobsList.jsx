@@ -4,6 +4,7 @@ import { deleteJob } from './utils/jobs_list/DeleteJob.js'
 import { rejected } from './utils/jobs_list/Rejected.js'
 import { interview } from './utils/jobs_list/Interview.js'
 import { active } from './utils/jobs_list/Active.js'
+import { formatDateTime } from './utils/jobs_list/FormatDateTime.js'
 
 const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallBack, updateInterviewCallBack, jobsState }) => {
 	const [openDropdownId, setOpenDropdownId] = useState(null);
@@ -147,12 +148,6 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 		setShowStatus({...showStatus, interview: !showStatus.interview});
 	};
 
-	const formatDate = (date) => {
-		const [yyyy, mm, dd] = date.split('-');
-		const formatDate = `${mm}/${dd}/${yyyy}`;
-		return formatDate;
-	};
-	
 	const jobsList = 
 		jobsState
 			.filter(job => showStatus[job.status.toLowerCase()])
@@ -177,7 +172,8 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 				<tr key={job.id}>
 					<td>{job.company}</td>
 					<td>{job.position}</td>
-					<td className='jobs-table-narrow-column'>{formatDate(job.date_time_applied)}</td>
+					<td className='jobs-table-narrow-column'>{formatDateTime(job.date_time_applied)}</td>
+					<td className='jobs-table-narrow-column'>{job.days_active}</td>
 					<td className='jobs-table-narrow-column'> <span className={`tag ${job.status}`}> {job.status} </span> </td>
 					<td>{job.location}</td>
 					<td className='jobs-table-narrow-column'> <a href={job.url} target='_blank' rel='noopener noreferrer' >link</a> </td> {/*target='_blank' opens link in new tab rel is for security*/}
@@ -226,7 +222,7 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 								</div>
 							</th>
 
-							<th colSpan='1' className='has-text-centered'>
+							<th colSpan='2' className='has-text-centered'>
 								<div class='control mt-1'>
 									<input type='checkbox' checked={showStatus.interview} onChange={toggleInterview} style={{ marginRight:'0.5em'}}/>
 									Interviews: {countJobStatus().interview}
@@ -247,16 +243,18 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 								</div>
 							</th>
 						</tr>
-
+						
 						<tr>
-							<th style={{ width: '20%' }} >Company</th>
-							<th style={{ width: '20%' }} >Position</th>
-							<th style={{ width: '10%' }} >Applied Date</th>
-							<th style={{ width: '10%' }} >Status</th>
-							<th style={{ width: '20%' }} >Location</th>
-							<th style={{ width: '10%' }} >URL</th>
-							<th style={{ width: '10%' }} >Actions</th>
-						</tr>
+                                                        <th style={{ width: '18%' }} >Company</th>
+                                                        <th style={{ width: '18%' }} >Position</th>
+                                                        <th style={{ width: '12%' }} >Applied Date</th>
+                                                        <th style={{ wudth: '8%' }} >Days Active</th>
+                                                        <th style={{ width: '8%' }} >Status</th>
+                                                        <th style={{ width: '20%' }} >Location</th>
+                                                        <th style={{ width: '6%' }} >URL</th>
+                                                        <th style={{ width: '10%' }} >Actions</th>
+                                                </tr>
+					
 					</thead>
 
 					<tbody>
