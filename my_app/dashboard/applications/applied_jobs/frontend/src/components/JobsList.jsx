@@ -153,42 +153,42 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 			.filter(job => showStatus[job.status.toLowerCase()])
 			.sort((a,b) => { //swap a and b object if 1 is returned
 				if (sortBy === 'newest'){
-					return b.date_time_applied.localeCompare(a.date_time_applied);
+					return b['date_time_applied'].localeCompare(a.date_time_applied);
 				}
 				
 				if (sortBy === 'oldest'){
-					return a.date_time_applied.localeCompare(b.date_time_applied);
+					return a['date_time_applied'].localeCompare(b.date_time_applied);
 				}
 				
 				if (sortBy === 'company: a → z'){ 
-					return a.company.localeCompare(b.company); //compares 2 strings and returns -1 if first string comes before second, 0 if equal, and 1 if first string comes after second string
+					return a['company'].localeCompare(b.company); //compares 2 strings and returns -1 if first string comes before second, 0 if equal, and 1 if first string comes after second string
 				}
 				
 				if (sortBy === 'company: z → a'){
-					return b.company.localeCompare(a.company);
+					return b['company'].localeCompare(a.company);
 				}
 			})
 			.map(job => (
 				<tr key={job.id}>
-					<td>{job.company}</td>
-					<td>{job.position}</td>
-					<td className='jobs-table-narrow-column'>{formatDateTime(job.date_time_applied)}</td>
-					<td className='jobs-table-narrow-column'>{job.days_active}</td>
-					<td className='jobs-table-narrow-column'> <span className={`tag ${job.status}`}> {job.status} </span> </td>
-					<td>{job.location}</td>
-					<td className='jobs-table-narrow-column'> <a href={job.url} target='_blank' rel='noopener noreferrer' >link</a> </td> {/*target='_blank' opens link in new tab rel is for security*/}
+					<td>{job['company']}</td>
+					<td>{job['position']}</td>
+					<td className='jobs-table-narrow-column'> {formatDateTime(job['date_time_applied'])} </td>
+					<td className='jobs-table-narrow-column'> {job['days_active']} </td>
+					<td className='jobs-table-narrow-column'> <span className={`tag ${job['status']}`}> {job['status']} </span> </td>
+					<td>{job['location']}</td>
+					<td className='jobs-table-narrow-column'> <a href={job['url']} target='_blank' rel='noopener noreferrer'> link </a> </td> {/*target='_blank' opens link in new tab rel is for security*/}
 
 					<td className="jobs-actions" style={{ position: 'relative' }}>
-						<button className="dropdown-button" onClick={(e) => toggleDropdownStatus(e, job.id)}> Edit ▼ </button>
-							{openDropdownId === job.id && (       
+						<button className="dropdown-button" onClick={(e) => toggleDropdownStatus(e, job['id'])}> Edit ▼ </button>
+							{openDropdownId === job['id'] && (       
 								<div className="test-dropdown-menu" style={{ top: dropdownCoords.top, left: dropdownCoords.left }}>
 									{statusOptions
-										.filter(option => option.label != job.status)
+										.filter(option => option.label != job['status'])
 										.map(option => (
-											<div key={option.label} className='dropdown-item' onClick={(e) => option.handler(e, job.id)}>{option.label}</div>
+											<div key={option.label} className='dropdown-item' onClick={(e) => option.handler(e, job['id'])}>{option.label}</div>
 									))}
 
-									<div className="dropdown-item" onClick={(e) => handleDeleteJob(e, job.id, job.company, job.position)}>Delete</div>
+									<div className="dropdown-item" onClick={(e) => handleDeleteJob(e, job['id'], job['company'], job['position'])}>Delete</div>
 								</div>
 							)}
 					</td>
@@ -246,9 +246,9 @@ const JobsList = ({ removeJobCallBack, updateActiveCallBack, updateRejectedCallB
 						
 						<tr>
                                                         <th style={{ width: '18%' }} >Company</th>
-                                                        <th style={{ width: '18%' }} >Position</th>
+                                                        <th style={{ width: '20%' }} >Position</th>
                                                         <th style={{ width: '12%' }} >Applied Date</th>
-                                                        <th style={{ wudth: '8%' }} >Days Active</th>
+                                                        <th style={{ wudth: '6%' }} >Days Active</th>
                                                         <th style={{ width: '8%' }} >Status</th>
                                                         <th style={{ width: '20%' }} >Location</th>
                                                         <th style={{ width: '6%' }} >URL</th>

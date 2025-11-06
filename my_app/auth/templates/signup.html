@@ -1,6 +1,14 @@
 <!-- Signup.html-->
 {% extends "base.html" %}
 
+{% block title %}
+<title>Signup</title>
+{% endblock %}
+
+{% block head_css %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/auth/signup.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="column is-4 is-offset-4">
 	<h3 class="title has-text-white">Sign Up</h3>
@@ -35,11 +43,23 @@
 					<input class="input is-large has-background-white input-placeholder-lightgray input-text-color-dark" type="password" name="passwordRepeat" placeholder="Re-type Password">
 				</div>
 			</div>
+			
+			<div>
+				<input type="checkbox" >
+				<span class="black-text">
+					Agree to <a href="{{ url_for('auth.user_terms_of_service') }}" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+				</span>
+			</div>
+
+			<div>
+				<input type="checkbox">
+				<span class="black-text">
+					Agree to <a href="{{ url_for('auth.privacy_policy') }}" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+				</span>
+			</div>
 
 			<button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
 		</form>
 	</div>
 </div>
 {% endblock %}
-
-

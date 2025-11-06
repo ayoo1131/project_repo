@@ -94,3 +94,11 @@ def signup_post():
     db.session.commit()
 
     return render_template('login.html', userSuccessfullyAdded='User successfully added')
+
+@auth_blueprint.route('/user-terms-of-use')
+def user_terms_of_service():
+    return render_template('user-terms-of-use.html')
+
+@auth_blueprint.route('/privacy-policy')
+def privacy_policy():
+    return render_template('privacy-policy.html')

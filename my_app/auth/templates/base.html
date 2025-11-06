@@ -6,9 +6,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Andrew Yoo Web App</title>
+    {% block title %} {% endblock %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+
+    {% block head_css %} {% endblock %}
 </head>
 
 <body class="background-color-blue">
