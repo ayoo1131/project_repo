@@ -8,6 +8,7 @@ from my_app import db
 from .utils.validate_signup import is_valid_password, is_valid_username
 from .utils.create_guest_user import create_guest_username
 from .utils.created_user_date_time import created_user_date_time
+import logging
 
 auth_blueprint = Blueprint('auth', __name__, template_folder='templates')
 
@@ -65,6 +66,8 @@ def signup():
 def signup_post():
     username = request.form.get('username')
     password = request.form.get('password')
+    terms_of_use = request.form.get('terms_of_use')
+    privacy_policy = request.form.get('privacy_policy')
 
     usernameError = is_valid_username(username)
     passwordErrorList = is_valid_password(password)
@@ -84,6 +87,25 @@ def signup_post():
     passwordRepeat = request.form.get('passwordRepeat') 
     if (password != passwordRepeat):
         return render_template('signup.html', usernameAutofill=username,  passwordErrors=['Passwords do not match'])
+
+    privacyPolicyClicked=False
+    termsOfServiceClicked=False
+
+    #Check if terms of use and privacy policy check box are checked
+    if ('privacy_policy' in request.form):
+        privacyPolicyClicked=True    
+
+    if ('terms_of_use' in request.form):
+        termsOfServiceClicked=True
+
+    if (not privacyPolicyClicked and not termsOfServiceClicked):
+        return render_template('signup.html', usernameAutofill=username, passwordAutofill=password, privacyPolicyError=True, termsOfServiceError=True)
+
+    elif (not privacyPolicyClicked):
+        return render_template('signup.html', usernameAutofill=username, passwordAutofill=password, privacyPolicyError=True)
+
+    elif (not termsOfServiceClicked):
+        return render_template('signup.html', usernameAutofill=username, passwordAutofill=password, termsOfServiceError=True)
 
     #User entered username and password are valid
     #Create new user with the form data. Hash the password so plaintext version isn't saved.
