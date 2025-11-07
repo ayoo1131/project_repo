@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "main.html" %}
 
 {% block title %}
 <title>Privacy Policy</title>
@@ -6,6 +6,10 @@
 
 {% block head_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/auth/privacy_policy_terms_of_use.css') }}">
+{% endblock %}
+
+{% block header %}
+{% include "header.html" %}
 {% endblock %}
 
 {% block content %}
@@ -63,4 +67,8 @@
 	</div>
 </div>
 
+{% endblock %}
+
+{% block footer %}
+{% include "footer.html" %}
 {% endblock %}

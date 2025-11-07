@@ -1,0 +1,19 @@
+<nav class="navbar dark-background">
+	<div class="container">
+		<div id="navbarAuth" class="navbar-menu is-active">
+			<div class="navbar-start">
+				<a href="{{ url_for('auth.home') }}" class="navbar-item gray-background has-text-white">Home</a>
+				<a href="{{ url_for('auth.about') }}" class = "navbar-item gray-background has-text-white">About</a>
+			</div>
+
+			<div class="navbar-end">
+				<div class="navbar-item">
+					<div class="buttons">
+						<a href="{{ url_for('auth.login') }}" class="button is-primary">Login</a>
+						<a href="{{ url_for('auth.signup') }}" class="button is-light">Sign Up</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</nav>

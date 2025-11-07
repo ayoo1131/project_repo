@@ -1,12 +1,16 @@
 <!-- Signup.html-->
-{% extends "base.html" %}
+{% extends "main.html" %}
 
 {% block title %}
 <title>Signup</title>
 {% endblock %}
 
 {% block head_css %}
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/auth/signup.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth/signup.css') }}">
+{% endblock %}
+
+{% block header %}
+{% include "header.html" %}
 {% endblock %}
 
 {% block content %}
@@ -40,7 +44,7 @@
 
 			<div class="field">
 				<div class="control">
-					<input class="input is-large has-background-white input-placeholder-lightgray input-text-color-dark" type="password" name="passwordRepeat" placeholder="Re-type Password" value="{{passwordAutofill}}">
+					<input class="input is-large has-background-white input-placeholder-lightgray input-text-color-dark" type="password" name="passwordRepeat" placeholder="Re-type Password" value="{{passwordAutofilg}}">
 				</div>
 			</div>
 			
@@ -70,4 +74,8 @@
 		</form>
 	</div>
 </div>
+{% endblock %}
+
+{% block footer %}
+{% include "footer.html" %}
 {% endblock %}
