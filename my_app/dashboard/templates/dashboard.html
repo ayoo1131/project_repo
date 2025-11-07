@@ -1,7 +1,10 @@
-{% extends "dashboard_base.html" %}
+{% extends "main-dashboard.html" %}
 
-{% block content %}
+{% block header %}
+{% include "header-dashboard.html" %}
+{% endblock %}
 
+{% block body %}
 {% if session['is_guest'] and (not session['guest_acknowledged']) %}
 <div class='inactivity-warning-overlay'>
 	<div class='inactivity-warning-content'>
@@ -15,10 +18,14 @@
 </div>
 {% endif %}
 
-<div class='hero-body'>
-	<div class='container has-text-centered'>
+
+<div class="hero-body">
+	<div class="container has-text-centered">
 		<h1 class="title has-text-white">Welcome, {{current_user.username}}!</h1>
 	</div>
 </div>
+{% endblock %}
 
+{% block footer %}
+{% include "footer.html" %}
 {% endblock %}
