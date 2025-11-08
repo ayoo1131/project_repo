@@ -117,10 +117,10 @@ def signup_post():
 
     return render_template('login.html', userSuccessfullyAdded='User successfully added')
 
-@auth_blueprint.route('/user-terms-of-use')
+@auth_blueprint.route('/user-terms-of-use-auth')
 def user_terms_of_service():
-    return render_template('user-terms-of-use.html')
+    return render_template('user-terms-of-use-auth.html')
 
-@auth_blueprint.route('/privacy-policy')
+@auth_blueprint.route('/privacy-policy-auth')
 def privacy_policy():
-    return render_template('privacy-policy.html')
+    return render_template('privacy-policy-auth.html')

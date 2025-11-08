@@ -47,3 +47,13 @@ def logout():
 
     logout_user()
     return redirect(url_for('dashboard.dashboard_home'))
+
+@dashboard.route('/privacy-policy-dashboard')
+@login_required
+def privacy_policy_dashboard():
+    return render_template('privacy-policy-dashboard.html', is_guest=session['is_guest'])
+
+@dashboard.route('/user-terms-of-use-dashboard')
+@login_required
+def user_terms_of_service_dashboard():
+    return render_template('user-terms-of-use-dashboard.html', is_guest=session['is_guest'])

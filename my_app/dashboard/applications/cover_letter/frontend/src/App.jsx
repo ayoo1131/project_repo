@@ -4,6 +4,7 @@ import useCheckGuestInactivity from '../../../shared_ui/inactivity_logout/utils/
 import GuestInactivityWarning from '../../../shared_ui/inactivity_logout/GuestInactivityWarning.jsx';
 import Header from '../../../shared_ui/header/Header.jsx';
 import Body from './components/Body.jsx';
+import Footer from '../../../shared_ui/footer/Footer.jsx';
 
 function App() {
 	const [showGuestInactiveWarning, setShowGuestInactiveWarning] = useState(false);
@@ -45,6 +46,8 @@ function App() {
 				<Header  appName='Cover Letter' userRoleProp={userData.role}/>
                         }
 			<Body />
+
+			<Footer />
 		</section>
 	)
 }

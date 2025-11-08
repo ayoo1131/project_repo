@@ -1,73 +1,71 @@
-		<nav class="navbar dark-background">
-			<div class="container">
-				<div id="navbarDashboard" class="navbar-menu is-active">
-					<div class="navbar-start">
-						<a href="{{ url_for('dashboard.dashboard_home') }}" class="navbar-item gray-background has-text-white">Home</a>
-			    			
-						<div class="navbar-item has-dropdown is-hoverable">
-			    				<a class="navbar-link gray-background has-text-white">
-				    				Applications
-							</a>
+<nav class="navbar dark-background">
+	<div class="container">
+		<div id="navbarDashboard" class="navbar-menu is-active">
+			<div class="navbar-start">
+				<a href="{{ url_for('dashboard.dashboard_home') }}" class="navbar-item gray-background has-text-white">Home</a>
 
-							<div class="navbar-dropdown">
-								<!--Insert Application Dropdown Below-->
-								{% if current_user.role=='dev'%}
-									<a href="{{url_for('test_applied_jobs.test_applied_jobs_home')}}" class="navbar-item gray-background has-text-white">Test Applied Jobs</a>
-								{% endif %}
-								<a href="{{ url_for('cover_letter.cover_letter_home') }}" class="navbar-item gray-background has-text-white">
-									Cover Letter
-								</a>
-								<a href="{{ url_for('applied_jobs.applied_jobs_home') }}"  class="navbar-item gray-background has-text-white">
-									Applied Jobs
-								</a>
-							</div>
-			    			</div>
-					</div>
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link gray-background has-text-white">
+						Applications
+					</a>
 
-					<div class="navbar-center">
-						<div class="navbar-item navbar-app-name-centered">
-							<strong class="has-text-white is-size-3">{{ pageTitle }}</strong>
-						</div>
-					</div>
-
-					<div class="navbar-end">
-						<div class="navbar-item has-dropdown is-hoverable">
-                                                        <a class="navbar-link gray-background has-text-white">
-								{{current_user.username}}
-                                                        </a>
-
-                                                        <div class="navbar-dropdown">
-                                                                <a class="navbar-item gray-background has-text-white">
-                                                                        Profile
-                                                                </a>
-                                                                <a href="{{url_for('dashboard.logout') }}" id="logout-link"  class="navbar-item gray-background has-text-white">
-                                                                        Logout
-                                                                </a>
-                                                        </div>
-                                                </div>
+					<div class="navbar-dropdown">
+						<!--Insert Application Dropdown Below-->
+						{% if current_user.role=='dev'%}
+						<a href="{{url_for('test_applied_jobs.test_applied_jobs_home')}}" class="navbar-item gray-background has-text-white">Test Applied Jobs</a>
+						{% endif %}
+						<a href="{{ url_for('cover_letter.cover_letter_home') }}" class="navbar-item gray-background has-text-white">
+							Cover Letter
+						</a>
+						<a href="{{ url_for('applied_jobs.applied_jobs_home') }}"  class="navbar-item gray-background has-text-white">
+							Applied Jobs
+						</a>
 					</div>
 				</div>
 			</div>
-	
+
+			<div class="navbar-center">
+				<div class="navbar-item navbar-app-name-centered">
+					<strong class="has-text-white is-size-3">{{ pageTitle }}</strong>
+				</div>
+			</div>
+
+			<div class="navbar-end">
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link gray-background has-text-white">
+						{{current_user.username}}
+					</a>
+
+					<div class="navbar-dropdown">
+						<a class="navbar-item gray-background has-text-white">
+							Profile
+						</a>
+						<a href="{{url_for('dashboard.logout') }}" id="logout-link"  class="navbar-item gray-background has-text-white">
+							Logout
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</nav>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const logoutLink = document.getElementById("logout-link");
-        const isGuest = {{ is_guest| tojson }};
-	    
+	document.addEventListener("DOMContentLoaded", function () {
+		const logoutLink = document.getElementById("logout-link");
+		const isGuest = {{ is_guest| tojson }};
+
 		if (isGuest && logoutLink){
 			logoutLink.addEventListener('click', function (e) {
 				e.preventDefault();
 
 				const confirmLogout = window.confirm("You are logged in as a guest. Are you sure you want to log out?");
 
-                		if (confirmLogout) {// proceed to logout
-                    			window.location.href = logoutLink.href;
-                		}
+               			if (confirmLogout) {// proceed to logout
+					window.location.href = logoutLink.href;
+				}
 			});
 		}
-    });
+	});
 </script>
-
-</html>
 

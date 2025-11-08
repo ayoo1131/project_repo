@@ -1,0 +1,75 @@
+{% extends "base-dashboard.html" %}
+
+{% block title %}
+<title>Privacy Policy</title>
+{% endblock %}
+
+{% block head_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth/privacy_policy_terms_of_use.css') }}">
+{% endblock %}
+
+{%block header %}
+{% include "header-dashboard.html" %}
+{% endblock %}
+
+{% block body %}
+<div class="terms-container">
+	<h1 class="title">Privacy Policy</h1>
+	<div class="terms-scroll black-text">
+		<p>Effective Date: 11/5/2025</p>
+
+		<h1>1. Introduction</h1>
+		<p>Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your personal information when you use our website and applications. By using our services, you agree to the practices described in this policy.</p>
+
+		<h1>2. Information We Collect</h1>
+		<p> We may collect, store, and process the following types of information you provide:</p>
+		<p> - Personal Identification: Name, phone number, email address, social media profiles, personal website URLs.</p>
+		<p>- Job Application Data: Job titles, company names, dates, application statuses, or any other information you choose to store.</p>
+		<p>- Usage Information: IP address, browser type, device type, pages visited, and other technical information.</p>
+
+		<p>This information is collected to provide our users a way to save their information and use it to interact with the applications.</p>
+
+		<h1>3. How We Use Your Information</h1>
+		<p>We use your data for purposes including:</p>
+		<p>- Provide and maintain the website and its features.</p>
+		<p>- Allow you to track, store, and manage job applications.</p>
+		<p>- Monitor usage and improve the website.</p>
+		<p>- Enforce our Terms of Service and prevent misuse or fraud.</p>
+		
+		<p>We will never sell or rent your personal information to third parties.</p>
+
+		<h1>4. Data Storage and Security</h1>
+		<p>- Your personal information is stored securely in our server. We implement reasonable security measures to protect your data from unauthorized access, disclosure, or modification.</p>
+		<p>- We implement reasonable technical and organizational measures to protect your data.</p>
+		<p>- However, no system is completely secure. By using the website, you acknowledge that storing sensitive data, including job applications, is at your own risk.</p>
+		<p>- You are responsible for maintaining the confidentiality of your account credentials.</p>
+		<p>- We are not liable for unauthorized access, loss, misuse, or corruption of your personal information.</p>
+
+		<h1>5. Sharing Your Information</h1>
+		<p>We do not share your personal information with third parties except:</p>
+		<p>- When required by law</p>
+		<p>- To protect our rights, property, or safety</p>
+		
+		<h1>6. User Rights</h1>
+		<p>You may:</p>
+		<p>- Access, update, or correct your personal information</p>
+		<p>- Delete your personal information</p>
+
+		<h1>7. Cookies and Tracking</h1>
+		<p>We do not use cookies to collect personal information.</p>
+
+		<h1>8. Changes to This Policy</h1>
+		<p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated “Effective Date.”</p>
+
+		<h1>9. Data Retention</h1>
+		<p>We retain your information only as long as necessary to provide services or as required by law. After this period, data may be securely deleted or anonymized.</p>
+
+	</div>
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+{% include "footer-dashboard.html" %}
+{% endblock %}
