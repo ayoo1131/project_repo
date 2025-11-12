@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager 
 import logging
 from logging.handlers import SysLogHandler
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from jinja2 import ChoiceLoader, FileSystemLoader
 import os
@@ -20,6 +21,11 @@ def create_app():
     syslog_handler.setLevel(logging.DEBUG) #set the level of logging you want
     formatter = logging.Formatter('%(asctime)s %(name)s[%(process)d]: %(message)s')
     syslog_handler.setFormatter(formatter)
+
+    # Tell Flask there is 1 proxy (NGINX) in front (for getting user's ip Address)
+    # x_for=1 -> trust X-Forwarded-For
+    # x_proto=1 -> trust X-Forwarded-Proto
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1)
 
     app.logger.addHandler(syslog_handler) #Add the handler to Flask's Logger
 

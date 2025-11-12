@@ -8,6 +8,8 @@ from my_app import db
 from .utils.validate_signup import is_valid_password, is_valid_username
 from .utils.create_guest_user import create_guest_username
 from .utils.created_user_date_time import created_user_date_time
+from .utils.log_user_created import log_user_created
+from .utils.log_guest_user_created import log_guest_user_created
 import logging
 
 auth_blueprint = Blueprint('auth', __name__, template_folder='templates')
@@ -46,15 +48,21 @@ def login_post():
 @auth_blueprint.route('/login_guest', methods=['POST'])
 def login_guest_post():
     password = generate_password_hash('password', method = 'pbkdf2:sha256')
-
-    guestUser = User(is_guest=1, username=create_guest_username(), password=password, role='user', created_date_time=created_user_date_time())
+    
+    guest_username = create_guest_username()
+    created_date_time = created_user_date_time()
+    
+    guestUser = User(is_guest=1, username = guest_username, password=password, role='user', created_date_time=created_date_time)
     db.session.add(guestUser)
     db.session.commit()
     
     login_user(guestUser)
     session['is_guest'] = True
     session['guest_acknowledged'] = False
-    #session.permanent = True #treats session as 'permanent', meaning it uses value of permanent_session_lifetime to decide when session expires. Without this line, session will only last untill browser is closed.
+    
+    guest_id=3
+    guest_ip = request.remote_addr #This gets the user's ip address
+    log_guest_user_created(guest_username, guest_id, created_date_time, guest_ip)
     return redirect(url_for('dashboard.dashboard_home'))
 
 #Signup Routes
@@ -109,17 +117,23 @@ def signup_post():
 
     #User entered username and password are valid
     #Create new user with the form data. Hash the password so plaintext version isn't saved.
-    newUser = User(is_guest=0, username=username, password=generate_password_hash(password, method = 'pbkdf2:sha256'), role='user', created_date_time=created_user_date_time())
+    created_date_time = created_user_date_time()
+    newUser = User(is_guest=0, username=username, password=generate_password_hash(password, method = 'pbkdf2:sha256'), role='user', created_date_time=created_date_time)
     
     # add the new user to the database
     db.session.add(newUser)
     db.session.commit()
 
+    #Add username, id, created_date_time, and user IP address to project_repo/logs/users_created.log
+    user_ip = request.remote_addr #This gets the user's ip address
+    user_id = 1
+    log_user_created(username, user_id, created_date_time, user_ip) 
+
     return render_template('login.html', userSuccessfullyAdded='User successfully added')
 
 @auth_blueprint.route('/user-terms-of-use-auth')
 def user_terms_of_service():
-    return render_template('user-terms-of-use-auth.html')
+   return render_template('user-terms-of-use-auth.html')
 
 @auth_blueprint.route('/privacy-policy-auth')
 def privacy_policy():
