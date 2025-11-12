@@ -5,7 +5,6 @@ from sqlalchemy import ForeignKey
 
 class Job(db.Model):
     __tablename__ = 'job'
-
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey('user.id'), nullable=False)
     company = db.Column(db.String(60))
@@ -14,6 +13,6 @@ class Job(db.Model):
     date_time_rejected = db.Column(db.String(25))
     date_time_interview = db.Column(db.String(25))
     location = db.Column(db.String(60))
-    url = db.Column(db.String(250))
+    url = db.Column(db.String(350))
     status = db.Column(db.String(20))
     starred = db.Column(db.Integer, default=0)
