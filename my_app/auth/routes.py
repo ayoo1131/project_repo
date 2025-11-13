@@ -3,15 +3,11 @@ from flask_login import login_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import time
 import random
+import logging
 from models.user import User
 from models.id_tracker import Id_Tracker
 from my_app import db
-from .utils.validate_signup import is_valid_password, is_valid_username
-from .utils.create_guest_user import create_guest_username
-from .utils.created_user_date_time import created_user_date_time
-from .utils.log.log_user_created import log_user_created
-from .utils.log.log_guest_user_created import log_guest_user_created
-import logging
+from .utils import (is_valid_password, is_valid_username, create_guest_username, created_user_date_time, log_user_created, log_guest_user_created, check_highest_user_id)
 
 auth_blueprint = Blueprint('auth', __name__, template_folder='templates')
 
@@ -57,37 +53,18 @@ def login_guest_post():
     db.session.add(guestUser)
     db.session.commit()
     
-    guest_id = guestUser.id
-    highest_id = Id_Tracker.query.first()
+    
+    guest_id = check_highest_user_id(guestUser.id, guest_username)
+    logging.error("login guest")
+    logging.error(guest_id)
 
-    if not highest_id: #If there are no users in user table, add user id to id_tracker table
-        logging.error("1")
-        new_user_id = Id_Tracker(username=guest_username, highest_id=guest_id)
-        db.session.add(new_user_id)
-        db.session.commit()
-
-    elif highest_id.highest_id == guest_id: #If the highest id is equal to new user id, then highest user's been deleted. Update id_tracker and user tables
-        logging.error("2")
-        highest_id.username=guest_username
-        highest_id.highest_id=(guest_id + 1)
-
-        newGuestUser = User.query.filter_by(id = guest_id).first()
-        newGuestUser.id = (guest_id + 1)
-        db.session.commit()
-
-    elif highest_id.highest_id < guest_id: #Record new highest user id in id_tracker
-        logging.error("3")
-        highest_id.username = guest_username
-        highest_id.highest_id = guest_id
-        db.session.commit()
-
-    logging.error("4")
     login_user(guestUser)
     session['is_guest'] = True
     session['guest_acknowledged'] = False
     
     guest_ip = request.remote_addr #This gets the user's ip address
     log_guest_user_created(guest_username, guest_id, created_date_time, guest_ip)
+    
     return redirect(url_for('dashboard.dashboard_home'))
 
 #Signup Routes
@@ -149,12 +126,12 @@ def signup_post():
     db.session.add(newUser)
     db.session.commit()
 
+    user_id = check_highest_user_id(newUser.id, username)
+
     #Add username, id, created_date_time, and user IP address to project_repo/logs/users_created.log
     user_ip = request.remote_addr #This gets the user's ip address
-    user_id = newUser.id
     log_user_created(username, user_id, created_date_time, user_ip) 
     
-
     return render_template('login.html', userSuccessfullyAdded='User successfully added')
 
 @auth_blueprint.route('/user-terms-of-use-auth')
