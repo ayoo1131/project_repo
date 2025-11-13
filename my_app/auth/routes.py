@@ -5,7 +5,6 @@ import time
 import random
 import logging
 from models.user import User
-from models.id_tracker import Id_Tracker
 from my_app import db
 from .utils import (is_valid_password, is_valid_username, create_guest_username, created_user_date_time, log_user_created, log_guest_user_created, check_highest_user_id)
 
@@ -53,10 +52,7 @@ def login_guest_post():
     db.session.add(guestUser)
     db.session.commit()
     
-    
     guest_id = check_highest_user_id(guestUser.id, guest_username)
-    logging.error("login guest")
-    logging.error(guest_id)
 
     login_user(guestUser)
     session['is_guest'] = True
