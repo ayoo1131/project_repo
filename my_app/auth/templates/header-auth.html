@@ -3,7 +3,14 @@
 		<div id="navbarAuth" class="navbar-menu is-active">
 			<div class="navbar-start">
 				<a href="{{ url_for('auth.home') }}" class="navbar-item gray-background has-text-white">Home</a>
-				<a href="{{ url_for('auth.about') }}" class = "navbar-item gray-background has-text-white">About</a>
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link gray-background has-text-white">About</a>
+				
+					<div class="navbar-dropdown">
+						<a href="{{ url_for('auth.about_site') }}" class = "navbar-item gray-background has-text-white">This Site</a>
+						<a href="{{ url_for('auth.about_developer') }}" class = "navbar-item gray-background has-text-white">Site Developer</a>
+					</div>
+				</div>
 			</div>
 
 			<div class="navbar-end">

@@ -16,9 +16,13 @@ def home():
     return render_template('home.html')
 
 #About Page Route
-@auth_blueprint.route('/about')
-def about():
-    return render_template('about.html')
+@auth_blueprint.route('/about_site')
+def about_site():
+    return render_template('about-site.html')
+
+@auth_blueprint.route('/about_developer')
+def about_developer():
+    return render_template('about-develper.html')
 
 #Login Routes
 @auth_blueprint.route('/login')

@@ -1,0 +1,59 @@
+{% extends "base-auth.html" %}
+
+{% block title %}
+<title>About Site</title>
+{% endblock %}
+
+{% block header %}
+{% include "header-auth.html" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="box has-text-centered">
+	<h1 class="title is-3 mt-3">About This Site</h1>
+
+	<h2 class="title is-5 mt-3 mb-2 has-text-white has-text-left">Overview</h2>
+	<p class="content is-medium has-text-white has-text-left">
+		This website is a Full Stack Web Development portfolio created by me, Andrew Yoo, to showcase the applications I've designed and built.
+		The site has a user registration ability for users to create an account and save information for future use.
+		Currently there are 2 production applications ready for use.
+	</p>
+
+	<h1 class="title is-3 mt-3">Appliations</h1>
+	
+	<h2 class="title is-5 mt-3 mb-2 has-text-white has-text-left">Applied Jobs</h2>
+	<p class="content mb-1 is-medium has-text-white has-text-left">
+		Overview: This application helps job seekers track the status of their job applications. It let's users organize job applications by status(applied, denied, interview) and gives users data on how long it's been since they've applied.
+	</p>
+
+	<p class="content is-medium has-text-white has-text-left mb-1">Features: </p>
+	<p class="has-text-white has-text-left">• Save job application with: company, job title, date applied, location, and URL</p>
+	<p class="has-text-white has-text-left">• Display job applications by application status (applied, rejected, interviews)</p>
+	<p class="has-text-white has-text-left">• Sort job applications by date, name, etc.</p>
+	<p class="has-text-white has-text-left">• Update the appliation status of a job application</p>
+		
+	<h2 class="title is-5 mt-3 mb-2 has-text-white has-text-left">Cover Letter</h2>
+	<p class="content mb-1 is-medium has-text-white has-text-left">
+		Overview: This application lets the user store their contact information to quickly create a framework of a cover letter. The user can write the body of the cover letter and download it to their personal device as a word document.
+	</p>
+
+	<p class="content is-medium has-text-white has-text-left mb-1">Features: </p>
+        <p class="has-text-white has-text-left">• Save applicant info: name, email, phone no., social media(optional), extra(optional)</p>
+	<p class="has-text-white has-text-left">• Update and delete applicant info</p>
+	<p class="has-text-white has-text-left">• Fill cover letter template with applicant info and cover letter body paragraphs</p>
+	<p class="has-text-white has-text-left">• Download cover letter as a Word document</p>
+
+
+	<h1 class="title is-3 mt-3">Technology Stack</h1>
+	<p class="content is-medium has-text-white has-text-left mb-1">Back End: Python Flask</p>
+	<p class="content is-medium has-text-white has-text-left mb-1">Back End: Javascript React</p>
+	<p class="content is-medium has-text-white has-text-left mb-1">Database: SQLite</p>
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{% include "footer-auth.html" %}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base-auth.html" %}
+
+{% block title %}
+<title>About</title>
+{% endblock %}
+
+{% block header %}
+{% include "header-auth.html" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="box has-text-centered">
+	<h1 class="title is-3 mt-4">About The Developer</h1>
+
+	<figure class="image is-128x128 mb-6 clearfix" style="display: block; margin-left: auto; margin-right: auto;">
+		<img class="is-rounded" src="{{ url_for('static', filename='AndrewPicture.jpg') }}" alt="Profile picture">	
+	</figure>
+
+	<p class="content is-medium has-text-white">
+		Hi! I'm <strong>Andrew Yoo</strong>, a full stack web developer who loves creating practical and functional web applications.
+		I enjoy working with Flask and React, learning new frameworks, and building meaningful projects.
+	</p>
+
+	<p class="content">
+		Find links to the Github repo for this project and my LinkedIn profile below.
+	</p>
+
+
+    <a href="https://github.com/ayoo1131/project_repo" class="button is-link" target="_blank">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>GitHub</span>
+        </a>
+    <a href="https://www.linkedin.com/in/ayoo1234/" class="button is-info" target="_blank">
+            <span class="icon"><i class="fab fa-linkedin"></i></span>
+            <span>LinkedIn</span>
+    </a>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{% include "footer-auth.html" %}
+{% endblock %}
