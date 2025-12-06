@@ -56,8 +56,6 @@ def create_app():
     app.register_blueprint(test_applied_jobs_blueprint)
 
 
-
-
     #blueprint for coverletter routes in the Dashboard Applications
     from my_app.dashboard.applications.cover_letter.backend import cover_letter_blueprint
     app.register_blueprint(cover_letter_blueprint)

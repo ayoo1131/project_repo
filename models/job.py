@@ -16,3 +16,4 @@ class Job(db.Model):
     url = db.Column(db.String(350))
     status = db.Column(db.String(20))
     starred = db.Column(db.Integer, default=0)
+    cover_letter = db.Column(db.String(5))
